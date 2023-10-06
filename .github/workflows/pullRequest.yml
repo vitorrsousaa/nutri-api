@@ -1,0 +1,45 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+            **/package-lock.json
+            **/.production
+          key: node_modules-${{ hashFiles('**/package.json') }}
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run lint
+        run: yarn eslint . --fix
+
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'fix: Run ESLint and fix linting issues across all files'
+
+      - name: Run build package
+        run: yarn build
+
+      - name: Run the tests
+        run: yarn test
