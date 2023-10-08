@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
+import authRoutes from '../../../modules/Auth/http/routes';
+
 const routes = Router();
 
-routes.use('/api', (req, res) => {
-  res.json({ message: 'ok' });
-});
+routes.use('/api', authRoutes);
 
 export default routes;
