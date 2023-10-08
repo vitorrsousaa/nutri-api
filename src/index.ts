@@ -1,9 +1,9 @@
 import app from './app';
-// import prisma from './app/shared/database/prisma';
+import prisma from './app/shared/database/prisma';
 
 (async () => {
   try {
-    // await prisma.$connect();
+    await prisma.$connect();
 
     const port = process.env.PORT || 3001;
 
