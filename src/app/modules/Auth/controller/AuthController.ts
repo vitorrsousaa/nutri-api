@@ -12,8 +12,6 @@ class AuthController {
     returnErrorMissingField(request.body, ['email', 'password', 'name']);
     const { email, password, name } = request.body;
 
-    console.log(this.signUpService);
-
     const signUp = await this.signUpService.execute({ email, name, password });
 
     return response.json(signUp);

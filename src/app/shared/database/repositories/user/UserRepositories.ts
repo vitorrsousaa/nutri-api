@@ -1,9 +1,7 @@
 import { type Prisma, PrismaClient } from '@prisma/client';
 
 class UserRepositories {
-  constructor(private readonly prismaService: PrismaClient) {
-    // console.log('User repositories with pisma', prismaService);
-  }
+  constructor(private readonly prismaService: PrismaClient) {}
 
   async create(createDTO: Prisma.UserCreateArgs) {
     return this.prismaService.user.create(createDTO);

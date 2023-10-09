@@ -1,12 +1,13 @@
 import UserRepositories from '../../../../shared/database/repositories/user';
 import AppError from '../../../../shared/error';
 import { createUserDTO } from '../../dtos';
-import { Crypt, ICrypt } from '../../providers/crypt';
+import { ICrypt } from '../../providers/crypt';
 
 class SignUp {
-  constructor(private readonly userRepositories: UserRepositories) {
-    // private readonly cryptProvider: ICrypt
-  }
+  constructor(
+    private readonly userRepositories: UserRepositories,
+    private readonly cryptProvider: ICrypt
+  ) {}
 
   async execute(createUserDTO: createUserDTO) {
     const { email, name, password } = createUserDTO;
@@ -24,8 +25,7 @@ class SignUp {
       throw new AppError('Email already in use');
     }
 
-    // const hashedPassword = await this.cryptProvider.hash(password);
-    const hashedPassword = await Crypt.hash(password);
+    const hashedPassword = await this.cryptProvider.hash(password);
 
     const newUser = await this.userRepositories.create({
       data: {

@@ -10,8 +10,7 @@ class AuthModule {
   private controller: AuthController;
   constructor() {
     this.controller = new AuthController(
-      // new SignUp(userRepositoriesInstance, Crypt)
-      new SignUp(userRepositoriesInstance)
+      new SignUp(userRepositoriesInstance, Crypt)
     );
   }
 
