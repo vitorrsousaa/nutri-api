@@ -4,6 +4,13 @@ const prisma = new PrismaClient();
 
 async function main() {
   //
+  await prisma.user.create({
+    data: {
+      email: 'any_email',
+      name: 'any',
+      password: 'password',
+    },
+  });
 }
 
 main()

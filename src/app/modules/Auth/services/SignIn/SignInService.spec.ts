@@ -4,6 +4,7 @@ import UserRepositories from '../../../../shared/database/repositories/user/User
 import { createMockPrisma } from '../../../../shared/utils-test/createMockPrisma';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
 import { ICrypt } from '../../providers/crypt';
+import { IToken } from '../../providers/token';
 import SignIn from './SignInService';
 
 describe('SignIn service', () => {
@@ -30,10 +31,15 @@ describe('SignIn service', () => {
       hash: jest.fn().mockResolvedValue('hashed_password'),
       compare: jest.fn().mockReturnValue(true),
     };
+    const tokenProviderMock: IToken = {
+      generate: jest.fn().mockReturnValue('generate_token'),
+      verify: jest.fn(),
+    };
 
     const signInInstance = new SignIn(
       userRepositoriesInstance,
-      cryptProviderMock
+      cryptProviderMock,
+      tokenProviderMock
     );
 
     // Act
@@ -62,7 +68,16 @@ describe('SignIn service', () => {
       compare: jest.fn(),
     };
 
-    const service = new SignIn(userRepositoriesInstance, cryptProviderMock);
+    const tokenProviderMock: IToken = {
+      generate: jest.fn().mockReturnValue('generate_token'),
+      verify: jest.fn(),
+    };
+
+    const service = new SignIn(
+      userRepositoriesInstance,
+      cryptProviderMock,
+      tokenProviderMock
+    );
 
     // Act
     try {
@@ -86,7 +101,16 @@ describe('SignIn service', () => {
       hash: jest.fn().mockResolvedValue('hashed_password'),
       compare: jest.fn(),
     };
-    const service = new SignIn(userRepositoriesInstance, cryptProviderMock);
+    const tokenProviderMock: IToken = {
+      generate: jest.fn().mockReturnValue('generate_token'),
+      verify: jest.fn(),
+    };
+
+    const service = new SignIn(
+      userRepositoriesInstance,
+      cryptProviderMock,
+      tokenProviderMock
+    );
 
     // Act
     try {

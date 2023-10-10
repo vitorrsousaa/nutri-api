@@ -1,11 +1,13 @@
 import UserRepositories from '../../../../shared/database/repositories/user';
 import AppError from '../../../../shared/error';
 import { ICrypt } from '../../providers/crypt';
+import { IToken } from '../../providers/token';
 
 class SignIn {
   constructor(
     private readonly userRepositories: UserRepositories,
-    private readonly cryptProvider: ICrypt
+    private readonly cryptProvider: ICrypt,
+    private readonly tokenProvider: IToken
   ) {}
 
   async execute(email: string, password: string) {
@@ -38,6 +40,7 @@ class SignIn {
       name: findUser.name,
       email: findUser.email,
       id: findUser.id,
+      token: this.tokenProvider.generate({ id: findUser.id }),
     };
   }
 }

@@ -2,11 +2,13 @@ import UserRepositories from '../../../../shared/database/repositories/user';
 import AppError from '../../../../shared/error';
 import { createUserDTO } from '../../dtos';
 import { ICrypt } from '../../providers/crypt';
+import { IToken } from '../../providers/token';
 
 class SignUp {
   constructor(
     private readonly userRepositories: UserRepositories,
-    private readonly cryptProvider: ICrypt
+    private readonly cryptProvider: ICrypt,
+    private readonly tokenProvider: IToken
   ) {}
 
   async execute(createUserDTO: createUserDTO) {
@@ -39,6 +41,7 @@ class SignUp {
       id: newUser.id,
       name: newUser.name,
       email: newUser.email,
+      token: this.tokenProvider.generate({ id: newUser.id }),
     };
   }
 }
