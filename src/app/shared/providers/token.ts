@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-import authConfig from '../../../shared/config/auth.json';
-import { ACCESS_TOKEN_EXPIRATION } from '../../../shared/constants/auth';
+import authConfig from '../config/auth.json';
+import { ACCESS_TOKEN_EXPIRATION } from '../constants/auth';
 
 export type IGenerateToken = {
   id: string;

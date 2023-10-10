@@ -1,7 +1,7 @@
 import { NextFunction, Request, request, Response } from 'express';
 
 import AppError from '../../error';
-import token from '../../providers/token';
+import Token from '../../providers/token';
 
 interface PayloadProps {
   id: string;
@@ -31,7 +31,7 @@ export default function authHandler(
   }
 
   try {
-    const payload = token.verify(tokenJWT) as PayloadProps;
+    const payload = Token.verify(tokenJWT) as PayloadProps;
 
     request.user = { id: payload.id };
 

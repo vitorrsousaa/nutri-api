@@ -1,8 +1,8 @@
 import prisma from '../../../shared/database/prisma';
 import UserRepositories from '../../../shared/database/repositories/user';
+import Token from '../../../shared/providers/token';
 import AuthController, { optionsController } from '../controller';
 import { Crypt } from '../providers/crypt';
-import Token from '../providers/token';
 import SignIn from '../services/SignIn';
 import SignUp from '../services/SignUp';
 
