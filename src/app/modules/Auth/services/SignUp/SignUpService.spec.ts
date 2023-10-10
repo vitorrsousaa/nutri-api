@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import UserRepositories from '../../../../shared/database/repositories/user';
+import { IToken } from '../../../../shared/providers/token';
 import { createMockPrisma } from '../../../../shared/utils-test/createMockPrisma';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
 import { ICrypt } from '../../providers/crypt';
-import { IToken } from '../../providers/token';
 import SignUp from './SignUpService';
 
 describe('SignUp Service', () => {
