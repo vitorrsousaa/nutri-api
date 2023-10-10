@@ -1,4 +1,4 @@
-import { NextFunction, Request, request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 import AppError from '../../error';
 import Token from '../../providers/token';
@@ -33,7 +33,7 @@ export default function authHandler(
   try {
     const payload = Token.verify(tokenJWT) as PayloadProps;
 
-    request.user = { id: payload.id };
+    req.user = { id: payload.id };
 
     next();
   } catch (error) {

@@ -22,7 +22,7 @@ class PatientController {
 
     const create = await this.createService.execute(
       { birthDate, email, gender, height, name, weight },
-      'dcaba1e5-f50b-4f74-be6f-d9cae320d760'
+      request.user.id
     );
 
     return response.json(create);
