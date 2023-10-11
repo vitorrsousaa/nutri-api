@@ -16,7 +16,8 @@ model User {
   name     String
   password String
 
-  Patient Patient[]
+  patient      Patient[]
+  planningMeal PlanningMeal[]
 
   @@map("users")
 }
@@ -24,6 +25,8 @@ model User {
 enum GenderType {
   MASC
   FEM
+
+  @@map("gender_types")
 }
 
 model Patient {
@@ -36,7 +39,74 @@ model Patient {
   height    Float
   gender    GenderType
 
+  planningMeal PlanningMeal[]
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("patients")
 }
+
+enum FoodType {
+  FRUIT
+  PROTEIN
+  CARB
+  LEGUMES
+
+  @@map("food_types")
+}
+
+model PlanningMeal {
+  id        String @id @default(uuid()) @db.Uuid()
+  userId    String @map("user_id") @db.Uuid()
+  patientId String @map("patient_id") @db.Uuid()
+  meals     Meal[]
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("plannings_meal")
+}
+
+model Meal {
+  // O NUTRICIONISTA VAI SALVAR A REFEIÇÃO COM A ESCOLHA DO ALIMENTO, PORÉM, QUANDO FOR GERAR O PDF DO PLANEJAMENTO ALIMENTAR, VAMO PRECISAR GERAR UM PDF COM A LISTA DE SUBSTITUIÇÃO
+  id             String   @id @default(uuid()) @db.Uuid()
+  planningMealId String?  @map("planning_meal_id") @db.Uuid()
+  name           String
+  time           DateTime
+
+  mealFoods    MealFood[]
+  planningMeal PlanningMeal? @relation(fields: [planningMealId], references: [id], onDelete: Cascade)
+
+  @@map("meals")
+}
+
+model MealFood {
+  id       String @id @default(uuid()) @db.Uuid()
+  foodId   String @map("food_id") @db.Uuid()
+  quantity Float
+
+  food   Food    @relation(fields: [foodId], references: [id])
+  meal   Meal?   @relation(fields: [mealId], references: [id], onDelete: Cascade)
+  mealId String? @db.Uuid()
+
+  @@map("meal_foods")
+}
+
+model Food {
+  // CADASTRAR OS ALIMENTOS COM A MESMA QUANTIDADE DE CALORIAS
+  id       String @id @default(uuid()) @db.Uuid()
+  name     String
+  calories Float
+  protein  Float
+  fat      Float
+  quantity Float
+  carb     Float
+
+  group FoodType
+
+  MealFood MealFood[]
+
+  @@map("foods")
+}
+
+// O NUTRI VAI SELECIOANR O ALIMENTO
