@@ -1,5 +1,5 @@
-import AppError from '../../../../shared/error';
-import { createPatientDTO } from '../../dtos';
+import { AppError } from '../../../../shared/error';
+import { createPatientDTO } from '../../dtos/create-patient-dto';
 import PatientRepositories from '../../repositories/patient/PatientRepositories';
 
 export class CreatePatientService {

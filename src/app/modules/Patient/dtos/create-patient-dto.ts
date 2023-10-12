@@ -1,13 +1,19 @@
-export type createPatientDTO = {
-  email: string;
-  name: string;
-  height: number;
-  weight: number;
-  birthDate: Date;
-  gender: Gender;
-};
+import * as z from 'zod';
 
-export enum Gender {
-  MASC = 'MASC',
-  FEM = 'FEM',
-}
+import { GenderEnum } from '../entities/TGender';
+
+export const CreatePatientSchema = z.object({
+  email: z.string().email({ message: 'Invalid e-mail format' }),
+  name: z.string(),
+  height: z.number().positive(),
+  weight: z.number().positive(),
+  birthDate: z
+    .string()
+    .pipe(z.coerce.date())
+    .refine((date) => date <= new Date(), {
+      message: 'Birth date cannot be in the future',
+    }),
+  gender: GenderEnum,
+});
+
+export type createPatientDTO = z.infer<typeof CreatePatientSchema>;

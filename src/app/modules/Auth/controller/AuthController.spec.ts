@@ -2,6 +2,7 @@
 
 import { Request, Response } from 'express';
 
+import { ZodError } from '../../../shared/error';
 import SignIn from '../services/SignIn';
 import SignUp from '../services/SignUp';
 import AuthController from './AuthController';
@@ -56,9 +57,10 @@ describe('Auth Controller', () => {
       // Act
       try {
         await controller.signUp(mockRequest, mockResponse);
-      } catch (error: any) {
-        // Assert
-        expect(error.message).toBe('Missing fields: email');
+      } catch (error) {
+        if (error instanceof ZodError) {
+          expect(error.message.some((error) => error.field === 'email'));
+        }
       }
     });
 
@@ -75,7 +77,7 @@ describe('Auth Controller', () => {
       const signUpServiceMock = {
         execute: jest
           .fn()
-          .mockReturnValue({ name: 'any_name', email: 'any_email' }),
+          .mockReturnValue({ name: 'any_name', email: 'any_email@email.com' }),
       } as unknown as jest.Mocked<SignUp>;
 
       const controller = new AuthController(
@@ -85,7 +87,7 @@ describe('Auth Controller', () => {
       );
 
       const mockAuthenticate = {
-        email: 'any_email',
+        email: 'any_email@email.com',
         password: 'any_password',
         name: 'any_name',
       };
@@ -97,13 +99,13 @@ describe('Auth Controller', () => {
 
       // Assert
       expect(signUpServiceMock.execute).toBeCalledWith({
-        email: 'any_email',
+        email: 'any_email@email.com',
         password: 'any_password',
         name: 'any_name',
       });
       expect(mockResponse.json).toBeCalledWith({
         name: 'any_name',
-        email: 'any_email',
+        email: 'any_email@email.com',
       });
     });
   });
@@ -138,9 +140,11 @@ describe('Auth Controller', () => {
       // Act
       try {
         await controller.signIn(mockRequest, mockResponse);
-      } catch (error: any) {
+      } catch (error) {
         // Assert
-        expect(error.message).toBe('Missing fields: email');
+        if (error instanceof ZodError) {
+          expect(error.message.some((error) => error.field === 'email'));
+        }
       }
     });
 
@@ -149,7 +153,7 @@ describe('Auth Controller', () => {
       const signInServiceMock = {
         execute: jest
           .fn()
-          .mockReturnValue({ name: 'any_name', email: 'any_email' }),
+          .mockReturnValue({ name: 'any_name', email: 'any_email@email.com' }),
       } as unknown as jest.Mocked<SignIn>;
 
       // const recoverServiceMock = {
@@ -167,7 +171,7 @@ describe('Auth Controller', () => {
       );
 
       const mockAuthenticate = {
-        email: 'any_email',
+        email: 'any_email@email.com',
         password: 'any_password',
       };
 
@@ -178,12 +182,12 @@ describe('Auth Controller', () => {
 
       // Assert
       expect(signInServiceMock.execute).toBeCalledWith(
-        'any_email',
+        'any_email@email.com',
         'any_password'
       );
       expect(mockResponse.json).toBeCalledWith({
         name: 'any_name',
-        email: 'any_email',
+        email: 'any_email@email.com',
       });
     });
   });

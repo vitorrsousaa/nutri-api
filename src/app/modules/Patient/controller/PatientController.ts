@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import returnErrorMissingField from '../../../shared/utils/returnErrorMissingField';
+import { CreatePatientSchema } from '../dtos/create-patient-dto';
 import CreatePatient from '../services/Create';
 
 class PatientController {
@@ -9,16 +10,9 @@ class PatientController {
   }
 
   async create(request: Request, response: Response) {
-    returnErrorMissingField(request.body, [
-      'birthDate',
-      'email',
-      'gender',
-      'height',
-      'name',
-      'weight',
-    ]);
+    const result = returnErrorMissingField(CreatePatientSchema, request.body);
 
-    const { birthDate, email, gender, height, name, weight } = request.body;
+    const { birthDate, email, gender, height, name, weight } = result;
 
     const create = await this.createService.execute(
       { birthDate, email, gender, height, name, weight },

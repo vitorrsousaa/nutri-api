@@ -1,16 +1,16 @@
-import AppError from '../error';
+import * as z from 'zod';
 
-interface ObjectWithKeys {
-  [key: string]: unknown;
-}
+import { ZodError } from '../error';
 
-export default function returnErrorMissingField(
-  objectToCheck: ObjectWithKeys,
-  requiredKeys: string[]
-): void {
-  for (const key of requiredKeys) {
-    if (!(key in objectToCheck)) {
-      throw new AppError(`Missing fields: ${key}`, 400);
-    }
+export default function returnErrorMissingField<S extends z.ZodType>(
+  schema: S,
+  request: unknown
+): z.SafeParseSuccess<z.output<S>>['data'] {
+  const result = schema.safeParse(request);
+
+  if (!result.success) {
+    throw new ZodError(result.error);
   }
+
+  return result.data;
 }

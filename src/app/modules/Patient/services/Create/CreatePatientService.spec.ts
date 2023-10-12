@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createMockPrisma } from '../../../../shared/utils-test/createMockPrisma';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
-import { createPatientDTO } from '../../dtos';
+import { createPatientDTO } from '../../dtos/create-patient-dto';
 import PatientRepositories from '../../repositories/patient/PatientRepositories';
 import { CreatePatientService } from './CreatePatientService';
 
@@ -48,16 +48,14 @@ describe('Create Patient Service', () => {
     const mockPrisma = {
       patient: {
         findFirst: jest.fn().mockResolvedValue(null),
-        create: jest
-          .fn()
-          .mockResolvedValue({
-            birthDate: date,
-            email: 'any_email',
-            gender: 'MASC',
-            height: 80,
-            weight: 80,
-            name: 'any_name',
-          }),
+        create: jest.fn().mockResolvedValue({
+          birthDate: date,
+          email: 'any_email',
+          gender: 'MASC',
+          height: 80,
+          weight: 80,
+          name: 'any_name',
+        }),
       },
     };
     const patientMockPrisma = createMockPrisma(mockPrisma);
