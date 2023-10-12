@@ -1,7 +1,7 @@
 import UserRepositories from '../../../../shared/database/repositories/user';
-import AppError from '../../../../shared/error';
+import { AppError } from '../../../../shared/error';
 import { IToken } from '../../../../shared/providers/token';
-import { createUserDTO } from '../../dtos';
+import { createUserDTO } from '../../dtos/create-user-dto';
 import { ICrypt } from '../../providers/crypt';
 
 class SignUp {

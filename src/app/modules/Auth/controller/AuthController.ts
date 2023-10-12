@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 
 import returnErrorMissingField from '../../../shared/utils/returnErrorMissingField';
+import { CreateUserSchema } from '../dtos/create-user-dto';
+import { UserSchema } from '../entities/TUser';
 import SignIn from '../services/SignIn';
 import SignUp from '../services/SignUp';
 
@@ -14,8 +16,9 @@ class AuthController {
   }
 
   async signUp(request: Request, response: Response) {
-    returnErrorMissingField(request.body, ['email', 'password', 'name']);
-    const { email, password, name } = request.body;
+    const result = returnErrorMissingField(CreateUserSchema, request.body);
+
+    const { email, password, name } = result;
 
     const signUp = await this.signUpService.execute({ email, name, password });
 
@@ -23,9 +26,9 @@ class AuthController {
   }
 
   async signIn(request: Request, response: Response) {
-    returnErrorMissingField(request.body, ['email', 'password']);
+    const result = returnErrorMissingField(UserSchema, request.body);
 
-    const { email, password } = request.body;
+    const { email, password } = result;
 
     const signIn = await this.signInService.execute(email, password);
 
