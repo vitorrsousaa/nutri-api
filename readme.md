@@ -22,6 +22,7 @@ Technologies and tools used in this project.
 - [Prisma](https://www.prisma.io/)
 - [Postgres SQL](https://www.postgresql.org/)
 - [Jest](https://jestjs.io/pt-BR/)
+- [Zod](https://zod.dev/)
 
 #### **Utilities**
 

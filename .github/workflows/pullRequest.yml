@@ -30,6 +30,12 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      - name: Run build package
+        run: yarn build
+
+      - name: Run the tests
+        run: yarn test
+
       - name: Run lint
         run: yarn eslint . --fix
 
@@ -37,9 +43,3 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'fix: Run ESLint and fix linting issues across all files'
-
-      - name: Run build package
-        run: yarn build
-
-      - name: Run the tests
-        run: yarn test
