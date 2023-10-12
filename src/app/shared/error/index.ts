@@ -1,11 +1,4 @@
-class AppError {
-  public readonly message: string;
-  public readonly statusCode: number;
+import AppError from './AppError';
+import ZodError from './ZodError';
 
-  constructor(message: string, statusCode = 400) {
-    this.message = message;
-    this.statusCode = statusCode;
-  }
-}
-
-export default AppError;
+export { AppError, ZodError };

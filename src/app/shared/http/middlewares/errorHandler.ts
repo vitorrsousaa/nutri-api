@@ -1,6 +1,6 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 
-import AppError from '../../error';
+import { AppError, ZodError } from '../../error';
 
 export default (
   error: ErrorRequestHandler,
@@ -11,6 +11,12 @@ export default (
 ) => {
   console.log(error);
   if (error instanceof AppError) {
+    return response
+      .status(error.statusCode)
+      .json({ status: 'error', message: error.message });
+  }
+
+  if (error instanceof ZodError) {
     return response
       .status(error.statusCode)
       .json({ status: 'error', message: error.message });
