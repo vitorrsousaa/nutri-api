@@ -3,9 +3,9 @@ import { NextFunction, Request, Response } from 'express';
 import { AppError } from '../../error';
 import Token from '../../providers/token';
 
-interface PayloadProps {
+type PayloadProps = {
   id: string;
-}
+};
 
 export default function authHandler(
   req: Request,
