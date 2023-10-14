@@ -5,7 +5,7 @@ import PatientModule from '../../module';
 
 const createPatientRoutes = Router();
 
-createPatientRoutes.use(
+createPatientRoutes.post(
   '/create',
   authHandler,
   PatientModule.getController('create')
