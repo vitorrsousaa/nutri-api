@@ -7,6 +7,10 @@ class PatientRepositories {
     return this.prismaService.patient.create(createDTO);
   }
 
+  async findAll(findAllDTO: Prisma.PatientFindManyArgs) {
+    return this.prismaService.patient.findMany(findAllDTO);
+  }
+
   async findByEmail(email: string) {
     return this.prismaService.patient.findFirst({
       where: {
