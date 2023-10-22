@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
 import { carbSeed } from './seeders/carbo.seed';
-import { cerealSeed } from './seeders/cereal.seed';
 import { fruitSeed } from './seeders/fruit.seed';
 import { proteinSeed } from './seeders/protein.seed';
 
@@ -12,7 +11,6 @@ async function main() {
   await proteinSeed();
   await fruitSeed();
   await carbSeed();
-  await cerealSeed();
 }
 
 main()
