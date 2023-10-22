@@ -1,16 +1,16 @@
 import { PrismaClient } from '@prisma/client';
 
+import { carbSeed } from './seeders/carbo.seed';
+import { fruitSeed } from './seeders/fruit.seed';
+import { proteinSeed } from './seeders/protein.seed';
+
 const prisma = new PrismaClient();
 
 async function main() {
   //
-  await prisma.user.create({
-    data: {
-      email: 'any_email',
-      name: 'any',
-      password: 'password',
-    },
-  });
+  await proteinSeed();
+  await fruitSeed();
+  await carbSeed();
 }
 
 main()
