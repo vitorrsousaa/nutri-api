@@ -97,3 +97,7 @@ $ yarn dev
 `ci` – continuous integration related
 `build` – changes that affect the build system or external dependencies
 `revert` – reverts a previous commit
+
+## Tabela de alimentos
+
+https://www.tbca.net.br/base-dados/composicao_alimentos_calculaveis.php

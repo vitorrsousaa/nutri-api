@@ -51,6 +51,8 @@ enum FoodType {
   PROTEIN
   CARB
   LEGUMES
+  CEREAL
+  OTHERS
 
   @@map("food_types")
 }
@@ -68,7 +70,8 @@ model PlanningMeal {
 }
 
 model Meal {
-  // O NUTRICIONISTA VAI SALVAR A REFEIÇÃO COM A ESCOLHA DO ALIMENTO, PORÉM, QUANDO FOR GERAR O PDF DO PLANEJAMENTO ALIMENTAR, VAMO PRECISAR GERAR UM PDF COM A LISTA DE SUBSTITUIÇÃO
+  // O NUTRICIONISTA VAI SALVAR A REFEIÇÃO COM A ESCOLHA DO ALIMENTO
+  // VAMOS PRECISAR GERAR UM PDF COM A LISTA DE SUBSTITUIÇÃO
   id             String   @id @default(uuid()) @db.Uuid()
   planningMealId String?  @map("planning_meal_id") @db.Uuid()
   name           String
@@ -81,6 +84,9 @@ model Meal {
 }
 
 model MealFood {
+  // O NUTRI VAI SELECIOANR O ALIMENTO
+  // E VAI DEFINIR AS QUANTIDADES DE CADA ALIMENTO
+  // ESSA INFORMAÇÃO É UTILIZADA PARA CRIAR UMA REFEIÇÃO
   id       String @id @default(uuid()) @db.Uuid()
   foodId   String @map("food_id") @db.Uuid()
   quantity Float
@@ -93,7 +99,6 @@ model MealFood {
 }
 
 model Food {
-  // CADASTRAR OS ALIMENTOS COM A MESMA QUANTIDADE DE CALORIAS
   id       String @id @default(uuid()) @db.Uuid()
   name     String
   calories Float
@@ -108,5 +113,3 @@ model Food {
 
   @@map("foods")
 }
-
-// O NUTRI VAI SELECIOANR O ALIMENTO
