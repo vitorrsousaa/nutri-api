@@ -2,16 +2,43 @@ import { createMockPrisma } from '../../../../shared/utils-test/createMockPrisma
 import PatientRepositories from './PatientRepositories';
 
 describe('Patient Repositories', () => {
+  let repository: PatientRepositories;
+  const spy = {
+    findUnique: jest.fn(),
+    findFirst: jest.fn(),
+    delete: jest.fn(),
+    create: jest.fn(),
+    findMany: jest.fn(),
+  };
+
+  beforeEach(() => {
+    const mock = {
+      patient: spy,
+    };
+
+    const prismaMock = createMockPrisma(mock);
+    repository = new PatientRepositories(prismaMock);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('Should correctly create patient', async () => {
     // Arrange
-    const mock = {
-      patient: {
-        create: jest.fn(),
+    const date = new Date();
+
+    const mockCreatePatient = {
+      data: {
+        birthDate: date,
+        email: 'any_email',
+        gender: 'MASC',
+        height: 150,
+        name: 'any_name',
+        weight: 70,
+        userId: 'user_id',
       },
     };
-    const prismaMock = createMockPrisma(mock);
-    const repository = new PatientRepositories(prismaMock);
-    const date = new Date();
 
     // Act
     await repository.create({
@@ -27,58 +54,82 @@ describe('Patient Repositories', () => {
     });
 
     // Assert
-    expect(mock.patient.create).toBeCalledWith({
-      data: {
-        birthDate: date,
-        email: 'any_email',
-        gender: 'MASC',
-        height: 150,
-        name: 'any_name',
-        weight: 70,
-        userId: 'user_id',
-      },
-    });
+    expect(spy.create).toBeCalledWith(mockCreatePatient);
   });
 
-  it('Should call correctly findUnique by email', async () => {
+  it('Should call correctly find by email', async () => {
     // Arrange
-    const mock = {
-      patient: {
-        findFirst: jest.fn(),
-      },
-    };
-    const prismaMock = createMockPrisma(mock);
-    const repository = new PatientRepositories(prismaMock);
 
     // Act
     await repository.findByEmail('any_email');
 
     // Assert
-    expect(mock.patient.findFirst).toBeCalledWith({
+    expect(spy.findFirst).toBeCalledWith({
       where: { email: 'any_email' },
     });
   });
 
   it('Should call correctly findUnique by id', async () => {
     // Arrange
-    const mock = {
-      patient: {
-        findUnique: jest.fn(),
+    const mockFindUnique = {
+      where: {
+        id: 'any_id',
       },
     };
-    const prismaMock = createMockPrisma(mock);
-    const repository = new PatientRepositories(prismaMock);
 
     // Act
-    await repository.findUnique({
+    await repository.findUnique(mockFindUnique);
+
+    // Assert
+    expect(spy.findUnique).toBeCalledWith(mockFindUnique);
+  });
+
+  it('Should call findAll correctly', async () => {
+    // Arrange
+    const mockFindAll = {
+      where: {
+        userId: 'any_id',
+      },
+    };
+
+    // Act
+    await repository.findAll(mockFindAll);
+
+    // Assert
+    expect(spy.findMany).toBeCalledWith(mockFindAll);
+  });
+
+  it('Should call findFirst correctly', async () => {
+    // Arrange
+    const mockFindFirst = {
+      where: {
+        userId: 'any_id',
+      },
+    };
+
+    // Act
+    await repository.findFirst(mockFindFirst);
+
+    // Assert
+    expect(spy.findFirst).toBeCalledWith(mockFindFirst);
+  });
+
+  it('Should call delete correctly', async () => {
+    // Arrange
+    const mockDelete = {
+      where: {
+        id: 'any_id',
+      },
+    };
+
+    // Act
+    await repository.delete({
       where: {
         id: 'any_id',
       },
     });
 
     // Assert
-    expect(mock.patient.findUnique).toBeCalledWith({
-      where: { id: 'any_id' },
-    });
+    expect(spy.delete).toBeCalledWith(mockDelete);
   });
 });
