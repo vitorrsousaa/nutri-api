@@ -1,12 +1,13 @@
-export default function verifyObject<T extends object>(
-  objectToCheck: T,
-  requiredKeys: (keyof T)[]
-): boolean {
-  for (const key of requiredKeys) {
-    if (!(key in objectToCheck)) {
-      return false;
-    }
-  }
+import * as z from 'zod';
 
-  return true;
+export default function verifyObject<S extends z.ZodType>(
+  schema: S,
+  objectToCheck: Record<string, unknown>
+): boolean {
+  try {
+    schema.parse(objectToCheck);
+    return true;
+  } catch (error) {
+    return false;
+  }
 }

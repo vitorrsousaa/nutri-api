@@ -1,9 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import * as z from 'zod';
+
 import { createMockPrisma } from '../../../../shared/utils-test/createMockPrisma';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
 import { createPatientDTO } from '../../dtos/create-patient-dto';
 import PatientRepositories from '../../repositories/patient/PatientRepositories';
 import { CreatePatientService } from './CreatePatientService';
+
+const patientSchema = z.object({
+  name: z.string(),
+  email: z.string(),
+  birthDate: z.date(),
+  gender: z.string(),
+  height: z.number(),
+  weight: z.number(),
+});
 
 describe('Create Patient Service', () => {
   beforeEach(() => {
@@ -74,14 +85,7 @@ describe('Create Patient Service', () => {
 
     // Act
     const patient = await service.execute(mockPatient, 'user_id');
-    const result = verifyObject(patient, [
-      'email',
-      'birthDate',
-      'gender',
-      'height',
-      'name',
-      'weight',
-    ]);
+    const result = verifyObject(patientSchema, patient);
 
     // Assert
     expect(result).toBeTruthy();

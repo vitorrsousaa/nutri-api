@@ -1,50 +1,78 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import * as z from 'zod';
 
 import UserRepositories from '../../../../shared/database/repositories/user/UserRepositories';
 import { IToken } from '../../../../shared/providers/token';
-import { createMockPrisma } from '../../../../shared/utils-test/createMockPrisma';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
 import { ICrypt } from '../../providers/crypt';
 import SignIn from './SignInService';
 
+const signInServiceSchema = z.object({
+  name: z.string(),
+  email: z.string(),
+  id: z.string(),
+  token: z.string(),
+});
+
 describe('SignIn service', () => {
+  let service: SignIn;
+  let spy = {
+    'userRepositories.findUnique': {} as jest.SpiedFunction<
+      UserRepositories['findUnique']
+    >,
+    'cryptProvider.compare': {} as jest.SpiedFunction<ICrypt['compare']>,
+    'tokenProvider.verify': {} as jest.SpiedFunction<IToken['verify']>,
+  };
+
   beforeEach(() => {
+    const userRepositoriesInstance = {
+      findUnique: jest.fn(),
+    } as unknown as UserRepositories;
+
+    const cryptProviderInstance = {
+      hash: jest.fn().mockResolvedValue('hashed_password'),
+      compare: jest.fn(),
+    } as unknown as ICrypt;
+
+    const tokenProviderInstance = {
+      generate: jest.fn().mockReturnValue('generate_token'),
+      verify: jest.fn(),
+    } as unknown as IToken;
+
+    spy = {
+      'userRepositories.findUnique': jest.spyOn(
+        userRepositoriesInstance,
+        'findUnique'
+      ),
+      'cryptProvider.compare': jest.spyOn(cryptProviderInstance, 'compare'),
+      'tokenProvider.verify': jest.spyOn(tokenProviderInstance, 'verify'),
+    };
+
+    service = new SignIn(
+      userRepositoriesInstance,
+      cryptProviderInstance,
+      tokenProviderInstance
+    );
+  });
+
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('Should return user when email and password is correctly', async () => {
     // Arrange
-    const mockPrisma = {
-      user: {
-        findUnique: jest.fn().mockReturnValue({
-          name: 'any_name',
-          email: 'any_email',
-          id: 'any_id',
-          password: 'any_password',
-          createdAt: new Date(),
-        }),
-      },
-    };
-    const userMockPrisma = createMockPrisma(mockPrisma);
-    const userRepositoriesInstance = new UserRepositories(userMockPrisma);
-    const cryptProviderMock: ICrypt = {
-      hash: jest.fn().mockResolvedValue('hashed_password'),
-      compare: jest.fn().mockReturnValue(true),
-    };
-    const tokenProviderMock: IToken = {
-      generate: jest.fn().mockReturnValue('generate_token'),
-      verify: jest.fn(),
-    };
+    spy['userRepositories.findUnique'].mockResolvedValue({
+      name: 'any_name',
+      email: 'any_email',
+      id: 'any_id',
+      password: 'any_password',
+    });
 
-    const signInInstance = new SignIn(
-      userRepositoriesInstance,
-      cryptProviderMock,
-      tokenProviderMock
-    );
+    spy['cryptProvider.compare'].mockResolvedValue(true);
 
     // Act
-    const signIn = await signInInstance.execute('any_email', 'any_password');
-    const result = verifyObject(signIn, ['name', 'email', 'id']);
+    const signIn = await service.execute('any_email', 'any_password');
+    const result = verifyObject(signInServiceSchema, signIn);
 
     // Assert
     expect(result).toBeTruthy();
@@ -52,32 +80,14 @@ describe('SignIn service', () => {
 
   it('Should throw error when password is incorrectly', async () => {
     // Arrange
-    const mockPrisma = {
-      user: {
-        findUnique: jest.fn().mockReturnValue({
-          name: 'any_name',
-          email: 'any_email',
-          id: 'any_id',
-        }),
-      },
-    };
-    const userMockPrisma = createMockPrisma(mockPrisma);
-    const userRepositoriesInstance = new UserRepositories(userMockPrisma);
-    const cryptProviderMock: ICrypt = {
-      hash: jest.fn().mockResolvedValue('hashed_password'),
-      compare: jest.fn(),
-    };
+    spy['userRepositories.findUnique'].mockResolvedValue({
+      id: 'any_id',
+      email: 'any_email',
+      name: 'any_name',
+      password: 'any_password',
+    });
 
-    const tokenProviderMock: IToken = {
-      generate: jest.fn().mockReturnValue('generate_token'),
-      verify: jest.fn(),
-    };
-
-    const service = new SignIn(
-      userRepositoriesInstance,
-      cryptProviderMock,
-      tokenProviderMock
-    );
+    spy['cryptProvider.compare'].mockResolvedValue(false);
 
     // Act
     try {
@@ -90,27 +100,7 @@ describe('SignIn service', () => {
 
   it('Should throw error when user not exists', async () => {
     // Arrange
-    const mockPrisma = {
-      user: {
-        findUnique: jest.fn().mockReturnValue(null),
-      },
-    };
-    const userMockPrisma = createMockPrisma(mockPrisma);
-    const userRepositoriesInstance = new UserRepositories(userMockPrisma);
-    const cryptProviderMock: ICrypt = {
-      hash: jest.fn().mockResolvedValue('hashed_password'),
-      compare: jest.fn(),
-    };
-    const tokenProviderMock: IToken = {
-      generate: jest.fn().mockReturnValue('generate_token'),
-      verify: jest.fn(),
-    };
-
-    const service = new SignIn(
-      userRepositoriesInstance,
-      cryptProviderMock,
-      tokenProviderMock
-    );
+    spy['userRepositories.findUnique'].mockResolvedValue(null);
 
     // Act
     try {

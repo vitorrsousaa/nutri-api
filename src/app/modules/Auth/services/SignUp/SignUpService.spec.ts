@@ -1,11 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import * as z from 'zod';
+
 import UserRepositories from '../../../../shared/database/repositories/user';
 import { IToken } from '../../../../shared/providers/token';
 import { createMockPrisma } from '../../../../shared/utils-test/createMockPrisma';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
 import { ICrypt } from '../../providers/crypt';
 import SignUp from './SignUpService';
+
+const signUpServiceSchema = z.object({
+  name: z.string(),
+  email: z.string(),
+  id: z.string(),
+});
 
 describe('SignUp Service', () => {
   beforeEach(() => {
@@ -47,7 +55,7 @@ describe('SignUp Service', () => {
       name: 'any_name',
       password: 'any_password',
     });
-    const result = verifyObject(user, ['email', 'name', 'id']);
+    const result = verifyObject(signUpServiceSchema, user);
 
     // Assert
     expect(result).toBeTruthy();
