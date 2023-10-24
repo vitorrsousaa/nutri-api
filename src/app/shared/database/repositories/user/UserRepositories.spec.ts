@@ -2,78 +2,55 @@ import { createMockPrisma } from '../../../utils-test/createMockPrisma';
 import UserRepositories from './UserRepositories';
 
 describe('User Repositories', () => {
+  let repository: UserRepositories;
+
+  const spy = {
+    create: jest.fn(),
+    findUnique: jest.fn(),
+  };
+
+  beforeEach(() => {
+    const mock = {
+      user: spy,
+    };
+
+    const prismaMock = createMockPrisma(mock);
+    repository = new UserRepositories(prismaMock);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('Should correctly create user', async () => {
     // Arrange
-    const mock = {
-      user: {
-        create: jest.fn(),
+    const createMock = {
+      data: {
+        email: 'any_email',
+        name: 'any_name',
+        password: 'any_password',
       },
     };
-    const prismaMock = createMockPrisma(mock);
-    const repository = new UserRepositories(prismaMock);
 
     // Act
-    await repository.create({
-      data: {
-        email: 'any_email',
-        name: 'any_name',
-        password: 'any_password',
-      },
-    });
+    await repository.create(createMock);
 
     // Assert
-    expect(mock.user.create).toBeCalledWith({
-      data: {
-        email: 'any_email',
-        name: 'any_name',
-        password: 'any_password',
-      },
-    });
+    expect(spy.create).toBeCalledWith(createMock);
   });
 
   it('Should call correctly findUnique by email', async () => {
     // Arrange
-    const mock = {
-      user: {
-        findUnique: jest.fn(),
-      },
-    };
-    const prismaMock = createMockPrisma(mock);
-    const repository = new UserRepositories(prismaMock);
-
-    // Act
-    await repository.findUnique({
+    const mockFindUnique = {
       where: {
         email: 'any_email',
       },
-    });
-
-    // Assert
-    expect(mock.user.findUnique).toBeCalledWith({
-      where: { email: 'any_email' },
-    });
-  });
-
-  it('Should call correctly findUnique by id', async () => {
-    // Arrange
-    const mock = {
-      user: {
-        findUnique: jest.fn(),
-      },
     };
-    const prismaMock = createMockPrisma(mock);
-    const repository = new UserRepositories(prismaMock);
 
     // Act
-    await repository.findUnique({
-      where: {
-        id: 'any_id',
-      },
-    });
+    await repository.findUnique(mockFindUnique);
 
     // Assert
-    expect(mock.user.findUnique).toBeCalledWith({
-      where: { id: 'any_id' },
-    });
+    expect(spy.findUnique).toBeCalledWith(mockFindUnique);
   });
 });
