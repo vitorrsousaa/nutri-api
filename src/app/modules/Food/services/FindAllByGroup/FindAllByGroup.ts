@@ -1,5 +1,5 @@
 import FoodRepositories from '../../../../shared/database/repositories/food';
-import { TGroupFood } from '../../entitites/group';
+import { TGroupFood } from '../../entities/group';
 
 export class FindAllByGroupFoodService {
   constructor(private readonly foodRepositories: FoodRepositories) {}
