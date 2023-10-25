@@ -10,7 +10,7 @@ export async function fruitSeed() {
   });
 
   if (fruitCount > 0) {
-    console.log('📦 The seed has already created');
+    console.log('📦 The fruit seed has already created');
     return;
   }
 

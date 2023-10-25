@@ -50,9 +50,9 @@ enum FoodType {
   FRUIT
   PROTEIN
   CARB
-  LEGUMES
   CEREAL
   OTHERS
+  MILK
 
   @@map("food_types")
 }

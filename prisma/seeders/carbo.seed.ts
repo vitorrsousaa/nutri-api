@@ -10,7 +10,7 @@ export async function carbSeed() {
   });
 
   if (carbCount > 0) {
-    console.log('📦 The seed has already created');
+    console.log('📦 The carbo seed has already created');
     return;
   }
 
