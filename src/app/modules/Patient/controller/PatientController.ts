@@ -14,14 +14,9 @@ class PatientController {
     private readonly findByPatientIdService: FindByPatientId,
     private readonly findAllService: FindAllPatient,
     private readonly deleteService: DeletePatient
-  ) {
-    this.create = this.create.bind(this);
-    this.findAll = this.findAll.bind(this);
-    this.delete = this.delete.bind(this);
-    this.findByUserId = this.findByUserId.bind(this);
-  }
+  ) {}
 
-  async create(request: Request, response: Response) {
+  create = async (request: Request, response: Response) => {
     const result = returnErrorMissingField(CreatePatientSchema, request.body);
 
     const { birthDate, email, gender, height, name, weight } = result;
@@ -32,15 +27,15 @@ class PatientController {
     );
 
     return response.json(create);
-  }
+  };
 
-  async findAll(request: Request, response: Response) {
+  findAll = async (request: Request, response: Response) => {
     const findAll = await this.findAllService.execute(request.user.id);
 
     return response.json(findAll);
-  }
+  };
 
-  async findByUserId(request: Request, response: Response) {
+  findByUserId = async (request: Request, response: Response) => {
     const { params, user } = request;
 
     const patient = returnErrorMissingField(DataBaseIdSchema, params);
@@ -51,9 +46,9 @@ class PatientController {
     );
 
     return response.json(findByUserId);
-  }
+  };
 
-  async delete(request: Request, response: Response) {
+  delete = async (request: Request, response: Response) => {
     const { user, params } = request;
 
     const patient = returnErrorMissingField(DataBaseIdSchema, params);
@@ -61,7 +56,7 @@ class PatientController {
     await this.deleteService.execute(user.id, patient.id);
 
     return response.sendStatus(204);
-  }
+  };
 }
 
 export default PatientController;

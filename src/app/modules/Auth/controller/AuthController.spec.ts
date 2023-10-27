@@ -20,7 +20,7 @@ describe('Auth Controller', () => {
   beforeEach(() => {
     mockResponse = {
       json: jest.fn(),
-      status: jest.fn().mockReturnThis(),
+      sendStatus: jest.fn().mockReturnThis(),
     } as unknown as Response;
     mockRequest = {
       user: {},
