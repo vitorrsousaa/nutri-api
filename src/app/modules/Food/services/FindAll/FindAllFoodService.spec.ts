@@ -1,7 +1,7 @@
 import FoodRepositories from '../../../../shared/database/repositories/food';
 import { FindAllFoodService } from './FindAllFoodService';
 
-describe('Find all food', () => {
+describe('Find all food service', () => {
   let service: FindAllFoodService;
   let repository = {
     findAll: {} as jest.SpiedFunction<FoodRepositories['findAll']>,
