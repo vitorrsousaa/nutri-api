@@ -67,29 +67,43 @@ describe('Planning Meal Repositories', () => {
       },
     };
 
+    spy.findFirst.mockResolvedValue({
+      id: 'id',
+      patientId: 'patient_id',
+      userId: 'user_id',
+    });
+
     // Act
-    await repository.findFirst(findFirstMock);
+    const result = await repository.findFirst(findFirstMock);
 
     // Assert
-    expect(spy.findFirst).toBeCalledWith(findFirstMock);
+    expect(result).toEqual({
+      id: 'id',
+      patientId: 'patient_id',
+      userId: 'user_id',
+    });
   });
 
   it('should call correcly delete', async () => {
     // Arrange
-    const deleteMock = {
-      where: {
-        id: 'id',
-      },
-    };
+    spy.delete.mockResolvedValue({
+      id: 'id',
+      patientId: 'patient_id',
+      userId: 'user_id',
+    });
 
     // Act
-    await repository.delete({
+    const result = await repository.delete({
       where: {
         id: 'id',
       },
     });
 
     // Assert
-    expect(spy.delete).toBeCalledWith(deleteMock);
+    expect(result).toEqual({
+      id: 'id',
+      patientId: 'patient_id',
+      userId: 'user_id',
+    });
   });
 });
