@@ -117,7 +117,7 @@ describe('Patient Controller', () => {
     it('should call service with data patient and user id', async () => {
       // arrange
       mockRequest.body = {
-        birthDate: 'Fri Oct 26 2023',
+        birthDate: new Date('2023-10-26T03:00:00.000Z'),
         gender: 'MASC',
         height: 1.8,
         name: 'any_name',
