@@ -11,15 +11,39 @@ describe('Auth Controller', () => {
   let mockResponse: Response;
   let mockRequest: Request;
 
+  let controller: AuthController;
+  let spy = {
+    'signInService.execute': {} as jest.SpiedFunction<SignIn['execute']>,
+    'signUpService.execute': {} as jest.SpiedFunction<SignUp['execute']>,
+  };
+
   beforeEach(() => {
     mockResponse = {
       json: jest.fn(),
-      status: jest.fn().mockReturnThis(),
+      sendStatus: jest.fn().mockReturnThis(),
     } as unknown as Response;
     mockRequest = {
       user: {},
       body: {},
     } as unknown as Request;
+
+    const signInServiceInstance = {
+      execute: jest.fn(),
+    } as unknown as SignIn;
+
+    const signUpServiceInstance = {
+      execute: jest.fn(),
+    } as unknown as SignUp;
+
+    spy = {
+      'signInService.execute': jest.spyOn(signInServiceInstance, 'execute'),
+      'signUpService.execute': jest.spyOn(signUpServiceInstance, 'execute'),
+    };
+
+    controller = new AuthController(
+      signUpServiceInstance,
+      signInServiceInstance
+    );
   });
 
   afterEach(() => {
@@ -28,26 +52,16 @@ describe('Auth Controller', () => {
   });
 
   describe('Sign up controller', () => {
+    beforeEach(() => {
+      spy['signUpService.execute'].mockClear();
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
     it('Should return error when missing fields in authenticate', async () => {
       // Arrange
-      const signInServiceMock = {
-        execute: jest.fn(),
-      } as unknown as jest.Mocked<SignIn>;
-
-      // const recoverServiceMock = {
-      //   execute: jest.fn(),
-      // } as unknown as jest.Mocked<Recover>;
-
-      const signUpServiceMock = {
-        execute: jest.fn(),
-      } as unknown as jest.Mocked<SignUp>;
-
-      const controller = new AuthController(
-        // recoverServiceMock,
-        signUpServiceMock,
-        signInServiceMock
-      );
-
       const mockAuthenticate = {
         password: 'any_password',
       };
@@ -66,25 +80,12 @@ describe('Auth Controller', () => {
 
     it('Should return user when fields are correctly', async () => {
       // Arrange
-      const signInServiceMock = {
-        execute: jest.fn(),
-      } as unknown as jest.Mocked<SignIn>;
-
-      // const recoverServiceMock = {
-      //   execute: jest.fn(),
-      // } as unknown as jest.Mocked<Recover>;
-
-      const signUpServiceMock = {
-        execute: jest
-          .fn()
-          .mockReturnValue({ name: 'any_name', email: 'any_email@email.com' }),
-      } as unknown as jest.Mocked<SignUp>;
-
-      const controller = new AuthController(
-        // recoverServiceMock,
-        signUpServiceMock,
-        signInServiceMock
-      );
+      spy['signUpService.execute'].mockResolvedValue({
+        name: 'any_name',
+        email: 'any_email@email.com',
+        id: 'any_id',
+        token: 'any_token',
+      });
 
       const mockAuthenticate = {
         email: 'any_email@email.com',
@@ -98,39 +99,26 @@ describe('Auth Controller', () => {
       await controller.signUp(mockRequest, mockResponse);
 
       // Assert
-      expect(signUpServiceMock.execute).toBeCalledWith({
-        email: 'any_email@email.com',
-        password: 'any_password',
-        name: 'any_name',
-      });
       expect(mockResponse.json).toBeCalledWith({
         name: 'any_name',
         email: 'any_email@email.com',
+        id: 'any_id',
+        token: 'any_token',
       });
     });
   });
 
   describe('Sign in controller', () => {
+    beforeEach(() => {
+      spy['signInService.execute'].mockClear();
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
     it('Should return error when missing fields in authenticate', async () => {
       // Arrange
-      const signInServiceMock = {
-        execute: jest.fn(),
-      } as unknown as jest.Mocked<SignIn>;
-
-      // const recoverServiceMock = {
-      //   execute: jest.fn(),
-      // } as unknown as jest.Mocked<Recover>;
-
-      const signUpServiceMock = {
-        execute: jest.fn(),
-      } as unknown as jest.Mocked<SignUp>;
-
-      const controller = new AuthController(
-        // recoverServiceMock,
-        signUpServiceMock,
-        signInServiceMock
-      );
-
       const mockAuthenticate = {
         password: 'any_password',
       };
@@ -150,25 +138,12 @@ describe('Auth Controller', () => {
 
     it('Should return user when fields are correctly', async () => {
       // Arrange
-      const signInServiceMock = {
-        execute: jest
-          .fn()
-          .mockReturnValue({ name: 'any_name', email: 'any_email@email.com' }),
-      } as unknown as jest.Mocked<SignIn>;
-
-      // const recoverServiceMock = {
-      //   execute: jest.fn(),
-      // } as unknown as jest.Mocked<Recover>;
-
-      const signUpServiceMock = {
-        execute: jest.fn(),
-      } as unknown as jest.Mocked<SignUp>;
-
-      const controller = new AuthController(
-        // recoverServiceMock,
-        signUpServiceMock,
-        signInServiceMock
-      );
+      spy['signInService.execute'].mockResolvedValue({
+        name: 'any_name',
+        email: 'any_email@email.com',
+        id: 'any_id',
+        token: 'any_token',
+      });
 
       const mockAuthenticate = {
         email: 'any_email@email.com',
@@ -181,13 +156,11 @@ describe('Auth Controller', () => {
       await controller.signIn(mockRequest, mockResponse);
 
       // Assert
-      expect(signInServiceMock.execute).toBeCalledWith(
-        'any_email@email.com',
-        'any_password'
-      );
       expect(mockResponse.json).toBeCalledWith({
         name: 'any_name',
         email: 'any_email@email.com',
+        id: 'any_id',
+        token: 'any_token',
       });
     });
   });

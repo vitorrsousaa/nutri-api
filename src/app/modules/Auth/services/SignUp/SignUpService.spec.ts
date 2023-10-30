@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import * as z from 'zod';
 
 import UserRepositories from '../../../../shared/database/repositories/user';
 import { IToken } from '../../../../shared/providers/token';
-import { createMockPrisma } from '../../../../shared/utils-test/createMockPrisma';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
 import { ICrypt } from '../../providers/crypt';
 import SignUp from './SignUpService';
@@ -16,38 +14,64 @@ const signUpServiceSchema = z.object({
 });
 
 describe('SignUp Service', () => {
+  let service: SignUp;
+  let spy = {
+    'userRepositories.create': {} as jest.SpiedFunction<
+      UserRepositories['create']
+    >,
+    'userRepositories.findUnique': {} as jest.SpiedFunction<
+      UserRepositories['findUnique']
+    >,
+    'cryptProvider.compare': {} as jest.SpiedFunction<ICrypt['compare']>,
+    'tokenProvider.verify': {} as jest.SpiedFunction<IToken['verify']>,
+  };
+
   beforeEach(() => {
+    const userRepositoriesInstance = {
+      create: jest.fn(),
+      findUnique: jest.fn(),
+    } as unknown as UserRepositories;
+
+    const cryptProviderInstance = {
+      hash: jest.fn().mockResolvedValue('hashed_password'),
+      compare: jest.fn(),
+    } as unknown as ICrypt;
+
+    const tokenProviderInstance = {
+      generate: jest.fn().mockReturnValue('generate_token'),
+      verify: jest.fn(),
+    } as unknown as IToken;
+
+    spy = {
+      'userRepositories.create': jest.spyOn(userRepositoriesInstance, 'create'),
+      'userRepositories.findUnique': jest.spyOn(
+        userRepositoriesInstance,
+        'findUnique'
+      ),
+      'cryptProvider.compare': jest.spyOn(cryptProviderInstance, 'compare'),
+      'tokenProvider.verify': jest.spyOn(tokenProviderInstance, 'verify'),
+    };
+
+    service = new SignUp(
+      userRepositoriesInstance,
+      cryptProviderInstance,
+      tokenProviderInstance
+    );
+  });
+
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('Should return user when email is not in use', async () => {
     // Arrange
-    const mockPrisma = {
-      user: {
-        findUnique: jest.fn().mockReturnValue(null),
-        create: jest.fn().mockReturnValue({
-          email: 'any_email',
-          name: 'any_name',
-          id: 'any_id',
-        }),
-      },
-    };
-    const userMockPrisma = createMockPrisma(mockPrisma);
-    const userRepositoriesInstance = new UserRepositories(userMockPrisma);
-    const cryptProviderMock: ICrypt = {
-      hash: jest.fn().mockResolvedValue('hashed_password'),
-      compare: jest.fn(),
-    };
-    const tokenProviderMock: IToken = {
-      generate: jest.fn().mockReturnValue('hashed_token'),
-      verify: jest.fn(),
-    };
-
-    const service = new SignUp(
-      userRepositoriesInstance,
-      cryptProviderMock,
-      tokenProviderMock
-    );
+    spy['userRepositories.findUnique'].mockResolvedValue(null);
+    spy['userRepositories.create'].mockResolvedValue({
+      email: 'any_email',
+      name: 'any_name',
+      id: 'any_id',
+      password: 'any_password',
+    });
 
     // Act
     const user = await service.execute({
@@ -63,27 +87,12 @@ describe('SignUp Service', () => {
 
   it('Should throw error when email is in use', async () => {
     // Arrange
-    const mockPrisma = {
-      user: {
-        findUnique: jest.fn().mockReturnValue({ email: 'any_email' }),
-      },
-    };
-    const userMockPrisma = createMockPrisma(mockPrisma);
-    const userRepositoriesInstance = new UserRepositories(userMockPrisma);
-    const cryptProviderMock: ICrypt = {
-      hash: jest.fn().mockResolvedValue('hashed_password'),
-      compare: jest.fn(),
-    };
-    const tokenProviderMock: IToken = {
-      generate: jest.fn().mockReturnValue('hashed_token'),
-      verify: jest.fn(),
-    };
-
-    const service = new SignUp(
-      userRepositoriesInstance,
-      cryptProviderMock,
-      tokenProviderMock
-    );
+    spy['userRepositories.findUnique'].mockResolvedValue({
+      email: 'any_email',
+      id: 'any_id',
+      name: 'any_name',
+      password: 'any_password',
+    });
 
     // Act
     try {

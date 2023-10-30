@@ -10,7 +10,7 @@ export async function proteinSeed() {
   });
 
   if (proteinCount > 0) {
-    console.log('📦 The seed has already created');
+    console.log('📦 The protein seed has already created');
     return;
   }
 
@@ -42,6 +42,15 @@ export async function proteinSeed() {
         fat: 5.8,
         group: 'PROTEIN',
         quantity: 95,
+      },
+      {
+        name: 'Ovo de galinha cozido',
+        calories: 160.0,
+        carb: 0.6,
+        protein: 13.3,
+        fat: 9.5,
+        group: 'PROTEIN',
+        quantity: 1,
       },
       {
         name: 'Bacalhau',
