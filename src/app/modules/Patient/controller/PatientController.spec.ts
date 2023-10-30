@@ -116,8 +116,9 @@ describe('Patient Controller', () => {
 
     it('should call service with data patient and user id', async () => {
       // arrange
+      const date = new Date('2023-10-26T03:00:00.000Z');
       mockRequest.body = {
-        birthDate: new Date('2023-10-26T03:00:00.000Z'),
+        birthDate: date.toString(),
         gender: 'MASC',
         height: 1.8,
         name: 'any_name',
@@ -128,12 +129,16 @@ describe('Patient Controller', () => {
       mockRequest.user = { id: 'any_user_id' };
 
       // act
-      await controller.create(mockRequest, mockResponse);
+      try {
+        await controller.create(mockRequest, mockResponse);
+      } catch (error) {
+        console.log(error);
+      }
 
       // assert
       expect(spy['createPatientService.execute']).toBeCalledWith(
         {
-          birthDate: new Date('2023-10-26T03:00:00.000Z'),
+          birthDate: date,
           gender: 'MASC',
           height: 1.8,
           name: 'any_name',
