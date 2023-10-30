@@ -40,6 +40,7 @@ describe('Planning Meal Repositories', () => {
       id: 'id',
       patientId: 'patient_id',
       userId: 'user_id',
+      description: 'description',
     });
 
     // Act
@@ -47,6 +48,7 @@ describe('Planning Meal Repositories', () => {
       data: {
         userId: 'user_id',
         patientId: 'patient_id',
+        description: 'any_description',
       },
     });
 
@@ -55,6 +57,7 @@ describe('Planning Meal Repositories', () => {
       id: 'id',
       patientId: 'patient_id',
       userId: 'user_id',
+      description: 'description',
     });
   });
 
@@ -71,6 +74,7 @@ describe('Planning Meal Repositories', () => {
       id: 'id',
       patientId: 'patient_id',
       userId: 'user_id',
+      description: 'description',
     });
 
     // Act
@@ -81,6 +85,7 @@ describe('Planning Meal Repositories', () => {
       id: 'id',
       patientId: 'patient_id',
       userId: 'user_id',
+      description: 'description',
     });
   });
 
@@ -90,6 +95,7 @@ describe('Planning Meal Repositories', () => {
       id: 'id',
       patientId: 'patient_id',
       userId: 'user_id',
+      description: 'description',
     });
 
     // Act
@@ -104,6 +110,7 @@ describe('Planning Meal Repositories', () => {
       id: 'id',
       patientId: 'patient_id',
       userId: 'user_id',
+      description: 'description',
     });
   });
 });
