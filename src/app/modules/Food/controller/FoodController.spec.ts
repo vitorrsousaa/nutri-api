@@ -120,7 +120,6 @@ describe('Food controller', () => {
         await controller.findAllByGroup(mockRequest, mockResponse);
       } catch (error) {
         if (error instanceof ZodError) {
-          console.log(error);
           expect(error.message.some((error) => error.message === 'enum'));
         }
       }
