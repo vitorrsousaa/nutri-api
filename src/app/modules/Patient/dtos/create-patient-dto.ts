@@ -16,4 +16,4 @@ export const CreatePatientSchema = z.object({
   gender: GenderEnum,
 });
 
-export type createPatientDTO = z.infer<typeof CreatePatientSchema>;
+export type ICreatePatientDTO = z.infer<typeof CreatePatientSchema>;
