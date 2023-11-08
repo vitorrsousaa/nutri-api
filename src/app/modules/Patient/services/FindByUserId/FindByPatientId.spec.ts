@@ -1,8 +1,8 @@
 import * as z from 'zod';
 
+import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
 import PatientRepositories from '../../repositories/patient/PatientRepositories';
-import ValidatePatientOwnershipService from '../ValidatePatientOwnership';
 import { FindByPatientId } from './FindByPatientId';
 
 const patientSchema = z.object({
