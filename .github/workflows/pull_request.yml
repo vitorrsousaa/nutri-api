@@ -1,0 +1,28 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install
+        uses: ./.github/composite-actions/install
+
+      - name: Run build package
+        run: yarn build
+
+      - name: Run the tests
+        run: yarn test
+
+      - name: Run lint
+        run: yarn eslint . --fix
+
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'fix: Run ESLint and fix linting issues across all files'
