@@ -7,6 +7,10 @@ export default class MealRepositories {
     return this.prismaService.meal.create(createMealDTO);
   }
 
+  async createMany(createManyMealDTO: Prisma.MealCreateManyArgs) {
+    return this.prismaService.meal.createMany(createManyMealDTO);
+  }
+
   async findFirst(findFirstArgs: Prisma.MealFindFirstArgs) {
     return this.prismaService.meal.findFirst(findFirstArgs);
   }
