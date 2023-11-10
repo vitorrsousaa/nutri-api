@@ -1,6 +1,9 @@
 name: 'Reusable Workflow Install'
 description: 'Sets up Node.js and runs install'
 
+on:
+  workflow_call:
+
 jobs:
   build:
     runs-on: ubuntu-latest
