@@ -22,5 +22,5 @@ runs:
         key: node_modules-${{ hashFiles('**/package.json') }}
 
     - name: Install dependencies
-      run: yarn
+      run: npm install
       shell: powershell
