@@ -54,7 +54,15 @@ $ yarn install
 
 ### Create container
 
-After installation of dependencies, its necessary to create a docker container. You can run in any port, but in this example, we will create a container in port 5434.
+After installation of dependencies, its necessary to create a docker container. You can run in any port, but in this example, we will create a container in port 5432.
+
+Podemos rodar o comando
+
+```
+docker-compose up -d
+```
+
+ou
 
 ```
 docker run --name server_nutri -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -p 5432:5432 -d postgres
