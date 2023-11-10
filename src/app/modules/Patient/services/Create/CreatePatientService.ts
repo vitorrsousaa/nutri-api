@@ -1,11 +1,11 @@
 import { AppError } from '../../../../shared/error';
-import { createPatientDTO } from '../../dtos/create-patient-dto';
+import { ICreatePatientDTO } from '../../dtos/create-patient-dto';
 import PatientRepositories from '../../repositories/patient/PatientRepositories';
 
 export class CreatePatientService {
   constructor(private readonly patientRepositories: PatientRepositories) {}
 
-  async execute(createPatientDTO: createPatientDTO, userId: string) {
+  async execute(createPatientDTO: ICreatePatientDTO, userId: string) {
     const { birthDate, email, gender, height, name, weight } = createPatientDTO;
 
     const findPatient = await this.patientRepositories.findByEmail(email);

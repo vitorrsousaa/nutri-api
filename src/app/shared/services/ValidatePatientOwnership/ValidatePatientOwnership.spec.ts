@@ -1,4 +1,4 @@
-import PatientRepositories from '../../repositories/patient/PatientRepositories';
+import PatientRepositories from '../../../modules/Patient/repositories/patient/PatientRepositories';
 import { ValidatePatientOwnershipService } from './ValidatePatientOwnershipService';
 
 describe('Validate patient ownership service', () => {

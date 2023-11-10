@@ -2,7 +2,7 @@
 import * as z from 'zod';
 
 import verifyObject from '../../../../shared/utils-test/verifyObject';
-import { createPatientDTO } from '../../dtos/create-patient-dto';
+import { ICreatePatientDTO } from '../../dtos/create-patient-dto';
 import PatientRepositories from '../../repositories/patient/PatientRepositories';
 import { CreatePatientService } from './CreatePatientService';
 
@@ -73,7 +73,7 @@ describe('Create Patient Service', () => {
       height: 80,
       weight: 80,
       name: 'any_name',
-    } as createPatientDTO;
+    } as ICreatePatientDTO;
 
     // Act
     try {
@@ -106,7 +106,7 @@ describe('Create Patient Service', () => {
       height: 80,
       weight: 80,
       name: 'any_name',
-    } as createPatientDTO;
+    } as ICreatePatientDTO;
 
     // Act
     const patient = await service.execute(mockPatient, 'user_id');

@@ -1,5 +1,5 @@
-import { AppError } from '../../../../shared/error';
-import PatientRepositories from '../../repositories/patient/PatientRepositories';
+import PatientRepositories from '../../../modules/Patient/repositories/patient/PatientRepositories';
+import { AppError } from '../../error';
 
 export class ValidatePatientOwnershipService {
   constructor(private readonly patientRepositories: PatientRepositories) {}

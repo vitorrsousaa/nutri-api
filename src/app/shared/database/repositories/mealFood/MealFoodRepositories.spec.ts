@@ -25,9 +25,14 @@ describe('Meal Food Repositories', () => {
     // Arrange
     const createMealFoodMock = {
       data: {
-        quantity: 200,
-        mealId: 'meal_id',
-        foodId: 'food_id',
+        calories: 100,
+        foodId: 'any_food_id',
+        quantity: 100,
+        carb: 100,
+        fat: 100,
+        foodOrigin: 'DATABASE',
+        name: 'any_name',
+        protein: 100,
       },
     };
 
