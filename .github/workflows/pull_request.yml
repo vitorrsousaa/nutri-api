@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install
-        uses: ./.github/composite-action/install
+        uses: ./.github/composite-actions/install
 
       - name: Run build package
         run: yarn build
