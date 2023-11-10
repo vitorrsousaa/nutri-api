@@ -62,7 +62,7 @@ model PlanningMeal {
   userId    String @map("user_id") @db.Uuid()
   patientId String @map("patient_id") @db.Uuid()
 
-  description String
+  description String?
 
   meals Meal[]
 
@@ -73,32 +73,31 @@ model PlanningMeal {
 }
 
 model Meal {
-  // O NUTRICIONISTA VAI SALVAR A REFEIÇÃO COM A ESCOLHA DO ALIMENTO
-  // VAMOS PRECISAR GERAR UM PDF COM A LISTA DE SUBSTITUIÇÃO
   id             String  @id @default(uuid()) @db.Uuid()
   planningMealId String? @map("planning_meal_id") @db.Uuid()
 
   name String
   time DateTime
 
-  mealFoods MealFood[]
-
   planningMeal PlanningMeal? @relation(fields: [planningMealId], references: [id], onDelete: Cascade)
+  mealFoods    MealFood[]
 
   @@map("meals")
 }
 
 model MealFood {
-  // O NUTRI VAI SELECIOANR O ALIMENTO
-  // E VAI DEFINIR AS QUANTIDADES DE CADA ALIMENTO
-  // ESSA INFORMAÇÃO É UTILIZADA PARA CRIAR UMA REFEIÇÃO
   id     String  @id @default(uuid()) @db.Uuid()
-  foodId String  @map("food_id") @db.Uuid()
   mealId String? @map("meal_id") @db.Uuid()
 
-  quantity Float
+  name       String
+  foodOrigin String @map("food_origin")
+  foodId     String @map("food_id")
+  quantity   Float
+  calories   Float
+  protein    Float
+  fat        Float
+  carb       Float
 
-  food Food  @relation(fields: [foodId], references: [id])
   meal Meal? @relation(fields: [mealId], references: [id], onDelete: Cascade)
 
   @@map("meal_foods")
@@ -114,8 +113,6 @@ model Food {
   carb     Float
 
   group FoodType
-
-  MealFood MealFood[]
 
   @@map("foods")
 }
