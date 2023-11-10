@@ -1,0 +1,27 @@
+name: 'Reusable Workflow Install'
+description: 'Sets up Node.js and runs install'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+            **/package-lock.json
+            **/.production
+          key: node_modules-${{ hashFiles('**/package.json') }}
+
+      - name: Install dependencies
+        run: yarn
