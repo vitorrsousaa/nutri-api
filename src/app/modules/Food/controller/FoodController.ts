@@ -1,29 +1,23 @@
 import { Request, Response } from 'express';
 
+import { OriginFoodEnum } from '../../../shared/entities/TOriginFood';
 import returnErrorMissingField from '../../../shared/utils/returnErrorMissingField';
-import { GroupFoodSchema } from '../entities/group';
 import FindAllFoodService from '../services/FindAll';
-import FindAllByGroupFoodService from '../services/FindAllByGroup';
 
 export class FoodController {
-  constructor(
-    private readonly findAllFoodService: FindAllFoodService,
-    private readonly findAllByGroupService: FindAllByGroupFoodService
-  ) {}
+  constructor(private readonly findAllFoodService: FindAllFoodService) {}
 
   findAll = async (request: Request, response: Response) => {
-    const findAll = await this.findAllFoodService.execute();
+    const { origin } = request.params;
 
-    return response.json(findAll);
-  };
+    const result = returnErrorMissingField(OriginFoodEnum, origin);
 
-  findAllByGroup = async (request: Request, response: Response) => {
-    const { params } = request;
+    if (result === 'DATABASE') {
+      const findAll = await this.findAllFoodService.execute();
 
-    const group = returnErrorMissingField(GroupFoodSchema, params.group);
+      return response.json(findAll);
+    }
 
-    const findAll = await this.findAllByGroupService.execute(group);
-
-    return response.json(findAll);
+    return response.json('API');
   };
 }
