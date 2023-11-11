@@ -1,10 +1,16 @@
 # Pull Request Template
 
-## Proposed Changes
+## Description
 
-Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
+[Provide a brief description of the changes introduced by this pull request.]
 
-Fixes # (issue)
+## Issue
+
+[Link to the issue that this pull request addresses, if applicable.]
+
+## Changes Made
+
+[Provide a detailed description of the changes made in this pull request. List the new features, bug fixes, or enhancements introduced.]
 
 ## Type of change
 
@@ -17,8 +23,8 @@ Please delete options that are not relevant.
 
 ## Checklist:
 
-- [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my own code
-- [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing tests pass locally with my changes
+- [ ] I have reviewed my own code and made necessary adjustments.
+- [ ] My code follows the project's coding standards.
+- [ ] My changes are properly documented.
+- [ ] I have added/updated unit tests where necessary.
+- [ ] All new and existing tests pass.
