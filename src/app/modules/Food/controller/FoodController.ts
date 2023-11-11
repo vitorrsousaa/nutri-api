@@ -1,29 +1,34 @@
 import { Request, Response } from 'express';
 
+import { OriginFoodEnum } from '../../../shared/entities/TOriginFood';
 import returnErrorMissingField from '../../../shared/utils/returnErrorMissingField';
-import { GroupFoodSchema } from '../entities/group';
 import FindAllFoodService from '../services/FindAll';
-import FindAllByGroupFoodService from '../services/FindAllByGroup';
 
 export class FoodController {
-  constructor(
-    private readonly findAllFoodService: FindAllFoodService,
-    private readonly findAllByGroupService: FindAllByGroupFoodService
-  ) {}
+  constructor(private readonly findAllFoodService: FindAllFoodService) {}
 
   findAll = async (request: Request, response: Response) => {
-    const findAll = await this.findAllFoodService.execute();
+    const { origin } = request.params;
 
-    return response.json(findAll);
-  };
+    const result = returnErrorMissingField(OriginFoodEnum, origin);
 
-  findAllByGroup = async (request: Request, response: Response) => {
-    const { params } = request;
+    if (result === 'DATABASE') {
+      const findAll = await this.findAllFoodService.execute();
 
-    const group = returnErrorMissingField(GroupFoodSchema, params.group);
+      return response.json(findAll);
+    }
 
-    const findAll = await this.findAllByGroupService.execute(group);
-
-    return response.json(findAll);
+    return response.json([
+      {
+        id: '41295d94-09b0-4ce3-b83d-2ad829f3b8f4',
+        name: 'Abacaxi',
+        calories: 45,
+        protein: 0.8,
+        fat: 0.1,
+        quantity: 100,
+        carb: 11.5,
+        group: 'FRUIT',
+      },
+    ]);
   };
 }

@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 
 import { ZodError } from '../../../shared/error';
 import FindAllFoodService from '../services/FindAll';
-import FindAllByGroupFoodService from '../services/FindAllByGroup';
 import { FoodController } from './FoodController';
 
 describe('Food controller', () => {
@@ -14,9 +13,6 @@ describe('Food controller', () => {
   let spy = {
     'findAllService.execute': {} as jest.SpiedFunction<
       FindAllFoodService['execute']
-    >,
-    'findAllByGroupService.execute': {} as jest.SpiedFunction<
-      FindAllByGroupFoodService['execute']
     >,
   };
 
@@ -34,22 +30,11 @@ describe('Food controller', () => {
       execute: jest.fn(),
     } as unknown as FindAllFoodService;
 
-    const findAllByGroupServiceInstance = {
-      execute: jest.fn(),
-    } as unknown as FindAllByGroupFoodService;
-
     spy = {
       'findAllService.execute': jest.spyOn(findAllServiceInstance, 'execute'),
-      'findAllByGroupService.execute': jest.spyOn(
-        findAllByGroupServiceInstance,
-        'execute'
-      ),
     };
 
-    controller = new FoodController(
-      findAllServiceInstance,
-      findAllByGroupServiceInstance
-    );
+    controller = new FoodController(findAllServiceInstance);
   });
 
   afterEach(() => {
@@ -80,6 +65,9 @@ describe('Food controller', () => {
           quantity: 100,
         },
       ]);
+      mockRequest.params = {
+        origin: 'DATABASE',
+      };
 
       // Act
       await controller.findAll(mockRequest, mockResponse);
@@ -98,68 +86,32 @@ describe('Food controller', () => {
         },
       ]);
     });
-  });
 
-  describe('findAll by group controller', () => {
-    beforeEach(() => {
-      spy['findAllByGroupService.execute'].mockClear();
-    });
-
-    afterEach(() => {
-      jest.clearAllMocks();
-    });
-
-    it('should returned error when group is not correctly', async () => {
+    it('should throw error when origin is not enum', async () => {
       // Arrange
+      spy['findAllService.execute'].mockResolvedValue([
+        {
+          calories: 100,
+          carb: 100,
+          fat: 100,
+          group: 'CARB',
+          id: '123',
+          name: 'name',
+          protein: 100,
+          quantity: 100,
+        },
+      ]);
       mockRequest.params = {
-        group: 'group',
+        origin: 'ANY_ORIGIN',
       };
 
-      // Act
       try {
-        await controller.findAllByGroup(mockRequest, mockResponse);
+        await controller.findAll(mockRequest, mockResponse);
       } catch (error) {
         if (error instanceof ZodError) {
-          expect(error.message.some((error) => error.message === 'enum'));
+          expect(error.message.some((error) => error.message.includes('enum')));
         }
       }
-    });
-
-    it('should call response with returned of service', async () => {
-      // Arrange
-      spy['findAllByGroupService.execute'].mockResolvedValue([
-        {
-          calories: 100,
-          carb: 100,
-          fat: 100,
-          group: 'CARB',
-          id: '123',
-          name: 'name',
-          protein: 100,
-          quantity: 100,
-        },
-      ]);
-
-      mockRequest.params = {
-        group: 'CARB',
-      };
-
-      // Act
-      await controller.findAllByGroup(mockRequest, mockResponse);
-
-      // Assert
-      expect(mockResponse.json).toBeCalledWith([
-        {
-          calories: 100,
-          carb: 100,
-          fat: 100,
-          group: 'CARB',
-          id: '123',
-          name: 'name',
-          protein: 100,
-          quantity: 100,
-        },
-      ]);
     });
   });
 });

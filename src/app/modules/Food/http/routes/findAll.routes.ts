@@ -4,6 +4,6 @@ import FoodModule from '../../module';
 
 const findAllFoodRoutes = Router();
 
-findAllFoodRoutes.get('/', FoodModule.getController('findAll'));
+findAllFoodRoutes.get('/:origin', FoodModule.getController('findAll'));
 
 export default findAllFoodRoutes;
