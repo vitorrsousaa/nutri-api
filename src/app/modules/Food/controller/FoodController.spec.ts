@@ -65,7 +65,7 @@ describe('Food controller', () => {
           quantity: 100,
         },
       ]);
-      mockRequest.body = {
+      mockRequest.params = {
         origin: 'DATABASE',
       };
 
@@ -101,7 +101,7 @@ describe('Food controller', () => {
           quantity: 100,
         },
       ]);
-      mockRequest.body = {
+      mockRequest.params = {
         origin: 'ANY_ORIGIN',
       };
 
