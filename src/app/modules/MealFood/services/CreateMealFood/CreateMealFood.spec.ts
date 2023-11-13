@@ -34,7 +34,7 @@ describe('Create meal food service', () => {
       calories: 100,
       carb: 100,
       fat: 100,
-      foodOrigin: 'DATABASE',
+      foodOrigin: 'TACO',
       name: 'any_name',
       protein: 100,
     };
@@ -48,7 +48,7 @@ describe('Create meal food service', () => {
       quantity: 100,
       carb: 100,
       fat: 100,
-      foodOrigin: 'DATABASE',
+      foodOrigin: 'TACO',
       name: 'any_name',
       protein: 100,
     });
@@ -65,7 +65,7 @@ describe('Create meal food service', () => {
       quantity: 100,
       carb: 100,
       fat: 100,
-      foodOrigin: 'DATABASE',
+      foodOrigin: 'TACO',
       name: 'any_name',
       protein: 100,
     };
