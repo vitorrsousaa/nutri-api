@@ -46,17 +46,6 @@ model Patient {
   @@map("patients")
 }
 
-enum FoodType {
-  FRUIT
-  PROTEIN
-  CARB
-  CEREAL
-  OTHERS
-  MILK
-
-  @@map("food_types")
-}
-
 model PlanningMeal {
   id        String @id @default(uuid()) @db.Uuid()
   userId    String @map("user_id") @db.Uuid()
@@ -104,15 +93,13 @@ model MealFood {
 }
 
 model Food {
-  id       String @id @default(uuid()) @db.Uuid()
-  name     String
-  calories Float
-  protein  Float
-  fat      Float
-  quantity Float
-  carb     Float
+  id           String @id @default(uuid()) @db.Uuid()
+  name         String
+  baseQty      Float  @map("base_qty")
+  baseUnit     String @map("base_unit")
+  categoryName String @map("category_name")
 
-  group FoodType
+  attributes Json[]
 
   @@map("foods")
 }
