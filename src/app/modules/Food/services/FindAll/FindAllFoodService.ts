@@ -9,6 +9,7 @@ export class FindAllFoodService {
         name: 'asc',
       },
     });
+    console.log(foods);
 
     return foods;
   }

@@ -123,7 +123,7 @@ describe('Planning Meal Controller', () => {
               {
                 id: '41295d94-09b0-4ce3-b83d-2ad829f3b8f4',
                 name: 'Abacaxi',
-                origin: 'DATABASE',
+                origin: 'TACO',
                 quantity: 100,
                 calories: 1200,
                 protein: 200,
@@ -170,7 +170,7 @@ describe('Planning Meal Controller', () => {
               {
                 id: '41295d94-09b0-4ce3-b83d-2ad829f3b8f4',
                 name: 'Abacaxi',
-                origin: 'DATABASE',
+                origin: 'TACO',
                 quantity: 100,
                 calories: 1200,
                 protein: 200,
