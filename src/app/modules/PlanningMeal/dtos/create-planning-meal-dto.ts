@@ -19,6 +19,7 @@ export const CreatePlanningMealSchema = z.object({
             protein: z.number().min(1, 'protein cannot be empty'),
             fat: z.number().min(1, 'fat cannot be empty'),
             carb: z.number().min(1, 'carb cannot be empty'),
+            baseUnit: z.string().min(1, 'baseUnit cannot be empty'),
           })
         ),
       })

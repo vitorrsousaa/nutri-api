@@ -86,6 +86,7 @@ model MealFood {
   protein    Float
   fat        Float
   carb       Float
+  baseUnit   String @map("base_unit")
 
   meal Meal? @relation(fields: [mealId], references: [id], onDelete: Cascade)
 

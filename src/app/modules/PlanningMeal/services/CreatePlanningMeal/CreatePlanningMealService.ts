@@ -82,6 +82,7 @@ export class CreatePlanningMealService {
             quantity: food.quantity,
             foodOrigin: food.origin,
             foodId: food.id,
+            baseUnit: food.baseUnit,
           })),
         },
       };
