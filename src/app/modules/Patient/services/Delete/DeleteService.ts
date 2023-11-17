@@ -1,5 +1,5 @@
+import PatientRepositories from '../../../../shared/database/repositories/patient';
 import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
-import PatientRepositories from '../../repositories/patient/PatientRepositories';
 
 export class DeleteService {
   constructor(

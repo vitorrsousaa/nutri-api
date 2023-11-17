@@ -1,7 +1,7 @@
 import PatientRepositories from '../../database/repositories/patient';
 import { AppError } from '../../error';
 
-export class ValidatePatientOwnershipService {
+export class ValidatePatientStatusService {
   constructor(private readonly patientRepositories: PatientRepositories) {}
 
   async validate(userId: string, patientId: string) {
@@ -12,7 +12,7 @@ export class ValidatePatientOwnershipService {
       },
     });
 
-    if (!isPatientOwnedByUser) {
+    if (isPatientOwnedByUser?.status === 'INACTIVE') {
       throw new AppError('Patient not found', 404);
     }
   }

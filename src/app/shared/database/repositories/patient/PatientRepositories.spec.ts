@@ -9,6 +9,7 @@ describe('Patient Repositories', () => {
     delete: jest.fn(),
     create: jest.fn(),
     findMany: jest.fn(),
+    update: jest.fn(),
   };
 
   beforeEach(() => {
@@ -131,5 +132,24 @@ describe('Patient Repositories', () => {
 
     // Assert
     expect(spy.delete).toBeCalledWith(mockDelete);
+  });
+
+  it('Should call update correctly', async () => {
+    // Arrange
+    const mockUpdate = {
+      where: {
+        id: 'any_id',
+      },
+      data: {
+        email: 'any_email',
+        height: 150,
+      },
+    };
+
+    // Act
+    await repository.update(mockUpdate);
+
+    // Assert
+    expect(spy.update).toBeCalledWith(mockUpdate);
   });
 });

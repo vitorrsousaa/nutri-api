@@ -30,6 +30,10 @@ class PatientRepositories {
   async delete(deleteArgs: Prisma.PatientDeleteArgs) {
     return this.prismaService.patient.delete(deleteArgs);
   }
+
+  async update(updateArgs: Prisma.PatientUpdateArgs) {
+    return this.prismaService.patient.update(updateArgs);
+  }
 }
 
 export default PatientRepositories;

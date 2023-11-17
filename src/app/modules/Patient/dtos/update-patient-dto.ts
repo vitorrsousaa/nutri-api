@@ -2,7 +2,7 @@ import * as z from 'zod';
 
 import { GenderEnum } from '../entities/TGender';
 
-export const CreatePatientSchema = z.object({
+export const UpdatePatientSchema = z.object({
   email: z.string().email({ message: 'Invalid e-mail format' }),
   name: z.string(),
   height: z.number().positive().optional(),
@@ -17,4 +17,4 @@ export const CreatePatientSchema = z.object({
   gender: GenderEnum.optional(),
 });
 
-export type ICreatePatientDTO = z.infer<typeof CreatePatientSchema>;
+export type IUpdatePatientDTO = z.infer<typeof UpdatePatientSchema>;
