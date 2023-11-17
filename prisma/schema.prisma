@@ -29,15 +29,23 @@ enum GenderType {
   @@map("gender_types")
 }
 
+enum StatusType {
+  ACTIVE
+  INACTIVE
+
+  @@map("status_types")
+}
+
 model Patient {
-  id        String     @id @default(uuid()) @db.Uuid()
-  userId    String     @map("user_id") @db.Uuid()
-  email     String     @unique
+  id        String      @id @default(uuid()) @db.Uuid()
+  userId    String      @map("user_id") @db.Uuid()
+  email     String      @unique
   name      String
-  birthDate DateTime
-  weight    Float
-  height    Float
-  gender    GenderType
+  birthDate DateTime?
+  weight    Float?
+  height    Float?
+  gender    GenderType?
+  status    StatusType? @default(ACTIVE)
 
   planningMeal PlanningMeal[]
 
