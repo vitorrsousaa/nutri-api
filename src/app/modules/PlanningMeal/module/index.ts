@@ -1,7 +1,7 @@
 import prisma from '../../../shared/database/prisma';
+import PatientRepositories from '../../../shared/database/repositories/patient';
 import PlanningMealRepositores from '../../../shared/database/repositories/planningMeal';
 import ValidatePatientOwnershipService from '../../../shared/services/ValidatePatientOwnership';
-import PatientRepositories from '../../Patient/repositories/patient/PatientRepositories';
 import PlanningMealController, { optionsController } from '../controller';
 import CreatePlanningMealService from '../services/CreatePlanningMeal';
 

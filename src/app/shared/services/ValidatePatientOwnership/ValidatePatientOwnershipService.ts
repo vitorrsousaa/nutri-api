@@ -1,4 +1,4 @@
-import PatientRepositories from '../../../modules/Patient/repositories/patient/PatientRepositories';
+import PatientRepositories from '../../database/repositories/patient';
 import { AppError } from '../../error';
 
 export class ValidatePatientOwnershipService {

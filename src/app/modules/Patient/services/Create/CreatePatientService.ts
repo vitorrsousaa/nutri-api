@@ -1,6 +1,6 @@
+import PatientRepositories from '../../../../shared/database/repositories/patient';
 import { AppError } from '../../../../shared/error';
 import { ICreatePatientDTO } from '../../dtos/create-patient-dto';
-import PatientRepositories from '../../repositories/patient/PatientRepositories';
 
 export class CreatePatientService {
   constructor(private readonly patientRepositories: PatientRepositories) {}

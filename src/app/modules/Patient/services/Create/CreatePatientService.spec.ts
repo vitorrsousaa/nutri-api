@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as z from 'zod';
 
+import PatientRepositories from '../../../../shared/database/repositories/patient';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
 import { ICreatePatientDTO } from '../../dtos/create-patient-dto';
-import PatientRepositories from '../../repositories/patient/PatientRepositories';
 import { CreatePatientService } from './CreatePatientService';
 
 const patientSchema = z.object({
@@ -64,6 +64,7 @@ describe('Create Patient Service', () => {
       name: 'any_name',
       userId: 'any_user_id',
       weight: 80,
+      status: 'ACTIVE',
     });
 
     const mockCreatePatient = {
@@ -97,6 +98,7 @@ describe('Create Patient Service', () => {
       name: 'any_name',
       id: 'any_id',
       userId: 'any_user_id',
+      status: 'ACTIVE',
     });
 
     const mockPatient = {
