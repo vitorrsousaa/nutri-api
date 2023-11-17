@@ -5,8 +5,17 @@ export class CreateMealFoodService {
   constructor(private readonly mealFoodRepositories: MealFoodRepositories) {}
 
   async execute(createMealFoodDTO: ICreateMealFoodDTO) {
-    const { calories, carb, fat, foodId, foodOrigin, name, protein, quantity } =
-      createMealFoodDTO;
+    const {
+      calories,
+      carb,
+      fat,
+      foodId,
+      foodOrigin,
+      name,
+      protein,
+      quantity,
+      baseUnit,
+    } = createMealFoodDTO;
 
     const mealFood = await this.mealFoodRepositories.create({
       data: {
@@ -18,6 +27,7 @@ export class CreateMealFoodService {
         foodOrigin,
         name,
         protein,
+        baseUnit,
       },
     });
 

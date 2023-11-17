@@ -33,6 +33,7 @@ describe('Meal Food Repositories', () => {
         foodOrigin: 'DATABASE',
         name: 'any_name',
         protein: 100,
+        baseUnit: 'any_base_unit',
       },
     };
 

@@ -37,6 +37,7 @@ describe('Create meal food service', () => {
       foodOrigin: 'TACO',
       name: 'any_name',
       protein: 100,
+      baseUnit: 'any_base_unit',
     };
 
     spy.create.mockResolvedValue(mealFoodMock);
@@ -51,6 +52,7 @@ describe('Create meal food service', () => {
       foodOrigin: 'TACO',
       name: 'any_name',
       protein: 100,
+      baseUnit: 'any_base_unit',
     });
 
     // Assert
@@ -68,6 +70,7 @@ describe('Create meal food service', () => {
       foodOrigin: 'TACO',
       name: 'any_name',
       protein: 100,
+      baseUnit: 'any_base_unit',
     };
 
     // Act

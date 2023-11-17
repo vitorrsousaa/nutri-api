@@ -128,6 +128,7 @@ describe('Create Planning Meal Service', () => {
               protein: 200,
               fat: 100,
               carb: 10,
+              baseUnit: 'g',
             },
           ],
         },

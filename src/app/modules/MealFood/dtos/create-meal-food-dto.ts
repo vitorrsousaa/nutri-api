@@ -11,6 +11,7 @@ export const CreateMealFoodSchema = z.object({
   carb: z.number().min(1),
   foodOrigin: OriginFoodEnum,
   foodId: z.string().min(1),
+  baseUnit: z.string().min(1),
 });
 
 export type ICreateMealFoodDTO = z.infer<typeof CreateMealFoodSchema>;
