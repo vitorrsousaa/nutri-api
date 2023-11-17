@@ -34,9 +34,10 @@ describe('Create meal food service', () => {
       calories: 100,
       carb: 100,
       fat: 100,
-      foodOrigin: 'DATABASE',
+      foodOrigin: 'TACO',
       name: 'any_name',
       protein: 100,
+      baseUnit: 'any_base_unit',
     };
 
     spy.create.mockResolvedValue(mealFoodMock);
@@ -48,9 +49,10 @@ describe('Create meal food service', () => {
       quantity: 100,
       carb: 100,
       fat: 100,
-      foodOrigin: 'DATABASE',
+      foodOrigin: 'TACO',
       name: 'any_name',
       protein: 100,
+      baseUnit: 'any_base_unit',
     });
 
     // Assert
@@ -65,9 +67,10 @@ describe('Create meal food service', () => {
       quantity: 100,
       carb: 100,
       fat: 100,
-      foodOrigin: 'DATABASE',
+      foodOrigin: 'TACO',
       name: 'any_name',
       protein: 100,
+      baseUnit: 'any_base_unit',
     };
 
     // Act

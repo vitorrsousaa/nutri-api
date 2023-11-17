@@ -55,18 +55,16 @@ describe('Food controller', () => {
       // Arrange
       spy['findAllService.execute'].mockResolvedValue([
         {
-          calories: 100,
-          carb: 100,
-          fat: 100,
-          group: 'CARB',
-          id: '123',
-          name: 'name',
-          protein: 100,
-          quantity: 100,
+          name: 'any_food',
+          baseUnit: 'G',
+          baseQty: 100,
+          attributes: [],
+          id: 'any_id',
+          categoryName: 'any_category',
         },
       ]);
       mockRequest.params = {
-        origin: 'DATABASE',
+        origin: 'TACO',
       };
 
       // Act
@@ -75,32 +73,18 @@ describe('Food controller', () => {
       // Assert
       expect(mockResponse.json).toBeCalledWith([
         {
-          calories: 100,
-          carb: 100,
-          fat: 100,
-          group: 'CARB',
-          id: '123',
-          name: 'name',
-          protein: 100,
-          quantity: 100,
+          name: 'any_food',
+          baseUnit: 'G',
+          baseQty: 100,
+          attributes: [],
+          id: 'any_id',
+          categoryName: 'any_category',
         },
       ]);
     });
 
     it('should throw error when origin is not enum', async () => {
       // Arrange
-      spy['findAllService.execute'].mockResolvedValue([
-        {
-          calories: 100,
-          carb: 100,
-          fat: 100,
-          group: 'CARB',
-          id: '123',
-          name: 'name',
-          protein: 100,
-          quantity: 100,
-        },
-      ]);
       mockRequest.params = {
         origin: 'ANY_ORIGIN',
       };

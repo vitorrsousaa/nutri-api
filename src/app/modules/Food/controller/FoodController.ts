@@ -12,7 +12,7 @@ export class FoodController {
 
     const result = returnErrorMissingField(OriginFoodEnum, origin);
 
-    if (result === 'DATABASE') {
+    if (result === 'TACO') {
       const findAll = await this.findAllFoodService.execute();
 
       return response.json(findAll);
