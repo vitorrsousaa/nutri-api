@@ -1,5 +1,6 @@
-import PlanningMealRepositores from '../../../../shared/database/repositories/planningMeal';
+import PlanningMealRepositories from '../../../../shared/database/repositories/planningMeal';
 import { ZodError } from '../../../../shared/error';
+import { IValidatePatientHasPlanning } from '../../../../shared/services/ValidatePatientHasPlanning';
 import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
 import { ICreatePlanningMealDTO } from '../../dtos/create-planning-meal-dto';
@@ -13,21 +14,28 @@ describe('Create Planning Meal Service', () => {
 
   let spy = {
     'planningMealRepositories.create': {} as jest.SpiedFunction<
-      PlanningMealRepositores['create']
+      PlanningMealRepositories['create']
     >,
     'validateOwnershipService.validate': {} as jest.SpiedFunction<
       ValidatePatientOwnershipService['validate']
+    >,
+    'validatePatientHasPlanning.validate': {} as jest.SpiedFunction<
+      IValidatePatientHasPlanning['validate']
     >,
   };
 
   beforeEach(() => {
     const planningMealRepositoriesInstance = {
       create: jest.fn(),
-    } as unknown as PlanningMealRepositores;
+    } as unknown as PlanningMealRepositories;
 
     const validatePatientOwnershipServiceInstance = {
       validate: jest.fn(),
     } as unknown as ValidatePatientOwnershipService;
+
+    const validatePatientHasPlanningInstance = {
+      validate: jest.fn(),
+    } as unknown as IValidatePatientHasPlanning;
 
     spy = {
       'planningMealRepositories.create': jest.spyOn(
@@ -38,11 +46,16 @@ describe('Create Planning Meal Service', () => {
         validatePatientOwnershipServiceInstance,
         'validate'
       ),
+      'validatePatientHasPlanning.validate': jest.spyOn(
+        validatePatientHasPlanningInstance,
+        'validate'
+      ),
     };
 
     service = new CreatePlanningMealService(
       planningMealRepositoriesInstance,
-      validatePatientOwnershipServiceInstance
+      validatePatientOwnershipServiceInstance,
+      validatePatientHasPlanningInstance
     );
   });
 
@@ -65,6 +78,23 @@ describe('Create Planning Meal Service', () => {
 
     // Assert
     await expect(promise).rejects.toThrow(new Error('Patient not found'));
+  });
+
+  it('Should throw error when patient has planning', async () => {
+    // Arrange
+    spy['validatePatientHasPlanning.validate'].mockRejectedValue(
+      new Error('Patient has planning')
+    );
+
+    // Act
+    const promise = service.execute(
+      {} as ICreatePlanningMealDTO,
+      'any_user_id',
+      'any_patient_id'
+    );
+
+    // Assert
+    await expect(promise).rejects.toThrow(new Error('Patient has planning'));
   });
 
   it('Should throw error when origin food is invalid', async () => {
