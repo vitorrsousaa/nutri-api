@@ -193,15 +193,17 @@ describe('Patient Controller', () => {
 
       // assert
       expect(mockResponse.json).toBeCalledWith({
-        birthDate: date,
-        email: 'any_email',
-        name: 'any_name',
-        gender: 'MASC',
-        height: 1.8,
-        weight: 80,
-        id: 'any_id',
-        userId: 'any_user_id',
-        status: 'ACTIVE',
+        patient: {
+          birthDate: date,
+          email: 'any_email',
+          name: 'any_name',
+          gender: 'MASC',
+          height: 1.8,
+          weight: 80,
+          id: 'any_id',
+          userId: 'any_user_id',
+          status: 'ACTIVE',
+        },
       });
     });
   });
