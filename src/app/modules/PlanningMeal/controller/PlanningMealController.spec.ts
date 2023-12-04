@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 
 import { ZodError } from '../../../shared/error';
 import CreatePlanningMealService from '../services/CreatePlanningMeal';
+import { IDeletePlanningMealService } from '../services/DeletePlanningMeal';
+import FindByPatientIdService from '../services/FindByPatientId';
 import PlanningMealController from './PlanningMealController';
 
 describe('Planning Meal Controller', () => {
@@ -13,6 +15,12 @@ describe('Planning Meal Controller', () => {
   let spy = {
     'createPlanningMealService.execute': {} as jest.SpiedFunction<
       CreatePlanningMealService['execute']
+    >,
+    'findByPatientIdService.execute': {} as jest.SpiedFunction<
+      FindByPatientIdService['execute']
+    >,
+    'deletePlanningMealService.execute': {} as jest.SpiedFunction<
+      IDeletePlanningMealService['execute']
     >,
   };
 
@@ -31,14 +39,34 @@ describe('Planning Meal Controller', () => {
       execute: jest.fn(),
     } as unknown as CreatePlanningMealService;
 
+    const findByPatientIdServiceInstance = {
+      execute: jest.fn(),
+    } as unknown as FindByPatientIdService;
+
+    const deletePlanningMealServiceInstance = {
+      execute: jest.fn(),
+    } as unknown as IDeletePlanningMealService;
+
     spy = {
       'createPlanningMealService.execute': jest.spyOn(
         createPlanningMealServiceInstance,
         'execute'
       ),
+      'findByPatientIdService.execute': jest.spyOn(
+        findByPatientIdServiceInstance,
+        'execute'
+      ),
+      'deletePlanningMealService.execute': jest.spyOn(
+        deletePlanningMealServiceInstance,
+        'execute'
+      ),
     };
 
-    controller = new PlanningMealController(createPlanningMealServiceInstance);
+    controller = new PlanningMealController(
+      createPlanningMealServiceInstance,
+      findByPatientIdServiceInstance,
+      deletePlanningMealServiceInstance
+    );
   });
 
   afterEach(() => {
@@ -202,6 +230,83 @@ describe('Planning Meal Controller', () => {
         '2d5f7610-2361-4b0d-9d03-36da39e226e2',
         'd0317f46-efae-4049-8e40-b70489295f78'
       );
+    });
+  });
+
+  // describe('Find By Patient Id Controller', () => {
+  // beforeEach(() => {
+  //   spy['createPlanningMealService.execute'].mockClear();
+  // });
+
+  // afterEach(() => {
+  //   jest.clearAllMocks();
+  // });
+  // });
+
+  describe('Delete Planning Meal Controller', () => {
+    beforeEach(() => {
+      spy['deletePlanningMealService.execute'].mockClear();
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('Should throw error when patiend id is not valid id', async () => {
+      // Arrange
+      mockRequest.params = {
+        id: 'invalid_id',
+      };
+
+      try {
+        await controller.delete(mockRequest, mockResponse);
+      } catch (error) {
+        if (error instanceof ZodError) {
+          expect(error.message.some((error) => error.field === 'id'));
+        }
+      }
+    });
+
+    it('Should throw error when missing fields in delete planning meal', async () => {
+      // Arrange
+      mockRequest.params = {
+        id: 'd0317f46-efae-4049-8e40-b70489295f78',
+      };
+      mockRequest.body = {
+        planningMealId: 'planning',
+      };
+
+      // Act
+      try {
+        await controller.delete(mockRequest, mockResponse);
+      } catch (error) {
+        if (error instanceof ZodError) {
+          expect(error.message[0].message).toBe('Invalid uuid');
+        }
+      }
+    });
+
+    it('Should return correctly response', async () => {
+      // Arrange
+      mockRequest.params = {
+        id: 'd0317f46-efae-4049-8e40-b70489295f78',
+      };
+
+      mockRequest.body = {
+        planningMealId: 'd0317f46-efae-4049-8e40-b70489295f78',
+      };
+
+      mockRequest.user = {
+        id: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
+      };
+
+      spy['deletePlanningMealService.execute'].mockResolvedValue(null);
+
+      // Act
+      await controller.delete(mockRequest, mockResponse);
+
+      // Assert
+      expect(mockResponse.sendStatus).toBeCalledWith(204);
     });
   });
 });
