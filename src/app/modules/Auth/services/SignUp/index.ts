@@ -1,3 +1,4 @@
-import SignUp from './SignUpService';
+import SignUp, { ISignUpService } from './SignUpService';
 
+export { ISignUpService };
 export default SignUp;
