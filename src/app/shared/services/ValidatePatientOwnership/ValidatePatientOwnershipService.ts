@@ -1,7 +1,13 @@
+/* eslint-disable indent */
 import PatientRepositories from '../../database/repositories/patient';
 import { AppError } from '../../error';
+export interface IValidatePatientOwnershipService {
+  validate(userId: string, patientId: string): Promise<void>;
+}
 
-export class ValidatePatientOwnershipService {
+export class ValidatePatientOwnershipService
+  implements IValidatePatientOwnershipService
+{
   constructor(private readonly patientRepositories: PatientRepositories) {}
 
   async validate(userId: string, patientId: string) {

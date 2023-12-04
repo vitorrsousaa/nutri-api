@@ -3,13 +3,13 @@ import { Request, Response } from 'express';
 import returnErrorMissingField from '../../../shared/utils/returnErrorMissingField';
 import { CreateUserSchema } from '../dtos/create-user-dto';
 import { UserSchema } from '../entities/TUser';
-import SignIn from '../services/SignIn';
-import SignUp from '../services/SignUp';
+import { ISignInService } from '../services/SignIn';
+import { ISignUpService } from '../services/SignUp';
 
 class AuthController {
   constructor(
-    private readonly signUpService: SignUp,
-    private readonly signInService: SignIn
+    private readonly signUpService: ISignUpService,
+    private readonly signInService: ISignInService
   ) {
     this.signUp = this.signUp.bind(this);
     this.signIn = this.signIn.bind(this);
