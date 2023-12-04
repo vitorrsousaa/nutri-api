@@ -1,3 +1,3 @@
-import PlanningMealRepositores from './PlanningMealRepositories';
+import PlanningMealRepositories from './PlanningMealRepositories';
 
-export default PlanningMealRepositores;
+export default PlanningMealRepositories;

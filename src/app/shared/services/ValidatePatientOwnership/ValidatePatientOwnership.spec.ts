@@ -1,8 +1,11 @@
 import PatientRepositories from '../../database/repositories/patient';
-import { ValidatePatientOwnershipService } from './ValidatePatientOwnershipService';
+import {
+  IValidatePatientOwnershipService,
+  ValidatePatientOwnershipService,
+} from './ValidatePatientOwnershipService';
 
 describe('Validate patient ownership service', () => {
-  let service: ValidatePatientOwnershipService;
+  let service: IValidatePatientOwnershipService;
 
   let spy = {
     'patientRepositories.findFirst': {} as jest.SpiedFunction<
