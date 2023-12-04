@@ -2,7 +2,7 @@
 import * as z from 'zod';
 
 import UserRepositories from '../../../../shared/database/repositories/user';
-import { IToken } from '../../../../shared/providers/token';
+import { IToken } from '../../../../shared/interfaces/token';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
 import { ICrypt } from '../../providers/crypt';
 import SignUp from './SignUpService';
