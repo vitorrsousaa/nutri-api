@@ -1,8 +1,9 @@
 import * as z from 'zod';
 
-import PlanningMealRepositories from '../../../../shared/database/repositories/planningMeal/PlanningMealRepositories';
+import PlanningMealRepositories from '../../../../shared/database/repositories/planningMeal';
 import { OriginFoodEnum } from '../../../../shared/entities/TOriginFood';
 import { ZodError } from '../../../../shared/error';
+import { IValidatePatientHasPlanning } from '../../../../shared/services/ValidatePatientHasPlanning';
 import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
 import { ICreatePlanningMealDTO } from '../../dtos/create-planning-meal-dto';
 
@@ -16,7 +17,8 @@ export const CreatePlanningMealOutputSchema = z.object({
 export class CreatePlanningMealService {
   constructor(
     private readonly planningMealRepositories: PlanningMealRepositories,
-    private readonly validatePatientOwnershipService: ValidatePatientOwnershipService
+    private readonly validatePatientOwnershipService: ValidatePatientOwnershipService,
+    private readonly validatePatientHasPlanning: IValidatePatientHasPlanning
   ) {}
 
   async execute(
@@ -24,7 +26,7 @@ export class CreatePlanningMealService {
     userId: string,
     patientId: string
   ) {
-    await this.validatePatientOwnershipService.validate(userId, patientId);
+    await this.validate(userId, patientId);
 
     const { meals, description } = createPlanningMealDTO;
 
@@ -63,6 +65,13 @@ export class CreatePlanningMealService {
         }
       })
     );
+  }
+
+  private async validate(userId: string, patientId: string) {
+    return Promise.all([
+      this.validatePatientOwnershipService.validate(userId, patientId),
+      this.validatePatientHasPlanning.validate({ patientId }),
+    ]);
   }
 
   private mapperMealToPrisma(meals: ICreatePlanningMealDTO['meals']) {
