@@ -1,6 +1,6 @@
 import { type Prisma, PrismaClient } from '@prisma/client';
 
-export default class PlanningMealRepositores {
+export default class PlanningMealRepositories {
   constructor(private readonly prismaService: PrismaClient) {}
 
   async create(createPlanningMealDTO: Prisma.PlanningMealCreateArgs) {

@@ -2,10 +2,10 @@
 import * as z from 'zod';
 
 import UserRepositories from '../../../../shared/database/repositories/user';
+import { ICrypt } from '../../../../shared/interfaces/crypt';
 import { IToken } from '../../../../shared/interfaces/token';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
-import { ICrypt } from '../../providers/crypt';
-import SignUp from './SignUpService';
+import SignUp, { ISignUpService } from './SignUpService';
 
 const signUpServiceSchema = z.object({
   name: z.string(),
@@ -14,7 +14,7 @@ const signUpServiceSchema = z.object({
 });
 
 describe('SignUp Service', () => {
-  let service: SignUp;
+  let service: ISignUpService;
   let spy = {
     'userRepositories.create': {} as jest.SpiedFunction<
       UserRepositories['create']

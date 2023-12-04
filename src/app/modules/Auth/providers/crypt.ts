@@ -1,11 +1,8 @@
 import bcrypt from 'bcryptjs';
 
-export interface ICrypt {
-  hash: (value: string) => Promise<string>;
-  compare: (value: string, hashedValue: string) => Promise<boolean>;
-}
+import { ICrypt } from '../../../shared/interfaces/crypt';
 
-class CryptClass implements ICrypt {
+class CryptProvider implements ICrypt {
   hash(value: string): Promise<string> {
     return bcrypt.hash(value, 10);
   }
@@ -15,4 +12,4 @@ class CryptClass implements ICrypt {
   }
 }
 
-export const Crypt = new CryptClass();
+export const Crypt = new CryptProvider();

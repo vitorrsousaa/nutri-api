@@ -2,20 +2,40 @@ import PatientRepositories from '../../../../shared/database/repositories/patien
 import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
 import ValidatePatientStatusService from '../../../../shared/services/ValidatePatientStatus';
 import { IUpdatePatientDTO } from '../../dtos/update-patient-dto';
+import { TPatient } from '../../entities/TPatient';
 
-export class UpdateService {
+interface IUpdatePatientServiceOutput {
+  patient: TPatient;
+}
+
+interface IUpdatePatientServiceInput {
+  patient: IUpdatePatientDTO;
+  userId: string;
+  patientId: string;
+}
+
+export interface IUpdateService {
+  execute(
+    updateServiceInput: IUpdatePatientServiceInput
+  ): Promise<IUpdatePatientServiceOutput>;
+}
+
+export class UpdateService implements IUpdateService {
   constructor(
     private readonly patientRepositories: PatientRepositories,
     private readonly validatePatientOwnershipService: ValidatePatientOwnershipService,
     private readonly validatePatientStatusService: ValidatePatientStatusService
   ) {}
 
-  async execute(patient: IUpdatePatientDTO, userId: string, patientId: string) {
+  async execute(
+    updateServiceInput: IUpdatePatientServiceInput
+  ): Promise<IUpdatePatientServiceOutput> {
+    const { patient, userId, patientId } = updateServiceInput;
     const { email, birthDate, gender, height, weight } = patient;
 
     await this.validatePatient(userId, patientId);
 
-    return this.patientRepositories.update({
+    const updatePatient = await this.patientRepositories.update({
       where: {
         id: patientId,
       },
@@ -27,6 +47,10 @@ export class UpdateService {
         email,
       },
     });
+
+    return {
+      patient: updatePatient,
+    };
   }
 
   private async validatePatient(userId: string, patientId: string) {

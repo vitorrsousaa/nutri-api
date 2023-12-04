@@ -2,10 +2,10 @@
 import * as z from 'zod';
 
 import UserRepositories from '../../../../shared/database/repositories/user/UserRepositories';
+import { ICrypt } from '../../../../shared/interfaces/crypt';
 import { IToken } from '../../../../shared/interfaces/token';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
-import { ICrypt } from '../../providers/crypt';
-import SignIn from './SignInService';
+import SignIn, { ISignInService } from './SignInService';
 
 const signInServiceSchema = z.object({
   name: z.string(),
@@ -15,7 +15,7 @@ const signInServiceSchema = z.object({
 });
 
 describe('SignIn service', () => {
-  let service: SignIn;
+  let service: ISignInService;
   let spy = {
     'userRepositories.findUnique': {} as jest.SpiedFunction<
       UserRepositories['findUnique']
@@ -72,6 +72,7 @@ describe('SignIn service', () => {
 
     // Act
     const signIn = await service.execute('any_email', 'any_password');
+
     const result = verifyObject(signInServiceSchema, signIn);
 
     // Assert

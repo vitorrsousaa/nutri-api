@@ -3,8 +3,8 @@
 import { Request, Response } from 'express';
 
 import { ZodError } from '../../../shared/error';
-import SignIn from '../services/SignIn';
-import SignUp from '../services/SignUp';
+import { ISignInService } from '../services/SignIn';
+import { ISignUpService } from '../services/SignUp';
 import AuthController from './AuthController';
 
 describe('Auth Controller', () => {
@@ -13,8 +13,12 @@ describe('Auth Controller', () => {
 
   let controller: AuthController;
   let spy = {
-    'signInService.execute': {} as jest.SpiedFunction<SignIn['execute']>,
-    'signUpService.execute': {} as jest.SpiedFunction<SignUp['execute']>,
+    'signInService.execute': {} as jest.SpiedFunction<
+      ISignInService['execute']
+    >,
+    'signUpService.execute': {} as jest.SpiedFunction<
+      ISignUpService['execute']
+    >,
   };
 
   beforeEach(() => {
@@ -29,11 +33,11 @@ describe('Auth Controller', () => {
 
     const signInServiceInstance = {
       execute: jest.fn(),
-    } as unknown as SignIn;
+    } as unknown as ISignInService;
 
     const signUpServiceInstance = {
       execute: jest.fn(),
-    } as unknown as SignUp;
+    } as unknown as ISignUpService;
 
     spy = {
       'signInService.execute': jest.spyOn(signInServiceInstance, 'execute'),
