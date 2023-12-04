@@ -83,6 +83,13 @@ Right after, you can run migrations in the DB.
 $ yarn migrations
 ```
 
+Right after, you can run seed in the DB.
+
+```bash
+# Created all of migrations and seed
+$ yarn seed:dev
+```
+
 ### Starting the project
 
 ```bash

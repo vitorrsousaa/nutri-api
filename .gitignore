@@ -23,4 +23,8 @@ lib/
 *.sln
 *.sw?
 
+# Jest
 coverage
+
+# Environment Variables
+.env
