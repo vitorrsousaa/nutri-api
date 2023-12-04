@@ -1,12 +1,13 @@
 {
   "restartable": "rs",
   "ignore": [".git", "node_modules/", "dist/", "coverage/"],
-  "watch": ["src/"],
+  "watch": ["src/", "swagger.js"],
   "execMap": {
     "ts": "node -r ts-node/register"
   },
   "env": {
     "NODE_ENV": "development"
   },
-  "ext": "js,json,ts"
+  "ext": "js,json,ts",
+  "exec": "yarn docs && ts-node --transpile-only src/index.ts"
 }
