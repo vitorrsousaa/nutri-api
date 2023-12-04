@@ -1,6 +1,6 @@
 import UserRepositories from '../../../../shared/database/repositories/user';
 import { AppError } from '../../../../shared/error';
-import { IToken } from '../../../../shared/providers/token';
+import { IToken } from '../../../../shared/interfaces/token';
 import { ICrypt } from '../../providers/crypt';
 
 class SignIn {
