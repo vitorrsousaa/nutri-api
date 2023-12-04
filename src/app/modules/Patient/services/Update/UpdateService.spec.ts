@@ -2,10 +2,10 @@ import PatientRepositories from '../../../../shared/database/repositories/patien
 import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
 import ValidatePatientStatusService from '../../../../shared/services/ValidatePatientStatus';
 import { IUpdatePatientDTO } from '../../dtos/update-patient-dto';
-import { UpdateService } from './UpdateService';
+import { IUpdateService, UpdateService } from './UpdateService';
 
 describe('Update patient service', () => {
-  let service: UpdateService;
+  let service: IUpdateService;
   let spy = {
     'patientRepositories.update': {} as jest.SpiedFunction<
       PatientRepositories['update']
@@ -66,11 +66,11 @@ describe('Update patient service', () => {
     const patientUpdateDTO = {};
 
     // Act
-    const promise = service.execute(
-      patientUpdateDTO as IUpdatePatientDTO,
-      'any_user_id',
-      'any_patient_id'
-    );
+    const promise = service.execute({
+      patient: patientUpdateDTO as IUpdatePatientDTO,
+      userId: 'any_user_id',
+      patientId: 'any_patient_id',
+    });
 
     // Assert
     await expect(promise).rejects.toThrow(new Error('Patient not found'));
@@ -85,11 +85,11 @@ describe('Update patient service', () => {
     const patientUpdateDTO = {};
 
     // Act
-    const promise = service.execute(
-      patientUpdateDTO as IUpdatePatientDTO,
-      'any_user_id',
-      'any_patient_id'
-    );
+    const promise = service.execute({
+      patient: patientUpdateDTO as IUpdatePatientDTO,
+      userId: 'any_user_id',
+      patientId: 'any_patient_id',
+    });
 
     // Assert
     await expect(promise).rejects.toThrow(new Error('Patient not found'));
@@ -117,14 +117,14 @@ describe('Update patient service', () => {
     };
 
     // Act
-    const patient = await service.execute(
-      mockUpdatePatient,
-      'any_user_id',
-      'any_patient_id'
-    );
+    const output = await service.execute({
+      patient: mockUpdatePatient,
+      userId: 'any_user_id',
+      patientId: 'any_patient_id',
+    });
 
     // Assert
-    expect(patient).toStrictEqual({
+    expect(output.patient).toStrictEqual({
       birthDate: date,
       email: 'any_email',
       gender: 'MASC',

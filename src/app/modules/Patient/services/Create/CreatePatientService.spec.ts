@@ -78,7 +78,10 @@ describe('Create Patient Service', () => {
 
     // Act
     try {
-      await service.execute(mockCreatePatient, 'user_id');
+      await service.execute({
+        createPatientDTO: mockCreatePatient,
+        userId: 'any_user_id',
+      });
     } catch (error: any) {
       // Assert
       expect(error.message).toBe('Email already in use');
@@ -111,8 +114,11 @@ describe('Create Patient Service', () => {
     } as ICreatePatientDTO;
 
     // Act
-    const patient = await service.execute(mockPatient, 'user_id');
-    const result = verifyObject(patientSchema, patient);
+    const output = await service.execute({
+      createPatientDTO: mockPatient,
+      userId: 'any_user_id',
+    });
+    const result = verifyObject(patientSchema, output.patient);
 
     // Assert
     expect(result).toBeTruthy();

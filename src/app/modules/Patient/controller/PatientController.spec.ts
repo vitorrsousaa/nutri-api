@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 
 import { ZodError } from '../../../shared/error';
-import CreatePatientService from '../services/Create';
+import { ICreatePatientService } from '../services/Create';
 import DeletePatientService from '../services/Delete';
 import FindAllPatient from '../services/FindAll';
 import FindByPatientId from '../services/FindByUserId';
-import UpdatePatientService from '../services/Update';
+import { IUpdateService } from '../services/Update';
 import PatientController from './PatientController';
 
 describe('Patient Controller', () => {
@@ -15,7 +15,7 @@ describe('Patient Controller', () => {
   let controller: PatientController;
   let spy = {
     'createPatientService.execute': {} as jest.SpiedFunction<
-      CreatePatientService['execute']
+      ICreatePatientService['execute']
     >,
     'findAllPatientService.execute': {} as jest.SpiedFunction<
       FindAllPatient['execute']
@@ -27,7 +27,7 @@ describe('Patient Controller', () => {
       DeletePatientService['execute']
     >,
     'updatePatientService.execute': {} as jest.SpiedFunction<
-      UpdatePatientService['execute']
+      IUpdateService['execute']
     >,
   };
 
@@ -43,7 +43,7 @@ describe('Patient Controller', () => {
 
     const createPatientServiceInstance = {
       execute: jest.fn(),
-    } as unknown as CreatePatientService;
+    } as unknown as ICreatePatientService;
 
     const findByPatientIdServiceInstance = {
       execute: jest.fn(),
@@ -59,7 +59,7 @@ describe('Patient Controller', () => {
 
     const updatePatientServiceInstance = {
       execute: jest.fn(),
-    } as unknown as UpdatePatientService;
+    } as unknown as IUpdateService;
 
     spy = {
       'createPatientService.execute': jest.spyOn(
@@ -149,8 +149,8 @@ describe('Patient Controller', () => {
       }
 
       // assert
-      expect(spy['createPatientService.execute']).toBeCalledWith(
-        {
+      expect(spy['createPatientService.execute']).toBeCalledWith({
+        createPatientDTO: {
           birthDate: date,
           gender: 'MASC',
           height: 1.8,
@@ -158,8 +158,8 @@ describe('Patient Controller', () => {
           weight: 80,
           email: 'email@email.com',
         },
-        'any_user_id'
-      );
+        userId: 'any_user_id',
+      });
     });
 
     it('should call response with data returned of service', async () => {
@@ -175,15 +175,17 @@ describe('Patient Controller', () => {
       };
 
       spy['createPatientService.execute'].mockResolvedValue({
-        birthDate: date,
-        email: 'any_email',
-        name: 'any_name',
-        gender: 'MASC',
-        height: 1.8,
-        weight: 80,
-        id: 'any_id',
-        userId: 'any_user_id',
-        status: 'ACTIVE',
+        patient: {
+          birthDate: date,
+          email: 'any_email',
+          name: 'any_name',
+          gender: 'MASC',
+          height: 1.8,
+          weight: 80,
+          id: 'any_id',
+          userId: 'any_user_id',
+          status: 'ACTIVE',
+        },
       });
 
       // act
@@ -448,15 +450,15 @@ describe('Patient Controller', () => {
       await controller.update(mockRequest, mockResponse);
 
       // Assert
-      expect(spy['updatePatientService.execute']).toHaveBeenCalledWith(
-        {
+      expect(spy['updatePatientService.execute']).toHaveBeenCalledWith({
+        patient: {
           email: 'any_email@email.com',
           name: 'any_name',
           height: 150,
         },
-        'any_user_id',
-        '47f9c5f8-6a2d-4f1e-ba47-4cddf2509c33'
-      );
+        userId: 'any_user_id',
+        patientId: '47f9c5f8-6a2d-4f1e-ba47-4cddf2509c33',
+      });
     });
   });
 });

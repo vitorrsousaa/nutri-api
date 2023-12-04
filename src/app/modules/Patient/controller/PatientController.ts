@@ -4,19 +4,19 @@ import { DataBaseIdSchema } from '../../../shared/entities/TUuid';
 import returnErrorMissingField from '../../../shared/utils/returnErrorMissingField';
 import { CreatePatientSchema } from '../dtos/create-patient-dto';
 import { UpdatePatientSchema } from '../dtos/update-patient-dto';
-import CreatePatient from '../services/Create';
+import { ICreatePatientService } from '../services/Create';
 import DeletePatient from '../services/Delete';
 import FindAllPatient from '../services/FindAll';
 import FindByPatientId from '../services/FindByUserId';
-import UpdatePatient from '../services/Update';
+import { IUpdateService } from '../services/Update';
 
 class PatientController {
   constructor(
-    private readonly createService: CreatePatient,
+    private readonly createService: ICreatePatientService,
     private readonly findByPatientIdService: FindByPatientId,
     private readonly findAllService: FindAllPatient,
     private readonly deleteService: DeletePatient,
-    private readonly updateService: UpdatePatient
+    private readonly updateService: IUpdateService
   ) {}
 
   create = async (request: Request, response: Response) => {
@@ -24,10 +24,10 @@ class PatientController {
 
     const { birthDate, email, gender, height, name, weight } = result;
 
-    const create = await this.createService.execute(
-      { birthDate, email, gender, height, name, weight },
-      request.user.id
-    );
+    const create = await this.createService.execute({
+      createPatientDTO: { birthDate, email, gender, height, name, weight },
+      userId: request.user.id,
+    });
 
     return response.json(create);
   };
@@ -68,11 +68,11 @@ class PatientController {
 
     const updateDTO = returnErrorMissingField(UpdatePatientSchema, body);
 
-    const update = await this.updateService.execute(
-      updateDTO,
-      user.id,
-      patient.id
-    );
+    const update = await this.updateService.execute({
+      patient: updateDTO,
+      userId: user.id,
+      patientId: patient.id,
+    });
 
     return response.json(update);
   };
