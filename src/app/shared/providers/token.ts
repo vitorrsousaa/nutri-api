@@ -1,32 +1,24 @@
 import jwt from 'jsonwebtoken';
 
-import authConfig from '../config/auth.json';
+import Config from '../../config';
 import { ACCESS_TOKEN_EXPIRATION } from '../constants/auth';
+import { IGenerateToken, IToken } from '../interfaces/token';
 
-export type IGenerateToken = {
-  id: string;
-};
-
-export interface IToken {
-  generate: ({ id }: IGenerateToken, duration?: number) => string;
-  verify: (token: string) => string | jwt.JwtPayload;
-}
-
-class TokenClass implements IToken {
+class TokenProvider implements IToken {
   generate(generateToken: IGenerateToken, duration?: number) {
     const { id } = generateToken;
     const time = duration ? duration : ACCESS_TOKEN_EXPIRATION;
 
-    return jwt.sign({ id: id.toString() }, authConfig.secret, {
+    return jwt.sign({ id: id.toString() }, Config.AUTH_SECRET, {
       expiresIn: time,
     });
   }
 
   verify(token: string) {
-    return jwt.verify(token, authConfig.secret);
+    return jwt.verify(token, Config.AUTH_SECRET);
   }
 }
 
-const Token = new TokenClass();
+const Token = new TokenProvider();
 
 export default Token;
