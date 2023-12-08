@@ -11,8 +11,9 @@
     "prepare": "husky install",
     "seed:dev": "npx prisma db seed",
     "start": "tsc && node dist/index.js",
-    "test": "jest",
-    "test:dev": "jest --watch --coverage"
+    "test:ci": "jest --all",
+    "test:dev": "jest --watch --coverage",
+    "typecheck": "tsc --noEmit"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
