@@ -14,7 +14,7 @@
     "test:ci": "jest --all",
     "test:dev": "jest --watch --coverage",
     "typecheck": "tsc --noEmit",
-    "lint:ci": "prettier --check . && eslint . --ext .ts"
+    "lint:ci": "prettier --check ./src && eslint ./src --ext .ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
