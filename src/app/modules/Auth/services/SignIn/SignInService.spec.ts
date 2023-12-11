@@ -61,11 +61,16 @@ describe('SignIn service', () => {
 
   it('Should return user when email and password is correctly', async () => {
     // Arrange
+    const createdAt = new Date();
+    const updatedAt = new Date();
     spy['userRepositories.findUnique'].mockResolvedValue({
       name: 'any_name',
       email: 'any_email',
       id: 'any_id',
       password: 'any_password',
+      createdAt,
+      hash: null,
+      updatedAt,
     });
 
     spy['cryptProvider.compare'].mockResolvedValue(true);
@@ -81,11 +86,16 @@ describe('SignIn service', () => {
 
   it('Should throw error when password is incorrectly', async () => {
     // Arrange
+    const createdAt = new Date();
+    const updatedAt = new Date();
     spy['userRepositories.findUnique'].mockResolvedValue({
       id: 'any_id',
       email: 'any_email',
       name: 'any_name',
       password: 'any_password',
+      createdAt,
+      hash: null,
+      updatedAt,
     });
 
     spy['cryptProvider.compare'].mockResolvedValue(false);

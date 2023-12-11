@@ -39,11 +39,16 @@ describe('Recover user service', () => {
 
   it('should return user when id exists', async () => {
     // Arrange
+    const createdAt = new Date();
+    const updatedAt = new Date();
     spy['userRepositories.findUnique'].mockResolvedValue({
       email: 'any_email',
       id: 'any_id',
       name: 'any_name',
       password: 'any_password',
+      hash: null,
+      createdAt,
+      updatedAt,
     });
 
     // Act
