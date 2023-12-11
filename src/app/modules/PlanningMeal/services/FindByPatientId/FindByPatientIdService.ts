@@ -7,7 +7,9 @@ interface IFindByPatientIdServiceInput {
 }
 
 export interface IFindByPatientIdService {
-  execute(findByPatientIdServiceInput: IFindByPatientIdServiceInput): Promise<unknown>;
+  execute(
+    findByPatientIdServiceInput: IFindByPatientIdServiceInput
+  ): Promise<unknown>;
 }
 
 export class FindByPatientIdService implements IFindByPatientIdService {
