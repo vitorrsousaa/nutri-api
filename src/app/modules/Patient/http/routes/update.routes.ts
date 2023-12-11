@@ -4,7 +4,7 @@ import PatientModule from '../../module';
 
 const updatePatientRoutes = Router();
 
-updatePatientRoutes.patch(
+updatePatientRoutes.put(
   '/update/:id',
   (req, res, next) => {
     // #swagger.tags = ['Patient']
