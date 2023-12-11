@@ -7,9 +7,29 @@
   },
   "host": "localhost:3001",
   "basePath": "/api",
-  "schemes": [
-    "http"
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Operations about authentication"
+    },
+    {
+      "name": "Patient",
+      "description": "Operations about Patient"
+    },
+    {
+      "name": "Food",
+      "description": "Operations about Food"
+    },
+    {
+      "name": "User",
+      "description": "Operations about user"
+    },
+    {
+      "name": "Planning Meal",
+      "description": "Operations about planning meal"
+    }
   ],
+  "schemes": ["http"],
   "securityDefinitions": {
     "api_key": {
       "type": "jwt",
@@ -17,26 +37,149 @@
       "in": "header"
     }
   },
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "paths": {
+    "/auth/signUp": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register user and returns a JWT token",
+        "description": "Endpoint to sign up",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Information about user to sign up",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TUserCreate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TUserResponse"
+            },
+            "description": "User logged successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorFieldResponse"
+            },
+            "description": "Email already in use"
+          }
+        }
+      }
+    },
+    "/auth/signIn": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logs in a user and returns a JWT token",
+        "description": "Endpoint to sign in",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Credentials to sign in",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TUserResponse"
+            },
+            "description": "User logged successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorFieldResponse"
+            },
+            "description": "Missing fields or invalid fields."
+          },
+          "404": {
+            "description": "User not exists"
+          }
+        }
+      }
+    },
+    "/food/{origin}": {
+      "get": {
+        "tags": ["Food"],
+        "summary": "Returns all food",
+        "description": "Endpoint to find all food",
+        "operationId": "findAllFood",
+        "parameters": [
+          {
+            "name": "origin",
+            "in": "path",
+            "required": true,
+            "type": "enum",
+            "description": "Origin of food",
+            "enum": ["TACO", "CUSTOM"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TFood"
+            },
+            "description": "Food found successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorFieldResponse"
+            },
+            "description": "Missing fields or invalid fields."
+          }
+        }
+      }
+    },
     "/patient/create": {
       "post": {
-        "description": "",
+        "tags": ["Patient"],
+        "summary": "Returns patient created",
+        "description": "Endpoint to create patient",
+        "parameters": [
+          {
+            "name": "patient",
+            "in": "body",
+            "description": "Patient information to create",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TCreatePatient"
+            }
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TPatient"
+            },
+            "description": "Patient created successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorFieldResponse"
+            },
+            "description": "Missing fields or invalid fields."
+          },
+          "404": {
+            "description": "Email already in use"
           }
         }
       }
     },
     "/patient/": {
       "get": {
-        "description": "",
+        "tags": ["Patient"],
+        "summary": "Returns all patient",
+        "description": "Endpoint to find all patient",
+        "operationId": "findAllPatient",
         "responses": {
           "default": {
             "description": ""
@@ -46,7 +189,9 @@
     },
     "/patient/{id}": {
       "get": {
-        "description": "",
+        "tags": ["Patient"],
+        "summary": "Returns patient by user id",
+        "description": "Endpoint to find patient by user id",
         "parameters": [
           {
             "name": "id",
@@ -62,36 +207,388 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Patient"],
+        "summary": "Returns patient deleted",
+        "description": "Endpoint to delete patient",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Patient id to delete"
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "204": {
+            "description": "Patient deleted successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorFieldResponse"
+            },
+            "description": "Missing fields or invalid fields."
+          },
+          "404": {
+            "description": "Patient not found"
           }
         }
       }
     },
     "/patient/update/{id}": {
-      "patch": {
-        "description": "",
+      "put": {
+        "tags": ["Patient"],
+        "summary": "Returns patient updated",
+        "description": "Endpoint to update patient",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Patient id to update"
+          },
+          {
+            "name": "patient",
+            "in": "body",
+            "description": "Patient information to update",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TUpdatePatient"
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TPatient"
+            },
+            "description": "Patient updated successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorFieldResponse"
+            },
+            "description": "Missing fields or invalid fields."
+          },
+          "404": {
+            "description": "Patient not found"
+          }
+        }
+      }
+    },
+    "/user/recover": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Returns user recovered",
+        "description": "Endpoint to recover user",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TUser"
+            },
+            "description": "User recovered successfully."
+          }
+        }
+      }
+    },
+    "/planning/create/{id}": {
+      "post": {
+        "tags": ["Planning Meal"],
+        "summary": "Returns planning meal created",
+        "description": "Endpoint to create planning meal",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Patient id to create planning meal"
+          },
+          {
+            "name": "planningMeal",
+            "in": "body",
+            "description": "Planning meal information to create",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TCreatePlanningMeal"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TPlanningMeal"
+            },
+            "description": "Planning meal created successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorFieldResponse"
+            },
+            "description": "Missing fields or invalid fields."
+          },
+          "404": {
+            "description": "Patient not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "TUser": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "any_email@email.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "any_password"
+        }
+      }
+    },
+    "TUserCreate": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "any_email@email.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "any_password"
+        },
+        "name": {
+          "type": "string",
+          "example": "any_name"
+        }
+      }
+    },
+    "TUserResponse": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "any_name"
+        },
+        "email": {
+          "type": "string",
+          "example": "any_email@email.com"
+        },
+        "id": {
+          "type": "string",
+          "example": "any_id"
+        },
+        "token": {
+          "type": "string",
+          "example": "any_token"
+        }
+      }
+    },
+    "ErrorFieldResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "error"
+        },
+        "message": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string",
+                "example": "email"
+              },
+              "message": {
+                "type": "string",
+                "example": "Invalid e-mail format"
+              }
+            }
+          }
+        }
+      }
+    },
+    "TFood": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "any_id"
+        },
+        "name": {
+          "type": "string",
+          "example": "any_name"
+        },
+        "categoryName": {
+          "type": "string",
+          "example": "any_category"
+        },
+        "baseUnit": {
+          "type": "string",
+          "example": "any_base"
+        },
+        "baseQty": {
+          "type": "number",
+          "example": 100
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "any_attribute"
+              },
+              "unit": {
+                "type": "string",
+                "example": "any_unit"
+              },
+              "qty": {
+                "type": "number",
+                "example": 100
+              }
+            }
+          }
+        }
+      }
+    },
+    "TCreatePatient": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "any_email@email.com"
+        },
+        "name": {
+          "type": "string",
+          "example": "any_name"
+        },
+        "height": {
+          "type": "number",
+          "example": 100
+        },
+        "weight": {
+          "type": "number",
+          "example": 100
+        },
+        "birthDate": {
+          "type": "string",
+          "example": "Mon Nov 27 2023"
+        },
+        "gender": {
+          "type": "string",
+          "example": "MASC"
+        }
+      }
+    },
+    "TPatient": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "any_name"
+        }
+      }
+    },
+    "TUpdatePatient": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "any_email@email.com"
+        },
+        "name": {
+          "type": "string",
+          "example": "any_name"
+        },
+        "height": {
+          "type": "number",
+          "example": 100
+        },
+        "weight": {
+          "type": "number",
+          "example": 100
+        },
+        "birthDate": {
+          "type": "string",
+          "example": "Mon Nov 27 2023"
+        },
+        "gender": {
+          "type": "string",
+          "example": "MASC"
+        }
+      }
+    },
+    "TCreatePlanningMeal": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "example": "any_description"
+        },
+        "meals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "any_name"
+              },
+              "time": {
+                "type": "string",
+                "example": "any_time"
+              },
+              "foods": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "any_id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "any_name"
+                    },
+                    "quantity": {
+                      "type": "number",
+                      "example": 100
+                    },
+                    "origin": {
+                      "type": "string",
+                      "example": "TACO"
+                    },
+                    "calories": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "proteins": {
+                      "type": "number",
+                      "example": 100
+                    },
+                    "carb": {
+                      "type": "number",
+                      "example": 100
+                    },
+                    "fat": {
+                      "type": "number",
+                      "example": 100
+                    },
+                    "baseUnit": {
+                      "type": "string",
+                      "example": "g"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

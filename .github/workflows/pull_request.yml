@@ -6,7 +6,7 @@ on:
       - develop
 
 jobs:
-  build:
+  pull_request:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,16 +16,14 @@ jobs:
       - name: Install
         uses: ./.github/composite-actions/install
 
+      - name: Run Linting
+        run: yarn lint:ci
+
       - name: Run Typechecking
         run: yarn typecheck
 
       - name: Run the tests
         run: yarn test:ci
 
-      - name: Run lint
-        run: yarn eslint . --fix
-
-      - name: Push changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: 'fix: Run ESLint and fix linting issues across all files'
+      - name: Run build
+        run: yarn build

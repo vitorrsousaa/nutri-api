@@ -8,7 +8,7 @@ import {
   DeletePlanningMealSchema,
   IDeletePlanningMealService,
 } from '../services/DeletePlanningMeal';
-import  { IFindByPatientIdService } from '../services/FindByPatientId';
+import { IFindByPatientIdService } from '../services/FindByPatientId';
 
 class PlanningMealController {
   constructor(
