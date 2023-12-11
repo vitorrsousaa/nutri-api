@@ -13,7 +13,8 @@
     "start": "tsc && node dist/index.js",
     "test:ci": "jest --all",
     "test:dev": "jest --watch --coverage",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint:ci": "prettier --check . && eslint . --ext .ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

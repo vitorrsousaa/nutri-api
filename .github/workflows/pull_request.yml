@@ -17,7 +17,7 @@ jobs:
         uses: ./.github/composite-actions/install
 
       - name: Run Linting
-        run: yarn lint
+        run: yarn lint:ci
 
       - name: Run Typechecking
         run: yarn typecheck
