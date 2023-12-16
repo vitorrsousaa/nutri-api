@@ -29,7 +29,9 @@
       "description": "Operations about planning meal"
     }
   ],
-  "schemes": ["http"],
+  "schemes": [
+    "http"
+  ],
   "securityDefinitions": {
     "api_key": {
       "type": "jwt",
@@ -37,12 +39,18 @@
       "in": "header"
     }
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
     "/auth/signUp": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Register user and returns a JWT token",
         "description": "Endpoint to sign up",
         "parameters": [
@@ -74,7 +82,9 @@
     },
     "/auth/signIn": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Logs in a user and returns a JWT token",
         "description": "Endpoint to sign in",
         "parameters": [
@@ -109,7 +119,9 @@
     },
     "/food/{origin}": {
       "get": {
-        "tags": ["Food"],
+        "tags": [
+          "Food"
+        ],
         "summary": "Returns all food",
         "description": "Endpoint to find all food",
         "operationId": "findAllFood",
@@ -120,7 +132,10 @@
             "required": true,
             "type": "enum",
             "description": "Origin of food",
-            "enum": ["TACO", "CUSTOM"]
+            "enum": [
+              "TACO",
+              "CUSTOM"
+            ]
           }
         ],
         "responses": {
@@ -141,7 +156,9 @@
     },
     "/patient/create": {
       "post": {
-        "tags": ["Patient"],
+        "tags": [
+          "Patient"
+        ],
         "summary": "Returns patient created",
         "description": "Endpoint to create patient",
         "parameters": [
@@ -176,7 +193,9 @@
     },
     "/patient/": {
       "get": {
-        "tags": ["Patient"],
+        "tags": [
+          "Patient"
+        ],
         "summary": "Returns all patient",
         "description": "Endpoint to find all patient",
         "operationId": "findAllPatient",
@@ -189,7 +208,9 @@
     },
     "/patient/{id}": {
       "get": {
-        "tags": ["Patient"],
+        "tags": [
+          "Patient"
+        ],
         "summary": "Returns patient by user id",
         "description": "Endpoint to find patient by user id",
         "parameters": [
@@ -207,7 +228,9 @@
         }
       },
       "delete": {
-        "tags": ["Patient"],
+        "tags": [
+          "Patient"
+        ],
         "summary": "Returns patient deleted",
         "description": "Endpoint to delete patient",
         "parameters": [
@@ -237,7 +260,9 @@
     },
     "/patient/update/{id}": {
       "put": {
-        "tags": ["Patient"],
+        "tags": [
+          "Patient"
+        ],
         "summary": "Returns patient updated",
         "description": "Endpoint to update patient",
         "parameters": [
@@ -279,7 +304,9 @@
     },
     "/user/recover": {
       "get": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Returns user recovered",
         "description": "Endpoint to recover user",
         "responses": {
@@ -294,7 +321,9 @@
     },
     "/planning/create/{id}": {
       "post": {
-        "tags": ["Planning Meal"],
+        "tags": [
+          "Planning Meal"
+        ],
         "summary": "Returns planning meal created",
         "description": "Endpoint to create planning meal",
         "parameters": [
