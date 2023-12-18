@@ -11,10 +11,10 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid()) @db.Uuid()
-  email    String @unique
-  name     String
-  password String
+  id        String   @id @default(uuid()) @db.Uuid()
+  email     String   @unique
+  name      String
+  password  String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
   hash      Float?   @map("hash")
@@ -58,9 +58,10 @@ model Patient {
 }
 
 model PlanningMeal {
-  id        String @id @default(uuid()) @db.Uuid()
-  userId    String @map("user_id") @db.Uuid()
-  patientId String @map("patient_id") @db.Uuid()
+  id        String   @id @default(uuid()) @db.Uuid()
+  userId    String   @map("user_id") @db.Uuid()
+  patientId String   @map("patient_id") @db.Uuid()
+  createdAt DateTime @default(now()) @map("created_at")
 
   description String?
 
