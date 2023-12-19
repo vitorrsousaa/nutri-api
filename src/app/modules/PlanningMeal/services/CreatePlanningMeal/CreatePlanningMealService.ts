@@ -12,6 +12,7 @@ export const CreatePlanningMealOutputSchema = z.object({
   userId: z.string().uuid(),
   patientId: z.string().uuid(),
   description: z.string().optional(),
+  createdAt: z.date(),
 });
 
 export class CreatePlanningMealService {
