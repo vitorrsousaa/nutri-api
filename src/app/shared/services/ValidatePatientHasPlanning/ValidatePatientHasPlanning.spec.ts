@@ -39,6 +39,7 @@ describe('Validate patient has planning', () => {
       id: 'any_id',
       patientId: 'any_patient_id',
       userId: 'any_user_id',
+      createdAt: new Date(),
     });
 
     // Act

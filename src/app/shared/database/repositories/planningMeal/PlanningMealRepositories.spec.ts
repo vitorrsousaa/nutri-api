@@ -41,6 +41,7 @@ describe('Planning Meal Repositories', () => {
       patientId: 'patient_id',
       userId: 'user_id',
       description: 'description',
+      createdAt: new Date(),
     });
 
     // Act
@@ -75,6 +76,7 @@ describe('Planning Meal Repositories', () => {
       patientId: 'patient_id',
       userId: 'user_id',
       description: 'description',
+      createdAt: new Date(),
     });
 
     // Act
@@ -96,6 +98,7 @@ describe('Planning Meal Repositories', () => {
       patientId: 'patient_id',
       userId: 'user_id',
       description: 'description',
+      createdAt: new Date(),
     });
 
     // Act

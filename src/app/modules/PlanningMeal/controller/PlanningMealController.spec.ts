@@ -173,6 +173,7 @@ describe('Planning Meal Controller', () => {
         id: 'd0317f46-efae-4049-8e40-b70489295f78',
         patientId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
         userId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
+        createdAt: new Date(),
       });
 
       // Act
