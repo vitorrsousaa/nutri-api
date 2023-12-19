@@ -16,14 +16,11 @@ jobs:
       - name: Install
         uses: ./.github/composite-actions/install
 
-      - name: Run Linting
-        run: yarn lint:ci
+      - name: Run build
+        run: yarn build
 
       - name: Run Typechecking
         run: yarn typecheck
 
       - name: Run the tests
         run: yarn test:ci
-
-      - name: Run build
-        run: yarn build

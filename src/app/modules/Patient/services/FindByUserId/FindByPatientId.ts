@@ -15,6 +15,9 @@ export class FindByPatientId {
         id: patientId,
         userId: userId,
       },
+      include: {
+        planningMeal: true,
+      },
     });
 
     return patient;

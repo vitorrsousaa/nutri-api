@@ -36,11 +36,13 @@ describe('Planning Meal Repositories', () => {
 
   it('should call correcly create', async () => {
     // Arrange
+    const date = new Date();
     spy.create.mockResolvedValue({
       id: 'id',
       patientId: 'patient_id',
       userId: 'user_id',
       description: 'description',
+      createdAt: date,
     });
 
     // Act
@@ -58,11 +60,13 @@ describe('Planning Meal Repositories', () => {
       patientId: 'patient_id',
       userId: 'user_id',
       description: 'description',
+      createdAt: date,
     });
   });
 
   it('should call correcly find first', async () => {
     // Arrange
+    const date = new Date();
     const findFirstMock = {
       where: {
         userId: 'user_id',
@@ -75,6 +79,7 @@ describe('Planning Meal Repositories', () => {
       patientId: 'patient_id',
       userId: 'user_id',
       description: 'description',
+      createdAt: date,
     });
 
     // Act
@@ -86,16 +91,19 @@ describe('Planning Meal Repositories', () => {
       patientId: 'patient_id',
       userId: 'user_id',
       description: 'description',
+      createdAt: date,
     });
   });
 
   it('should call correcly delete', async () => {
     // Arrange
+    const date = new Date();
     spy.delete.mockResolvedValue({
       id: 'id',
       patientId: 'patient_id',
       userId: 'user_id',
       description: 'description',
+      createdAt: date,
     });
 
     // Act
@@ -111,6 +119,7 @@ describe('Planning Meal Repositories', () => {
       patientId: 'patient_id',
       userId: 'user_id',
       description: 'description',
+      createdAt: date,
     });
   });
 });
