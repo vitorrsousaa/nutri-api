@@ -8,7 +8,7 @@ findPlanningByPatientId.get(
   '/:id',
   (req, res, next) => {
     // #swagger.tags = ['Planning Meal']
-    // #swagger.description = 'Endpoint to create planning meal'
+    // #swagger.description = 'Endpoint to find planning meal by patient id'
     // #swagger.summary = 'Returns planning meal created'
 
     /* #swagger.parameters['id'] = {

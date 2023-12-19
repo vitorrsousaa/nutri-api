@@ -369,7 +369,7 @@
           "Planning Meal"
         ],
         "summary": "Returns planning meal created",
-        "description": "Endpoint to create planning meal",
+        "description": "Endpoint to find planning meal by patient id",
         "parameters": [
           {
             "name": "id",
