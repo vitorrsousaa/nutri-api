@@ -142,6 +142,7 @@ describe('Create Planning Meal Service', () => {
       patientId: 'd0317f46-efae-4049-8e40-b70489295f78',
       description: 'Planning description',
       createdAt: new Date(),
+      endsIn: new Date(),
     });
 
     const mockCreatePlanningMeal = {

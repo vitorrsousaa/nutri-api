@@ -176,6 +176,7 @@ describe('Planning Meal Controller', () => {
         patientId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
         userId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
         createdAt: date,
+        endsIn: date,
       });
 
       // Act
@@ -188,6 +189,7 @@ describe('Planning Meal Controller', () => {
         patientId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
         userId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
         createdAt: date,
+        endsIn: date,
       });
     });
 
