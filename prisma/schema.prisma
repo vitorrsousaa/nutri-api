@@ -11,10 +11,13 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid()) @db.Uuid()
-  email    String @unique
-  name     String
-  password String
+  id        String   @id @default(uuid()) @db.Uuid()
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  hash      Float?   @map("hash")
 
   patient      Patient[]
   planningMeal PlanningMeal[]
@@ -29,15 +32,23 @@ enum GenderType {
   @@map("gender_types")
 }
 
+enum StatusType {
+  ACTIVE
+  INACTIVE
+
+  @@map("status_types")
+}
+
 model Patient {
-  id        String     @id @default(uuid()) @db.Uuid()
-  userId    String     @map("user_id") @db.Uuid()
-  email     String     @unique
+  id        String      @id @default(uuid()) @db.Uuid()
+  userId    String      @map("user_id") @db.Uuid()
+  email     String      @unique
   name      String
-  birthDate DateTime
-  weight    Float
-  height    Float
-  gender    GenderType
+  birthDate DateTime?
+  weight    Float?
+  height    Float?
+  gender    GenderType?
+  status    StatusType? @default(ACTIVE)
 
   planningMeal PlanningMeal[]
 
@@ -46,23 +57,14 @@ model Patient {
   @@map("patients")
 }
 
-enum FoodType {
-  FRUIT
-  PROTEIN
-  CARB
-  CEREAL
-  OTHERS
-  MILK
-
-  @@map("food_types")
-}
-
 model PlanningMeal {
-  id        String @id @default(uuid()) @db.Uuid()
-  userId    String @map("user_id") @db.Uuid()
-  patientId String @map("patient_id") @db.Uuid()
+  id        String   @id @default(uuid()) @db.Uuid()
+  userId    String   @map("user_id") @db.Uuid()
+  patientId String   @map("patient_id") @db.Uuid()
+  createdAt DateTime @default(now()) @map("created_at")
+  endsIn    DateTime @default(now()) @map("ends_in")
 
-  description String
+  description String?
 
   meals Meal[]
 
@@ -73,49 +75,45 @@ model PlanningMeal {
 }
 
 model Meal {
-  // O NUTRICIONISTA VAI SALVAR A REFEIÇÃO COM A ESCOLHA DO ALIMENTO
-  // VAMOS PRECISAR GERAR UM PDF COM A LISTA DE SUBSTITUIÇÃO
   id             String  @id @default(uuid()) @db.Uuid()
   planningMealId String? @map("planning_meal_id") @db.Uuid()
 
   name String
   time DateTime
 
-  mealFoods MealFood[]
-
   planningMeal PlanningMeal? @relation(fields: [planningMealId], references: [id], onDelete: Cascade)
+  mealFoods    MealFood[]
 
   @@map("meals")
 }
 
 model MealFood {
-  // O NUTRI VAI SELECIOANR O ALIMENTO
-  // E VAI DEFINIR AS QUANTIDADES DE CADA ALIMENTO
-  // ESSA INFORMAÇÃO É UTILIZADA PARA CRIAR UMA REFEIÇÃO
   id     String  @id @default(uuid()) @db.Uuid()
-  foodId String  @map("food_id") @db.Uuid()
   mealId String? @map("meal_id") @db.Uuid()
 
-  quantity Float
+  name       String
+  foodOrigin String @map("food_origin")
+  foodId     String @map("food_id")
+  quantity   Float
+  calories   Float
+  protein    Float
+  fat        Float
+  carb       Float
+  baseUnit   String @map("base_unit")
 
-  food Food  @relation(fields: [foodId], references: [id])
   meal Meal? @relation(fields: [mealId], references: [id], onDelete: Cascade)
 
   @@map("meal_foods")
 }
 
 model Food {
-  id       String @id @default(uuid()) @db.Uuid()
-  name     String
-  calories Float
-  protein  Float
-  fat      Float
-  quantity Float
-  carb     Float
+  id           String @id @default(uuid()) @db.Uuid()
+  name         String
+  baseQty      Float  @map("base_qty")
+  baseUnit     String @map("base_unit")
+  categoryName String @map("category_name")
 
-  group FoodType
-
-  MealFood MealFood[]
+  attributes Json[]
 
   @@map("foods")
 }

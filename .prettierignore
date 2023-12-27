@@ -1,2 +1,8 @@
 coverage
 node_modules
+.github
+.vscode
+*.json
+*.yml
+swagger.js
+readme.md

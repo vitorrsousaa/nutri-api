@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as z from 'zod';
 
+import PatientRepositories from '../../../../shared/database/repositories/patient';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
-import { createPatientDTO } from '../../dtos/create-patient-dto';
-import PatientRepositories from '../../repositories/patient/PatientRepositories';
+import { ICreatePatientDTO } from '../../dtos/create-patient-dto';
 import { CreatePatientService } from './CreatePatientService';
 
 const patientSchema = z.object({
@@ -64,6 +64,7 @@ describe('Create Patient Service', () => {
       name: 'any_name',
       userId: 'any_user_id',
       weight: 80,
+      status: 'ACTIVE',
     });
 
     const mockCreatePatient = {
@@ -73,11 +74,14 @@ describe('Create Patient Service', () => {
       height: 80,
       weight: 80,
       name: 'any_name',
-    } as createPatientDTO;
+    } as ICreatePatientDTO;
 
     // Act
     try {
-      await service.execute(mockCreatePatient, 'user_id');
+      await service.execute({
+        createPatientDTO: mockCreatePatient,
+        userId: 'any_user_id',
+      });
     } catch (error: any) {
       // Assert
       expect(error.message).toBe('Email already in use');
@@ -97,6 +101,7 @@ describe('Create Patient Service', () => {
       name: 'any_name',
       id: 'any_id',
       userId: 'any_user_id',
+      status: 'ACTIVE',
     });
 
     const mockPatient = {
@@ -106,11 +111,14 @@ describe('Create Patient Service', () => {
       height: 80,
       weight: 80,
       name: 'any_name',
-    } as createPatientDTO;
+    } as ICreatePatientDTO;
 
     // Act
-    const patient = await service.execute(mockPatient, 'user_id');
-    const result = verifyObject(patientSchema, patient);
+    const output = await service.execute({
+      createPatientDTO: mockPatient,
+      userId: 'any_user_id',
+    });
+    const result = verifyObject(patientSchema, output.patient);
 
     // Assert
     expect(result).toBeTruthy();

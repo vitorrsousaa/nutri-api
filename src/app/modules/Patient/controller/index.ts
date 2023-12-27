@@ -4,6 +4,7 @@ export type optionsController =
   | 'create'
   | 'findAll'
   | 'delete'
-  | 'findByUserId';
+  | 'findByUserId'
+  | 'update';
 
 export default PatientController;

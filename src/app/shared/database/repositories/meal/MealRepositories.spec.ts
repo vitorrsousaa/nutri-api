@@ -8,6 +8,7 @@ describe('Meal Repositories', () => {
     findFirst: jest.fn(),
     delete: jest.fn(),
     create: jest.fn(),
+    createMany: jest.fn(),
   };
 
   beforeEach(() => {
@@ -53,6 +54,37 @@ describe('Meal Repositories', () => {
         name: 'name',
         time: 'time',
       },
+    });
+  });
+
+  it('Should call create many correctly', async () => {
+    // Arrange
+
+    // Act
+    await repository.createMany({
+      data: [
+        {
+          name: 'name',
+          time: 'time',
+        },
+        {
+          name: 'name',
+          time: 'time',
+        },
+      ],
+    });
+
+    expect(spy.createMany).toBeCalledWith({
+      data: [
+        {
+          name: 'name',
+          time: 'time',
+        },
+        {
+          name: 'name',
+          time: 'time',
+        },
+      ],
     });
   });
 

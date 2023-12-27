@@ -1,16 +1,33 @@
 import UserRepositories from '../../../../shared/database/repositories/user';
 import { AppError } from '../../../../shared/error';
-import { IToken } from '../../../../shared/providers/token';
-import { ICrypt } from '../../providers/crypt';
+import { ICrypt } from '../../../../shared/interfaces/crypt';
+import { IToken } from '../../../../shared/interfaces/token';
 
-class SignIn {
+interface ISignInServiceOutput {
+  name: string;
+  email: string;
+  id: string;
+  token: string;
+}
+
+export interface ISignInService {
+  execute(
+    email: string,
+    password: string
+  ): Promise<ISignInServiceOutput | undefined>;
+}
+
+class SignIn implements ISignInService {
   constructor(
     private readonly userRepositories: UserRepositories,
     private readonly cryptProvider: ICrypt,
     private readonly tokenProvider: IToken
   ) {}
 
-  async execute(email: string, password: string) {
+  async execute(
+    email: string,
+    password: string
+  ): Promise<ISignInServiceOutput> {
     const findUser = await this.userRepositories.findUnique({
       where: {
         email,

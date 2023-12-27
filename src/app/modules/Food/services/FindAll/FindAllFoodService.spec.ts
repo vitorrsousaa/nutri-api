@@ -28,13 +28,11 @@ describe('Find all food service', () => {
     repository.findAll.mockResolvedValue([
       {
         name: 'any_food',
-        calories: 100,
-        protein: 10,
-        carb: 10,
-        fat: 10,
+        baseUnit: 'G',
+        baseQty: 100,
+        attributes: [],
         id: 'any_id',
-        group: 'CARB',
-        quantity: 100,
+        categoryName: 'any_category',
       },
     ]);
 
@@ -45,13 +43,11 @@ describe('Find all food service', () => {
     expect(foods).toEqual([
       {
         name: 'any_food',
-        calories: 100,
-        protein: 10,
-        carb: 10,
-        fat: 10,
+        baseUnit: 'G',
+        baseQty: 100,
+        attributes: [],
         id: 'any_id',
-        group: 'CARB',
-        quantity: 100,
+        categoryName: 'any_category',
       },
     ]);
   });

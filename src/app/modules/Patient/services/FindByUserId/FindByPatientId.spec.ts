@@ -1,8 +1,8 @@
 import * as z from 'zod';
 
+import PatientRepositories from '../../../../shared/database/repositories/patient';
+import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
-import PatientRepositories from '../../repositories/patient/PatientRepositories';
-import ValidatePatientOwnershipService from '../ValidatePatientOwnership';
 import { FindByPatientId } from './FindByPatientId';
 
 const patientSchema = z.object({
@@ -81,6 +81,7 @@ describe('Find Patient by patient id', () => {
       name: 'any_name',
       userId: 'any_user_id',
       weight: 70,
+      status: 'ACTIVE',
     });
 
     // Act

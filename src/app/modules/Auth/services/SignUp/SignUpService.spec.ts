@@ -2,10 +2,10 @@
 import * as z from 'zod';
 
 import UserRepositories from '../../../../shared/database/repositories/user';
-import { IToken } from '../../../../shared/providers/token';
+import { ICrypt } from '../../../../shared/interfaces/crypt';
+import { IToken } from '../../../../shared/interfaces/token';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
-import { ICrypt } from '../../providers/crypt';
-import SignUp from './SignUpService';
+import SignUp, { ISignUpService } from './SignUpService';
 
 const signUpServiceSchema = z.object({
   name: z.string(),
@@ -14,7 +14,7 @@ const signUpServiceSchema = z.object({
 });
 
 describe('SignUp Service', () => {
-  let service: SignUp;
+  let service: ISignUpService;
   let spy = {
     'userRepositories.create': {} as jest.SpiedFunction<
       UserRepositories['create']
@@ -65,12 +65,17 @@ describe('SignUp Service', () => {
 
   it('Should return user when email is not in use', async () => {
     // Arrange
+    const createdAt = new Date();
+    const updatedAt = new Date();
     spy['userRepositories.findUnique'].mockResolvedValue(null);
     spy['userRepositories.create'].mockResolvedValue({
       email: 'any_email',
       name: 'any_name',
       id: 'any_id',
       password: 'any_password',
+      hash: null,
+      createdAt,
+      updatedAt,
     });
 
     // Act
@@ -87,11 +92,16 @@ describe('SignUp Service', () => {
 
   it('Should throw error when email is in use', async () => {
     // Arrange
+    const createdAt = new Date();
+    const updatedAt = new Date();
     spy['userRepositories.findUnique'].mockResolvedValue({
       email: 'any_email',
       id: 'any_id',
       name: 'any_name',
       password: 'any_password',
+      hash: null,
+      createdAt,
+      updatedAt,
     });
 
     // Act

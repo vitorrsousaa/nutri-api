@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "plannings_meal" ADD COLUMN     "ends_in" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

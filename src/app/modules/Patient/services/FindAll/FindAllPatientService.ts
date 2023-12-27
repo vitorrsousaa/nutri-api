@@ -1,4 +1,4 @@
-import PatientRepositories from '../../repositories/patient/PatientRepositories';
+import PatientRepositories from '../../../../shared/database/repositories/patient';
 
 export class FindAllPatientService {
   constructor(private readonly patientRepositories: PatientRepositories) {}

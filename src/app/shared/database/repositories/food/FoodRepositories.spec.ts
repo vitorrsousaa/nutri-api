@@ -15,12 +15,16 @@ describe('Food Repositories', () => {
 
     // Act
     await repository.findAll({
-      where: {
-        group: 'CARB',
+      orderBy: {
+        name: 'asc',
       },
     });
 
     // Assert
-    expect(mock.food.findMany).toBeCalledWith({ where: { group: 'CARB' } });
+    expect(mock.food.findMany).toBeCalledWith({
+      orderBy: {
+        name: 'asc',
+      },
+    });
   });
 });

@@ -1,5 +1,5 @@
-import PatientRepositories from '../../repositories/patient/PatientRepositories';
-import ValidatePatientOwnershipService from '../ValidatePatientOwnership';
+import PatientRepositories from '../../../../shared/database/repositories/patient';
+import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
 
 export class FindByPatientId {
   constructor(
@@ -14,6 +14,9 @@ export class FindByPatientId {
       where: {
         id: patientId,
         userId: userId,
+      },
+      include: {
+        planningMeal: true,
       },
     });
 

@@ -6,13 +6,15 @@
   "scripts": {
     "build": "prisma generate && tsc",
     "dev": "prisma generate && nodemon --config nodemon.json src/index.ts",
-    "dev:docs": "node swagger.js",
-    "start": "tsc && node dist/index.js",
-    "test": "jest",
-    "test:dev": "jest --watch --coverage",
+    "docs": "node swagger.js",
     "migrations": "npx prisma migrate dev",
+    "prepare": "husky install",
     "seed:dev": "npx prisma db seed",
-    "prepare": "husky install"
+    "start": "tsc && node dist/index.js",
+    "test:ci": "jest --all",
+    "test:dev": "jest --watch --coverage",
+    "typecheck": "tsc --noEmit",
+    "lint:ci": "prettier --check ./src && eslint ./src --ext .ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -25,6 +27,7 @@
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
+    "resend": "^2.0.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -39,6 +42,7 @@
     "@types/jest": "^29.5.5",
     "@types/jsonwebtoken": "^9.0.3",
     "@types/morgan": "^1.9.6",
+    "@types/swagger-ui-express": "^4.1.6",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
     "babel-jest": "^29.7.0",
@@ -50,6 +54,8 @@
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
     "prisma": "^5.4.1",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }

@@ -2,10 +2,10 @@
 import * as z from 'zod';
 
 import UserRepositories from '../../../../shared/database/repositories/user/UserRepositories';
-import { IToken } from '../../../../shared/providers/token';
+import { ICrypt } from '../../../../shared/interfaces/crypt';
+import { IToken } from '../../../../shared/interfaces/token';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
-import { ICrypt } from '../../providers/crypt';
-import SignIn from './SignInService';
+import SignIn, { ISignInService } from './SignInService';
 
 const signInServiceSchema = z.object({
   name: z.string(),
@@ -15,7 +15,7 @@ const signInServiceSchema = z.object({
 });
 
 describe('SignIn service', () => {
-  let service: SignIn;
+  let service: ISignInService;
   let spy = {
     'userRepositories.findUnique': {} as jest.SpiedFunction<
       UserRepositories['findUnique']
@@ -61,17 +61,23 @@ describe('SignIn service', () => {
 
   it('Should return user when email and password is correctly', async () => {
     // Arrange
+    const createdAt = new Date();
+    const updatedAt = new Date();
     spy['userRepositories.findUnique'].mockResolvedValue({
       name: 'any_name',
       email: 'any_email',
       id: 'any_id',
       password: 'any_password',
+      createdAt,
+      hash: null,
+      updatedAt,
     });
 
     spy['cryptProvider.compare'].mockResolvedValue(true);
 
     // Act
     const signIn = await service.execute('any_email', 'any_password');
+
     const result = verifyObject(signInServiceSchema, signIn);
 
     // Assert
@@ -80,11 +86,16 @@ describe('SignIn service', () => {
 
   it('Should throw error when password is incorrectly', async () => {
     // Arrange
+    const createdAt = new Date();
+    const updatedAt = new Date();
     spy['userRepositories.findUnique'].mockResolvedValue({
       id: 'any_id',
       email: 'any_email',
       name: 'any_name',
       password: 'any_password',
+      createdAt,
+      hash: null,
+      updatedAt,
     });
 
     spy['cryptProvider.compare'].mockResolvedValue(false);

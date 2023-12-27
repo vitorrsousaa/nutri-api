@@ -1,5 +1,5 @@
-import PatientRepositories from '../../repositories/patient/PatientRepositories';
-import ValidatePatientOwnershipService from '../ValidatePatientOwnership';
+import PatientRepositories from '../../../../shared/database/repositories/patient';
+import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
 import { DeleteService } from './DeleteService';
 
 describe('Delete patient service', () => {
@@ -67,6 +67,7 @@ describe('Delete patient service', () => {
       name: 'any_name',
       userId: 'any_user_id',
       weight: 70,
+      status: 'ACTIVE',
     });
 
     // Act
