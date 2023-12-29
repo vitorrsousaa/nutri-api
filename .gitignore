@@ -28,3 +28,6 @@ coverage
 
 # Environment Variables
 .env
+
+# Deployment
+.serverless
