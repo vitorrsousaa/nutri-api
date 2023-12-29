@@ -43,6 +43,7 @@ describe('Planning Meal Repositories', () => {
       userId: 'user_id',
       description: 'description',
       createdAt: date,
+      endsIn: date,
     });
 
     // Act
@@ -61,6 +62,7 @@ describe('Planning Meal Repositories', () => {
       userId: 'user_id',
       description: 'description',
       createdAt: date,
+      endsIn: date,
     });
   });
 
@@ -80,6 +82,7 @@ describe('Planning Meal Repositories', () => {
       userId: 'user_id',
       description: 'description',
       createdAt: date,
+      endsIn: date,
     });
 
     // Act
@@ -92,6 +95,7 @@ describe('Planning Meal Repositories', () => {
       userId: 'user_id',
       description: 'description',
       createdAt: date,
+      endsIn: date,
     });
   });
 
@@ -104,6 +108,7 @@ describe('Planning Meal Repositories', () => {
       userId: 'user_id',
       description: 'description',
       createdAt: date,
+      endsIn: date,
     });
 
     // Act
@@ -120,6 +125,7 @@ describe('Planning Meal Repositories', () => {
       userId: 'user_id',
       description: 'description',
       createdAt: date,
+      endsIn: date,
     });
   });
 });
