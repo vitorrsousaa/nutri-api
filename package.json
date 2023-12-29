@@ -10,7 +10,7 @@
     "migrations": "npx prisma migrate dev",
     "prepare": "husky install",
     "seed:dev": "npx prisma db seed",
-    "start": "tsc && node dist/index.js",
+    "start": "node dist/src/index.js",
     "test:ci": "jest --all",
     "test:dev": "jest --watch --coverage",
     "typecheck": "tsc --noEmit",
