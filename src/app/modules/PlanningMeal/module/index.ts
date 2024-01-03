@@ -6,7 +6,6 @@ import ValidatePatientOwnershipService from '../../../shared/services/ValidatePa
 import PlanningMealController, { optionsController } from '../controller';
 import CreatePlanningMealService from '../services/CreatePlanningMeal';
 import DeletePlanningMealService from '../services/DeletePlanningMeal';
-import FindByPatientIdService from '../services/FindByPatientId';
 
 const patientRepositoriesInstance = new PatientRepositories(prisma);
 
@@ -24,10 +23,6 @@ class PlanningMealModule {
         planningMealRepositoresInstance,
         validatePatientOwnershipServiceInstance,
         new ValidatePatientHasPlanning(planningMealRepositoresInstance)
-      ),
-      new FindByPatientIdService(
-        planningMealRepositoresInstance,
-        validatePatientOwnershipServiceInstance
       ),
       new DeletePlanningMealService(
         planningMealRepositoresInstance,
