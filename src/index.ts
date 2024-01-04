@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
 import { ZodError } from 'zod';
 
-import app from './app';
 import { envSchema } from './app/config/envSchema';
 import prisma from './app/shared/database/prisma';
+import server from './server';
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ dotenv.config();
 
     const port = processEnv.PORT;
 
-    app.listen(port, () => {
+    server.listen(port, () => {
       console.log(`Server is running on port: ${port}`);
     });
   } catch (error) {
