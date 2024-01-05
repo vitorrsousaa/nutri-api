@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import RecoverUserService from '../service/Recover';
+
 import UserController from './UserController';
 
 describe('UserController', () => {

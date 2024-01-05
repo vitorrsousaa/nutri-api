@@ -5,6 +5,7 @@ import { Request, Response } from 'express';
 import { ZodError } from '../../../shared/error';
 import { ISignInService } from '../services/SignIn';
 import { ISignUpService } from '../services/SignUp';
+
 import AuthController from './AuthController';
 
 describe('Auth Controller', () => {

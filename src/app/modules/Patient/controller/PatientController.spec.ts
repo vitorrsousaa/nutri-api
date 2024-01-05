@@ -6,6 +6,7 @@ import DeletePatientService from '../services/Delete';
 import FindAllPatient from '../services/FindAll';
 import FindByPatientId from '../services/FindByUserId';
 import { IUpdateService } from '../services/Update';
+
 import PatientController from './PatientController';
 
 describe('Patient Controller', () => {
