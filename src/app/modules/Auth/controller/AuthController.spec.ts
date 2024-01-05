@@ -27,7 +27,7 @@ describe('Auth Controller', () => {
       sendStatus: jest.fn().mockReturnThis(),
     } as unknown as Response;
     mockRequest = {
-      user: {},
+      metadata: {},
       body: {},
     } as unknown as Request;
 

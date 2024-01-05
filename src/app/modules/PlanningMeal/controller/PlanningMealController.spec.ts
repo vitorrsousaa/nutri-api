@@ -31,7 +31,7 @@ describe('Planning Meal Controller', () => {
     } as unknown as Response;
 
     mockRequest = {
-      user: {},
+      metadata: {},
       body: {},
     } as unknown as Request;
 
@@ -164,8 +164,8 @@ describe('Planning Meal Controller', () => {
         ],
       };
 
-      mockRequest.user = {
-        id: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
+      mockRequest.metadata = {
+        accountId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
       };
 
       const date = new Date();
@@ -223,8 +223,8 @@ describe('Planning Meal Controller', () => {
 
       mockRequest.body = createMockPlanning;
 
-      mockRequest.user = {
-        id: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
+      mockRequest.metadata = {
+        accountId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
       };
 
       // Act
@@ -302,8 +302,8 @@ describe('Planning Meal Controller', () => {
         planningMealId: 'd0317f46-efae-4049-8e40-b70489295f78',
       };
 
-      mockRequest.user = {
-        id: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
+      mockRequest.metadata = {
+        accountId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
       };
 
       spy['deletePlanningMealService.execute'].mockResolvedValue(null);
