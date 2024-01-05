@@ -131,7 +131,6 @@ const routes = [
   './src/app/modules/Patient/http/routes/index.ts',
   './src/app/modules/User/http/routes/index.ts',
   './src/app/modules/PlanningMeal/http/routes/index.ts',
-  '.src/server/routes/food/index.ts'
 ];
 
 swaggerAutogen(outputFile, routes, doc);
