@@ -5,6 +5,7 @@ import { Request, Response } from 'express';
 import { ZodError } from '../../../shared/error';
 import { ISignInService } from '../services/SignIn';
 import { ISignUpService } from '../services/SignUp';
+
 import AuthController from './AuthController';
 
 describe('Auth Controller', () => {
@@ -27,7 +28,7 @@ describe('Auth Controller', () => {
       sendStatus: jest.fn().mockReturnThis(),
     } as unknown as Response;
     mockRequest = {
-      user: {},
+      metadata: {},
       body: {},
     } as unknown as Request;
 

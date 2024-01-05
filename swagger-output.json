@@ -117,43 +117,6 @@
         }
       }
     },
-    "/food/{origin}": {
-      "get": {
-        "tags": [
-          "Food"
-        ],
-        "summary": "Returns all food",
-        "description": "Endpoint to find all food",
-        "operationId": "findAllFood",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "path",
-            "required": true,
-            "type": "enum",
-            "description": "Origin of food",
-            "enum": [
-              "TACO",
-              "CUSTOM"
-            ]
-          }
-        ],
-        "responses": {
-          "200": {
-            "schema": {
-              "$ref": "#/definitions/TFood"
-            },
-            "description": "Food found successfully."
-          },
-          "400": {
-            "schema": {
-              "$ref": "#/definitions/ErrorFieldResponse"
-            },
-            "description": "Missing fields or invalid fields."
-          }
-        }
-      }
-    },
     "/patient/create": {
       "post": {
         "tags": [

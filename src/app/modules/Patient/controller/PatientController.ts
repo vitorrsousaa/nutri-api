@@ -26,25 +26,27 @@ class PatientController {
 
     const create = await this.createService.execute({
       createPatientDTO: { birthDate, email, gender, height, name, weight },
-      userId: request.user.id,
+      userId: request.metadata.accountId,
     });
 
     return response.json(create);
   };
 
   findAll = async (request: Request, response: Response) => {
-    const findAll = await this.findAllService.execute(request.user.id);
+    const findAll = await this.findAllService.execute(
+      request.metadata.accountId
+    );
 
     return response.json(findAll);
   };
 
   findByUserId = async (request: Request, response: Response) => {
-    const { params, user } = request;
+    const { params, metadata } = request;
 
     const patient = returnErrorMissingField(DataBaseIdSchema, params);
 
     const findByUserId = await this.findByPatientIdService.execute(
-      user.id,
+      metadata.accountId,
       patient.id
     );
 
@@ -52,17 +54,17 @@ class PatientController {
   };
 
   delete = async (request: Request, response: Response) => {
-    const { user, params } = request;
+    const { metadata, params } = request;
 
     const patient = returnErrorMissingField(DataBaseIdSchema, params);
 
-    await this.deleteService.execute(user.id, patient.id);
+    await this.deleteService.execute(metadata.accountId, patient.id);
 
     return response.sendStatus(204);
   };
 
   update = async (request: Request, response: Response) => {
-    const { user, params, body } = request;
+    const { metadata, params, body } = request;
 
     const patient = returnErrorMissingField(DataBaseIdSchema, params);
 
@@ -70,7 +72,7 @@ class PatientController {
 
     const update = await this.updateService.execute({
       patient: updateDTO,
-      userId: user.id,
+      userId: metadata.accountId,
       patientId: patient.id,
     });
 
