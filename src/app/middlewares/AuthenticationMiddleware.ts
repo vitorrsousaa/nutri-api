@@ -3,7 +3,8 @@ import {
   IMiddleware,
   IRequest,
   IResponse,
-} from '../interfaces/middleware';
+} from '@godiet-interfaces/middleware';
+
 import Token from '../shared/providers/token';
 
 export class AuthenticationMiddleware implements IMiddleware {

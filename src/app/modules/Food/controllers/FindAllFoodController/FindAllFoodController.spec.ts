@@ -1,6 +1,8 @@
-import { IRequest } from '../../../../interfaces/controller';
+import { IRequest } from '@godiet-interfaces/controller';
+
 import { ZodError } from '../../../../shared/error';
 import FindAllFoodService from '../../services/FindAll';
+
 import { FindAllFoodController } from './FindAllFoodController';
 
 describe('Find all food controller', () => {

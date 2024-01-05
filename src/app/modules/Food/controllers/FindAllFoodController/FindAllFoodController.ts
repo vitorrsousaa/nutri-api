@@ -2,7 +2,8 @@ import {
   IController,
   IRequest,
   IResponse,
-} from '../../../../interfaces/controller';
+} from '@godiet-interfaces/controller';
+
 import { OriginFoodEnum } from '../../../../shared/entities/TOriginFood';
 import returnErrorMissingField from '../../../../shared/utils/returnErrorMissingField';
 import FindAllFoodService from '../../services/FindAll';

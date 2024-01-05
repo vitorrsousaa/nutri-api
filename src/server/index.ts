@@ -1,14 +1,15 @@
-import 'express-async-errors';
-
 import cors from 'cors';
 import express from 'express';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 
+import 'express-async-errors';
+
 import swaggerDocument from '../../swagger-output.json';
 import corsOptions from '../app/shared/http/middlewares/cors';
 import errorHandler from '../app/shared/http/middlewares/errorHandler';
 import routesApp from '../app/shared/http/routes';
+
 import routes from './routes';
 
 const server = express();

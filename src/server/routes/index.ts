@@ -1,7 +1,9 @@
+import { makeAuthenticationMiddleware } from '@godiet-factories/middlewares/makeAuthenticationMiddleware';
+
 import { Router } from 'express';
 
-import { makeAuthenticationMiddleware } from '../../factories/middlewares/makeAuthenticationMiddleware';
 import { middlewareAdapter } from '../adapters/middlewareAdapter';
+
 import foodRoutes from './food';
 const routes = Router();
 

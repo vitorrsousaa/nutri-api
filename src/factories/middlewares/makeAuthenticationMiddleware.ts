@@ -1,4 +1,4 @@
-import { AuthenticationMiddleware } from '../../app/middlewares/AuthenticationMiddleware';
+import { AuthenticationMiddleware } from '@godiet-middlewares/AuthenticationMiddleware';
 
 export function makeAuthenticationMiddleware() {
   return new AuthenticationMiddleware();

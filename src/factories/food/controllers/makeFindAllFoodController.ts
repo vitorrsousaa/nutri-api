@@ -1,4 +1,5 @@
-import FindAllFoodController from '../../../app/modules/Food/controllers/FindAllFoodController';
+import FindAllFoodController from '@godiet-modules/Food/controllers/FindAllFoodController';
+
 import { makeFindAllFoodService } from '../services/makeFindAllFoodService';
 
 export function makeFindAllFoodController() {
