@@ -19,7 +19,7 @@ server.use(express.json());
 server.use(morgan('dev'));
 server.use(routesApp);
 server.use(routes);
-server.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+server.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 server.use(errorHandler);
 
