@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import { ZodError } from '../../../shared/error';
 import CreatePlanningMealService from '../services/CreatePlanningMeal';
 import { IDeletePlanningMealService } from '../services/DeletePlanningMeal';
-import FindByPatientIdService from '../services/FindByPatientId';
 
 import PlanningMealController from './PlanningMealController';
 
@@ -17,9 +16,7 @@ describe('Planning Meal Controller', () => {
     'createPlanningMealService.execute': {} as jest.SpiedFunction<
       CreatePlanningMealService['execute']
     >,
-    'findByPatientIdService.execute': {} as jest.SpiedFunction<
-      FindByPatientIdService['execute']
-    >,
+
     'deletePlanningMealService.execute': {} as jest.SpiedFunction<
       IDeletePlanningMealService['execute']
     >,
@@ -40,10 +37,6 @@ describe('Planning Meal Controller', () => {
       execute: jest.fn(),
     } as unknown as CreatePlanningMealService;
 
-    const findByPatientIdServiceInstance = {
-      execute: jest.fn(),
-    } as unknown as FindByPatientIdService;
-
     const deletePlanningMealServiceInstance = {
       execute: jest.fn(),
     } as unknown as IDeletePlanningMealService;
@@ -53,10 +46,7 @@ describe('Planning Meal Controller', () => {
         createPlanningMealServiceInstance,
         'execute'
       ),
-      'findByPatientIdService.execute': jest.spyOn(
-        findByPatientIdServiceInstance,
-        'execute'
-      ),
+
       'deletePlanningMealService.execute': jest.spyOn(
         deletePlanningMealServiceInstance,
         'execute'
@@ -65,7 +55,6 @@ describe('Planning Meal Controller', () => {
 
     controller = new PlanningMealController(
       createPlanningMealServiceInstance,
-      findByPatientIdServiceInstance,
       deletePlanningMealServiceInstance
     );
   });

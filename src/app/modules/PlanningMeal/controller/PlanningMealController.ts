@@ -8,12 +8,10 @@ import {
   DeletePlanningMealSchema,
   IDeletePlanningMealService,
 } from '../services/DeletePlanningMeal';
-import { IFindByPatientIdService } from '../services/FindByPatientId';
 
 class PlanningMealController {
   constructor(
     private readonly createPlanningMealService: CreatePlanningMealService,
-    private readonly findByPatientIdService: IFindByPatientIdService,
     private readonly deletePlanningMealService: IDeletePlanningMealService
   ) {}
 
@@ -34,19 +32,6 @@ class PlanningMealController {
     );
 
     return response.json(create);
-  };
-
-  findByPatientId = async (request: Request, response: Response) => {
-    const { params, metadata } = request;
-
-    const patient = returnErrorMissingField(DataBaseIdSchema, params);
-
-    const planningMeal = await this.findByPatientIdService.execute({
-      patientId: patient.id,
-      userId: metadata.accountId,
-    });
-
-    return response.json(planningMeal);
   };
 
   delete = async (request: Request, response: Response) => {
