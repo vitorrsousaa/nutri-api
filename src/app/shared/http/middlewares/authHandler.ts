@@ -33,7 +33,7 @@ export default function authHandler(
   try {
     const payload = Token.verify(tokenJWT) as PayloadProps;
 
-    req.user = { id: payload.id };
+    req.metadata = { accountId: payload.id };
 
     next();
   } catch (error) {

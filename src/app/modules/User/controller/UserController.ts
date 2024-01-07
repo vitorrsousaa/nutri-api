@@ -8,7 +8,9 @@ class UserController {
   }
 
   async recover(request: Request, response: Response) {
-    const recover = await this.recoverService.execute(request.user.id);
+    const recover = await this.recoverService.execute(
+      request.metadata.accountId
+    );
     return response.json(recover);
   }
 }

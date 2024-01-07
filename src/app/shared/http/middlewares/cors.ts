@@ -1,7 +1,7 @@
 import { CorsOptions } from 'cors';
 
-const corsOPtions: CorsOptions = {
+const corsOptions: CorsOptions = {
   // origin: `${process.env.FRONT_URL}`,
 };
 
-export default corsOPtions;
+export default corsOptions;

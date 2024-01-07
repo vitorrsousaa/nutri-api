@@ -16,7 +16,7 @@ class PlanningMealController {
   ) {}
 
   create = async (request: Request, response: Response) => {
-    const { params, user } = request;
+    const { params, metadata } = request;
 
     const patient = returnErrorMissingField(DataBaseIdSchema, params);
 
@@ -27,7 +27,7 @@ class PlanningMealController {
 
     const create = await this.createPlanningMealService.execute(
       result,
-      user.id,
+      metadata.accountId,
       patient.id
     );
 
@@ -35,7 +35,7 @@ class PlanningMealController {
   };
 
   delete = async (request: Request, response: Response) => {
-    const { params, user } = request;
+    const { params, metadata } = request;
 
     const patient = returnErrorMissingField(DataBaseIdSchema, params);
 
@@ -46,7 +46,7 @@ class PlanningMealController {
 
     await this.deletePlanningMealService.execute({
       patientId: patient.id,
-      userId: user.id,
+      userId: metadata.accountId,
       planningMealId: planningMealInput.planningMealId,
     });
 
