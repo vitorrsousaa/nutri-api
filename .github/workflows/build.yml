@@ -3,8 +3,7 @@ name: Action Build CI
 on:
   push:
     branches:
-      - develop
-      - main
+      - staging
 
 jobs:
   build:

@@ -11,6 +11,7 @@
     "prepare": "husky install",
     "seed:dev": "npx prisma db seed",
     "start": "node dist/src/index.js",
+    "test": "jest --coverage",
     "test:ci": "jest --all",
     "test:dev": "jest --watch --coverage",
     "typecheck": "tsc --noEmit",
