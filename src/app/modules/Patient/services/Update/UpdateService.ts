@@ -83,8 +83,7 @@ export class UpdateService implements IUpdateService {
     });
 
     if (patient && patient.id !== id) {
-      console.log('aqui dentro');
-      throw new AppError('Patient already exists');
+      throw new AppError('Patient already exists', 422);
     }
   }
 }
