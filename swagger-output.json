@@ -325,6 +325,50 @@
           }
         }
       }
+    },
+    "/planning/{id}": {
+      "delete": {
+        "tags": [
+          "Planning Meal"
+        ],
+        "summary": "Returns planning meal created",
+        "description": "Endpoint to create planning meal",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Patient id to create planning meal"
+          },
+          {
+            "name": "planningMeal",
+            "in": "body",
+            "description": "Planning meal information to create",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TCreatePlanningMeal"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TPlanningMeal"
+            },
+            "description": "Planning meal created successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/ErrorFieldResponse"
+            },
+            "description": "Missing fields or invalid fields."
+          },
+          "404": {
+            "description": "Patient not found"
+          }
+        }
+      }
     }
   },
   "definitions": {

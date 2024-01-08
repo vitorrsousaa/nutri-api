@@ -1,6 +1,7 @@
 import * as z from 'zod';
 
 import PlanningMealRepositories from '../../../../shared/database/repositories/planningMeal';
+import AppError from '../../../../shared/error/AppError';
 import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
 
 export const DeletePlanningMealSchema = z.object({
@@ -28,13 +29,16 @@ export class DeletePlanningMealService implements IDeletePlanningMealService {
 
     await this.validatePatient(userId, patientId);
 
-    await this.planningMealRepositories.delete({
-      where: {
-        id: planningMealId,
-      },
-    });
-
-    return null;
+    try {
+      await this.planningMealRepositories.delete({
+        where: {
+          id: planningMealId,
+        },
+      });
+      return null;
+    } catch {
+      throw new AppError('Planning not found', 404);
+    }
   }
 
   private validatePatient(userId: string, patientId: string) {
