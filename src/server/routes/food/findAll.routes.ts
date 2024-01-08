@@ -1,7 +1,6 @@
-import { makeFindAllFoodController } from '@godiet-factories/food/controllers/makeFindAllFoodController';
-
 import { Router } from 'express';
 
+import { makeFindAllFoodController } from '../../../factories/food/controllers/makeFindAllFoodController';
 import { routeAdapter } from '../../adapters/routeAdapter';
 
 const findAllFoodRoutes = Router();
