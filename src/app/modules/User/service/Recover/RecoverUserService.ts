@@ -18,6 +18,7 @@ export class RecoverUserService {
     return {
       email: findUser.email,
       name: findUser.name,
+      id: findUser.id,
     };
   }
 }
