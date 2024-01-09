@@ -8,4 +8,20 @@ export default class AnamnesisTemplateRepositories {
       createAnamnesisTemplateDTO
     );
   }
+
+  async createMany(
+    createManyAnamnesisTemplateDTO: Prisma.AnamnesisTemplateCreateManyArgs
+  ) {
+    return this.prismaService.anamnesisTemplate.createMany(
+      createManyAnamnesisTemplateDTO
+    );
+  }
+
+  async findMany(
+    findManyAnamnesisTemplateArgs: Prisma.AnamnesisTemplateFindManyArgs
+  ) {
+    return this.prismaService.anamnesisTemplate.findMany(
+      findManyAnamnesisTemplateArgs
+    );
+  }
 }
