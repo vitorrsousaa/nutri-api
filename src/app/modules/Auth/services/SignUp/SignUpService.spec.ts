@@ -5,6 +5,7 @@ import UserRepositories from '../../../../shared/database/repositories/user';
 import { ICrypt } from '../../../../shared/interfaces/crypt';
 import { IToken } from '../../../../shared/interfaces/token';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
+
 import SignUp, { ISignUpService } from './SignUpService';
 
 const signUpServiceSchema = z.object({
