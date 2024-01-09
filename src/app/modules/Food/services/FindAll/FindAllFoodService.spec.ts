@@ -1,4 +1,5 @@
 import FoodRepositories from '../../../../shared/database/repositories/food';
+
 import { FindAllFoodService } from './FindAllFoodService';
 
 describe('Find all food service', () => {
