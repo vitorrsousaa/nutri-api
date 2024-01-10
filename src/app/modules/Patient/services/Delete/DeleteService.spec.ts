@@ -1,5 +1,6 @@
 import PatientRepositories from '../../../../shared/database/repositories/patient';
 import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
+
 import { DeleteService } from './DeleteService';
 
 describe('Delete patient service', () => {

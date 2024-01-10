@@ -19,8 +19,10 @@ model User {
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
   hash      Float?   @map("hash")
 
-  patient      Patient[]
-  planningMeal PlanningMeal[]
+  patient           Patient[]
+  planningMeal      PlanningMeal[]
+  anamneses         Anamnesis[]
+  anamnesisTemplate AnamnesisTemplate[]
 
   @@map("users")
 }
@@ -52,7 +54,8 @@ model Patient {
 
   planningMeal PlanningMeal[]
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  anamneses Anamnesis[]
 
   @@map("patients")
 }
@@ -116,4 +119,34 @@ model Food {
   attributes Json[]
 
   @@map("foods")
+}
+
+model Anamnesis {
+  id        String   @id @default(uuid()) @db.Uuid()
+  userId    String   @map("user_id") @db.Uuid()
+  patientId String   @map("patient_id") @db.Uuid()
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  text  String
+  title String
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("anamneses")
+}
+
+model AnamnesisTemplate {
+  id        String   @id @default(uuid()) @db.Uuid()
+  userId    String   @map("user_id") @db.Uuid()
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  text  String
+  title String
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("anamnesis_templates")
 }

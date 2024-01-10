@@ -2,6 +2,7 @@ import * as z from 'zod';
 
 import UserRepositories from '../../../../shared/database/repositories/user';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
+
 import { RecoverUserService } from './RecoverUserService';
 
 const recoverUserServiceSchema = z.object({
