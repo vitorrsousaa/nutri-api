@@ -3,6 +3,7 @@ import { ZodError } from 'zod';
 
 import { envSchema } from './app/config/envSchema';
 import prisma from './app/shared/database/prisma';
+import { seedDatabase } from './scripts/database/updatedUsersWithNewTemplates';
 import server from './server';
 
 dotenv.config();
@@ -10,6 +11,8 @@ dotenv.config();
 (async () => {
   try {
     await prisma.$connect();
+
+    await seedDatabase();
 
     console.log('Parsing environment variables...');
     const processEnv = envSchema.parse(process.env);
