@@ -1,3 +1,4 @@
+import templateAnamnesis from '../../../../../app/shared/constants/templateAnamnesis';
 import UserRepositories from '../../../../shared/database/repositories/user';
 import { AppError } from '../../../../shared/error';
 import { ICrypt } from '../../../../shared/interfaces/crypt';
@@ -45,6 +46,11 @@ class SignUp implements ISignUpService {
         email,
         name,
         password: hashedPassword,
+        anamnesisTemplate: {
+          createMany: {
+            data: templateAnamnesis,
+          },
+        },
       },
     });
 

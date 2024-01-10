@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { ZodError } from '../../../shared/error';
 import CreatePlanningMealService from '../services/CreatePlanningMeal';
 import { IDeletePlanningMealService } from '../services/DeletePlanningMeal';
-import FindByPatientIdService from '../services/FindByPatientId';
+
 import PlanningMealController from './PlanningMealController';
 
 describe('Planning Meal Controller', () => {
@@ -16,9 +16,7 @@ describe('Planning Meal Controller', () => {
     'createPlanningMealService.execute': {} as jest.SpiedFunction<
       CreatePlanningMealService['execute']
     >,
-    'findByPatientIdService.execute': {} as jest.SpiedFunction<
-      FindByPatientIdService['execute']
-    >,
+
     'deletePlanningMealService.execute': {} as jest.SpiedFunction<
       IDeletePlanningMealService['execute']
     >,
@@ -31,17 +29,13 @@ describe('Planning Meal Controller', () => {
     } as unknown as Response;
 
     mockRequest = {
-      user: {},
+      metadata: {},
       body: {},
     } as unknown as Request;
 
     const createPlanningMealServiceInstance = {
       execute: jest.fn(),
     } as unknown as CreatePlanningMealService;
-
-    const findByPatientIdServiceInstance = {
-      execute: jest.fn(),
-    } as unknown as FindByPatientIdService;
 
     const deletePlanningMealServiceInstance = {
       execute: jest.fn(),
@@ -52,10 +46,7 @@ describe('Planning Meal Controller', () => {
         createPlanningMealServiceInstance,
         'execute'
       ),
-      'findByPatientIdService.execute': jest.spyOn(
-        findByPatientIdServiceInstance,
-        'execute'
-      ),
+
       'deletePlanningMealService.execute': jest.spyOn(
         deletePlanningMealServiceInstance,
         'execute'
@@ -64,7 +55,6 @@ describe('Planning Meal Controller', () => {
 
     controller = new PlanningMealController(
       createPlanningMealServiceInstance,
-      findByPatientIdServiceInstance,
       deletePlanningMealServiceInstance
     );
   });
@@ -164,8 +154,8 @@ describe('Planning Meal Controller', () => {
         ],
       };
 
-      mockRequest.user = {
-        id: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
+      mockRequest.metadata = {
+        accountId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
       };
 
       const date = new Date();
@@ -223,8 +213,8 @@ describe('Planning Meal Controller', () => {
 
       mockRequest.body = createMockPlanning;
 
-      mockRequest.user = {
-        id: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
+      mockRequest.metadata = {
+        accountId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
       };
 
       // Act
@@ -302,8 +292,8 @@ describe('Planning Meal Controller', () => {
         planningMealId: 'd0317f46-efae-4049-8e40-b70489295f78',
       };
 
-      mockRequest.user = {
-        id: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
+      mockRequest.metadata = {
+        accountId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
       };
 
       spy['deletePlanningMealService.execute'].mockResolvedValue(null);

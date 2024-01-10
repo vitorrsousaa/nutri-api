@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 import Config from '../../config';
 import { ACCESS_TOKEN_EXPIRATION } from '../constants/auth';
-import { IGenerateToken, IToken } from '../interfaces/token';
+import { IGenerateToken, IToken, PayloadProps } from '../interfaces/token';
 
 class TokenProvider implements IToken {
   generate(generateToken: IGenerateToken, duration?: number) {
@@ -15,7 +15,8 @@ class TokenProvider implements IToken {
   }
 
   verify(token: string) {
-    return jwt.verify(token, Config.AUTH_SECRET);
+    const result = jwt.verify(token, Config.AUTH_SECRET);
+    return result as PayloadProps;
   }
 }
 

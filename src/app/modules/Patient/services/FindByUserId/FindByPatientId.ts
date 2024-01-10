@@ -16,7 +16,15 @@ export class FindByPatientId {
         userId: userId,
       },
       include: {
-        planningMeal: true,
+        planningMeal: {
+          include: {
+            meals: {
+              include: {
+                mealFoods: true,
+              },
+            },
+          },
+        },
       },
     });
 

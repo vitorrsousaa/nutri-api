@@ -38,12 +38,22 @@
           "error",
           {
             "groups": [
+              // node first
+              ["^node:"],
+              // Packages starting with `@godiet`
+              ["^@godiet"],
+              // Packages starting with a character
+              ["^@?\\w"],
+              // Packages starting with `@`
+              ["^@"],
+              // Packages starting with `~`
+              ["^~"],
               ["^.*\\u0000$"],
               ["^\\u0000"],
-              ["^node:"],
-              ["^@?\\w"],
-              ["^"],
-              ["^\\."]
+              // Imports starting with `../`
+              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+              // Imports starting with `./`
+              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"]
             ]
           }
         ]
