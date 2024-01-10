@@ -11,8 +11,6 @@ export async function seedDatabase() {
     },
   });
 
-  console.log(users);
-
   users.forEach(async (user) => {
     user.anamnesisTemplate.length === 0 &&
       (await prisma.user.update({

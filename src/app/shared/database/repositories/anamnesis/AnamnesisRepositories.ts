@@ -6,4 +6,8 @@ export default class AnamnesisRepositories {
   async create(createAnamnesisDTO: Prisma.AnamnesisCreateArgs) {
     return this.prismaService.anamnesis.create(createAnamnesisDTO);
   }
+
+  async findAll(findAllAnamnesisArgs: Prisma.AnamnesisFindManyArgs) {
+    return this.prismaService.anamnesis.findMany(findAllAnamnesisArgs);
+  }
 }
