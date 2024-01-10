@@ -47,6 +47,7 @@ describe('UserController', () => {
       spy['recover.execute'].mockResolvedValueOnce({
         email: 'any_email',
         name: 'any_name',
+        id: 'any_id',
       });
 
       // Act
