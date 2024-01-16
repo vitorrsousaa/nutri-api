@@ -33,7 +33,7 @@ export class UpdateAnamnesisController implements IController {
       return {
         statusCode: 400,
         body: {
-          error: 'Patient not found',
+          error: 'User not found',
         },
       };
     }

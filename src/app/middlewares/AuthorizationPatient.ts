@@ -12,7 +12,6 @@ export class AuthorizationPatient implements IMiddleware {
   constructor(private readonly patientRepositories: PatientRepositories) {}
 
   async handle(request: IRequest): Promise<IResponse | IData> {
-    console.log('aqui ');
     const patient = returnErrorMissingField(DataBaseIdSchema, {
       id: request.params.patientId,
     });
