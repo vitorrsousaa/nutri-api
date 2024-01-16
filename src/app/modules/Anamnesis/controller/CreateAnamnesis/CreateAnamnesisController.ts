@@ -4,7 +4,6 @@ import {
   IResponse,
 } from '@godiet-interfaces/controller';
 
-import { DataBaseIdSchema } from '../../../../shared/entities/TUuid';
 import returnErrorMissingField from '../../../../shared/utils/returnErrorMissingField';
 import {
   CreateAnamnesisSchema,
@@ -17,13 +16,23 @@ export class CreateAnamnesisController implements IController {
   ) {}
 
   async handle(request: IRequest): Promise<IResponse> {
-    const user = returnErrorMissingField(DataBaseIdSchema, {
-      id: request.accountId,
-    });
+    if (!request.accountId) {
+      return {
+        statusCode: 400,
+        body: {
+          error: 'Anamnesis not found',
+        },
+      };
+    }
 
-    const patient = returnErrorMissingField(DataBaseIdSchema, {
-      id: request.params.patientId,
-    });
+    if (!request.patientId) {
+      return {
+        statusCode: 400,
+        body: {
+          error: 'Patient not found',
+        },
+      };
+    }
 
     const anamnesisParsed = returnErrorMissingField(
       CreateAnamnesisSchema,
@@ -31,8 +40,8 @@ export class CreateAnamnesisController implements IController {
     );
 
     const result = await this.createAnamnesisService.execute({
-      userId: user.id,
-      patientId: patient.id,
+      userId: request.accountId,
+      patientId: request.patientId,
       anamnesis: anamnesisParsed,
     });
 

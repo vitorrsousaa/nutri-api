@@ -1,7 +1,6 @@
 import * as z from 'zod';
 
 import AnamnesisRepositories from '../../../../shared/database/repositories/anamnesis';
-import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
 
 export interface ICreateAnamnesisService {
   execute(
@@ -25,17 +24,12 @@ export interface ICreateAnamnesisServiceInput {
 export interface ICreateAnamnesisServiceOutput {}
 
 export class CreateAnamnesisService implements ICreateAnamnesisService {
-  constructor(
-    private readonly validatePatientOwnershipService: ValidatePatientOwnershipService,
-    private readonly anamnesisRepositories: AnamnesisRepositories
-  ) {}
+  constructor(private readonly anamnesisRepositories: AnamnesisRepositories) {}
 
   async execute(
     createAnamnesisServiceInput: ICreateAnamnesisServiceInput
   ): Promise<ICreateAnamnesisServiceOutput> {
     const { patientId, userId, anamnesis } = createAnamnesisServiceInput;
-
-    await this.validatePatientOwnershipService.validate(userId, patientId);
 
     return this.anamnesisRepositories.create({
       data: {
