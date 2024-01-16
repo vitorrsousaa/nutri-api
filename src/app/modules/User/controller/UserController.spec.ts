@@ -43,7 +43,7 @@ describe('UserController', () => {
   describe('Recover controller', () => {
     it('Should call recover service with the user_id', async () => {
       // Arrange
-      mockRequest.metadata = { accountId: 'any_id' };
+      mockRequest.metadata = { accountId: 'any_id', patientId: '' };
       spy['recover.execute'].mockResolvedValueOnce({
         email: 'any_email',
         name: 'any_name',
