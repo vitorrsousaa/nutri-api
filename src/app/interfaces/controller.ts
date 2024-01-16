@@ -1,6 +1,7 @@
 export interface IRequest {
   body: Record<string, unknown>;
   accountId: string | undefined;
+  patientId: string | undefined;
   params: Record<string, unknown>;
 }
 
