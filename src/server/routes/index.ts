@@ -6,6 +6,7 @@ import { middlewareAdapter } from '../adapters/middlewareAdapter';
 import anamnesisRoutes from './anamnesis';
 import anamnesisTemplateRoutes from './anamnesisTemplate';
 import foodRoutes from './food';
+import userRoutes from './user';
 const routes = Router();
 
 routes.use(
@@ -24,6 +25,12 @@ routes.use(
   '/api',
   middlewareAdapter(makeAuthenticationMiddleware()),
   anamnesisRoutes
+);
+
+routes.use(
+  '/api',
+  middlewareAdapter(makeAuthenticationMiddleware()),
+  userRoutes
 );
 
 export default routes;
