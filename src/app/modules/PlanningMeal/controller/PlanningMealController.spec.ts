@@ -156,6 +156,7 @@ describe('Planning Meal Controller', () => {
 
       mockRequest.metadata = {
         accountId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
+        patientId: '',
       };
 
       const date = new Date();
@@ -215,6 +216,7 @@ describe('Planning Meal Controller', () => {
 
       mockRequest.metadata = {
         accountId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
+        patientId: '',
       };
 
       // Act
@@ -294,6 +296,7 @@ describe('Planning Meal Controller', () => {
 
       mockRequest.metadata = {
         accountId: '2d5f7610-2361-4b0d-9d03-36da39e226e2',
+        patientId: '',
       };
 
       spy['deletePlanningMealService.execute'].mockResolvedValue(null);

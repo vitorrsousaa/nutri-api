@@ -140,7 +140,7 @@ describe('Patient Controller', () => {
         email: 'email@email.com',
       };
 
-      mockRequest.metadata = { accountId: 'any_user_id' };
+      mockRequest.metadata = { accountId: 'any_user_id', patientId: '' };
 
       // act
       try {
@@ -220,7 +220,7 @@ describe('Patient Controller', () => {
 
     it('Should call service with user id', async () => {
       // Arrange
-      mockRequest.metadata = { accountId: 'any_user_id' };
+      mockRequest.metadata = { accountId: 'any_user_id', patientId: '' };
 
       // Act
       await controller.findAll(mockRequest, mockResponse);
@@ -299,7 +299,7 @@ describe('Patient Controller', () => {
         id: '47f9c5f8-6a2d-4f1e-ba47-4cddf2509c33',
       };
 
-      mockRequest.metadata = { accountId: 'any_user_id' };
+      mockRequest.metadata = { accountId: 'any_user_id', patientId: '' };
 
       // Act
       await controller.findByUserId(mockRequest, mockResponse);
@@ -317,7 +317,7 @@ describe('Patient Controller', () => {
         id: '47f9c5f8-6a2d-4f1e-ba47-4cddf2509c33',
       };
 
-      mockRequest.metadata = { accountId: 'any_user_id' };
+      mockRequest.metadata = { accountId: 'any_user_id', patientId: '' };
 
       spy['findByPatientIdService.execute'].mockResolvedValue({
         birthDate: new Date('2023-10-26T03:00:00.000Z'),
@@ -380,7 +380,7 @@ describe('Patient Controller', () => {
         id: '47f9c5f8-6a2d-4f1e-ba47-4cddf2509c33',
       };
 
-      mockRequest.metadata = { accountId: 'any_user_id' };
+      mockRequest.metadata = { accountId: 'any_user_id', patientId: '' };
 
       // Act
       await controller.delete(mockRequest, mockResponse);
@@ -398,7 +398,7 @@ describe('Patient Controller', () => {
         id: '47f9c5f8-6a2d-4f1e-ba47-4cddf2509c33',
       };
 
-      mockRequest.metadata = { accountId: 'any_user_id' };
+      mockRequest.metadata = { accountId: 'any_user_id', patientId: '' };
 
       spy['deletePatientService.execute'].mockResolvedValue(null);
 
@@ -441,7 +441,7 @@ describe('Patient Controller', () => {
         id: '47f9c5f8-6a2d-4f1e-ba47-4cddf2509c33',
       };
 
-      mockRequest.metadata = { accountId: 'any_user_id' };
+      mockRequest.metadata = { accountId: 'any_user_id', patientId: '' };
 
       mockRequest.body = {
         email: 'any_email@email.com',
