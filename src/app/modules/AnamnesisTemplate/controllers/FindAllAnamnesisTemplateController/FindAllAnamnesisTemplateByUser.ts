@@ -2,8 +2,7 @@ import {
   IController,
   IRequest,
   IResponse,
-} from '@godiet-interfaces/controller';
-
+} from '../../../../interfaces/controller';
 import { DataBaseIdSchema } from '../../../../shared/entities/TUuid';
 import returnErrorMissingField from '../../../../shared/utils/returnErrorMissingField';
 import { IFindAllAnamnesisTemplateByUserService } from '../../services/FindAllByUser';

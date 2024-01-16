@@ -1,5 +1,4 @@
-import { IRequest } from '@godiet-interfaces/controller';
-
+import { IRequest } from '../../../../interfaces/controller';
 import { ICreateAnamnesisService } from '../../services/CreateAnamnesis';
 
 import { CreateAnamnesisController } from './CreateAnamnesisController';
