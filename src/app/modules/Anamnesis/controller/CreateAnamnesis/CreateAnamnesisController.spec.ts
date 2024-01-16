@@ -40,7 +40,7 @@ describe('Create anamnesis controller', () => {
   it('Should call response with returned of service', async () => {
     // Arrange
     mockRequest.accountId = '4b429c9e-7562-421a-9aa9-669e1b380b7a';
-    mockRequest.params.patientId = '4b429c9e-7562-421a-9aa9-669e1b380b7a';
+    mockRequest.patientId = '4b429c9e-7562-421a-9aa9-669e1b380b7a';
     mockRequest.body = {
       title: 'any_title',
       text: 'any_text',
