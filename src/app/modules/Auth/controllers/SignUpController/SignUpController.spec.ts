@@ -1,7 +1,6 @@
-import { IRequest } from '@godiet-interfaces/controller';
-import { ISignUpService } from '@godiet-modules/Auth/services/SignUp';
-
+import { IRequest } from '../../../../interfaces/controller';
 import { ZodError } from '../../../../shared/error';
+import { ISignUpService } from '../../services/SignUp';
 
 import { SignUpController } from './SignUpController';
 

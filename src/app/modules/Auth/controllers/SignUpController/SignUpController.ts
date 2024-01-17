@@ -2,8 +2,7 @@ import {
   IController,
   IRequest,
   IResponse,
-} from '@godiet-interfaces/controller';
-
+} from '../../../../interfaces/controller';
 import returnErrorMissingField from '../../../../shared/utils/returnErrorMissingField';
 import { CreateUserSchema } from '../../dtos/create-user-dto';
 import { ISignUpService } from '../../services/SignUp';
