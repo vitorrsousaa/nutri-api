@@ -5,25 +5,23 @@ import {
 } from '../../../../interfaces/controller';
 import { DataBaseIdSchema } from '../../../../shared/entities/TUuid';
 import returnErrorMissingField from '../../../../shared/utils/returnErrorMissingField';
-import { IFindAllAnamnesisTemplateByUserService } from '../../services/FindAllByUser';
+import { IRecoverUserService } from '../../services/Recover';
 
-export class FindAllAnamnesisTemplateByUserController implements IController {
-  constructor(
-    private readonly findAllAnamnesisTemplateByUserService: IFindAllAnamnesisTemplateByUserService
-  ) {}
+export class RecoverUserController implements IController {
+  constructor(private readonly recoverUserService: IRecoverUserService) {}
 
   async handle(request: IRequest): Promise<IResponse> {
     const user = returnErrorMissingField(DataBaseIdSchema, {
       id: request.accountId,
     });
 
-    const result = await this.findAllAnamnesisTemplateByUserService.execute({
+    const recover = await this.recoverUserService.execute({
       userId: user.id,
     });
 
     return {
       statusCode: 200,
-      body: result,
+      body: recover,
     };
   }
 }

@@ -1,5 +1,4 @@
-import { IRequest } from '@godiet-interfaces/controller';
-
+import { IRequest } from '../../../../interfaces/controller';
 import FindAllService from '../../services/FindAllByUser';
 
 import { FindAllAnamnesisTemplateByUserController } from './FindAllAnamnesisTemplateByUser';

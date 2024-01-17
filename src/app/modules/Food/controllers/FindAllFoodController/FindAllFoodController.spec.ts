@@ -1,5 +1,4 @@
-import { IRequest } from '@godiet-interfaces/controller';
-
+import { IRequest } from '../../../../interfaces/controller';
 import { ZodError } from '../../../../shared/error';
 import FindAllFoodService from '../../services/FindAll';
 
