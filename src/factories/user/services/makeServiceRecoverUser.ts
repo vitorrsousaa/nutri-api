@@ -1,6 +1,6 @@
 import RecoverUserService from '../../../app/modules/User/services/Recover';
-import { makeUserRepositories } from '../../repositories/makeUserRepositories';
+import { makeRepositoryUser } from '../../repositories/makeRepositoryUser';
 
 export function makeServiceRecoverUser() {
-  return new RecoverUserService(makeUserRepositories());
+  return new RecoverUserService(makeRepositoryUser());
 }
