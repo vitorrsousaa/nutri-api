@@ -37,7 +37,7 @@ export default ${toPascalCase(inputs.name)}Controller;
   IController,
   IRequest,
   IResponse,
-} from '@godiet-interfaces/controller';
+} from '../../../../interfaces/controller';
 
 export class ${toPascalCase(inputs.name)}Controller implements IController {
   constructor() {}
@@ -56,7 +56,7 @@ export class ${toPascalCase(inputs.name)}Controller implements IController {
             type: 'file',
             name: 'controller.spec.ts',
             content: (inputs) =>
-              `import { IRequest } from '@godiet-interfaces/controller';
+              `import { IRequest } from '../../../../interfaces/controller';
 
 import { ${toPascalCase(inputs.name)}Controller } from './controller';
 
@@ -64,7 +64,7 @@ describe('${toPascalCase(inputs.name)}Controller', () => {
   let mockRequest: IRequest
   let controller: ${toPascalCase(inputs.name)}Controller;
 
-  const spy = {
+  let spy = {
     'service.execute': {} as jest.SpiedFunction<any>,
   }
 
@@ -73,6 +73,10 @@ describe('${toPascalCase(inputs.name)}Controller', () => {
       body: {},
       params: {},
     } as unknown as IRequest;
+
+    spy = {
+      'service.execute': jest.spyOn(service, 'execute'),
+    }
 
     controller = new ${toPascalCase(inputs.name)}Controller();
   });
