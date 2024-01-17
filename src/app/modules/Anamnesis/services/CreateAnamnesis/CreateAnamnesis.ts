@@ -26,8 +26,8 @@ export type ICreateAnamnesisServiceOutput = {
   id: string;
   userId: string;
   patientId: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
   text: string;
   title: string;
 };

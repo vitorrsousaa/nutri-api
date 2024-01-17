@@ -5,6 +5,7 @@ import UserRepositories from '../../../../shared/database/repositories/user/User
 import { ICrypt } from '../../../../shared/interfaces/crypt';
 import { IToken } from '../../../../shared/interfaces/token';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
+
 import SignIn, { ISignInService } from './SignInService';
 
 const signInServiceSchema = z.object({
@@ -76,7 +77,9 @@ describe('SignIn service', () => {
     spy['cryptProvider.compare'].mockResolvedValue(true);
 
     // Act
-    const signIn = await service.execute('any_email', 'any_password');
+    const signIn = await service.execute({
+      user: { email: 'any_email', password: 'any_password' },
+    });
 
     const result = verifyObject(signInServiceSchema, signIn);
 
@@ -102,7 +105,9 @@ describe('SignIn service', () => {
 
     // Act
     try {
-      await service.execute('any_email', 'any_password');
+      await service.execute({
+        user: { email: 'any_email', password: 'any_password' },
+      });
     } catch (error: any) {
       // Assert
       expect(error.message).toBe('User not exists');
@@ -115,7 +120,9 @@ describe('SignIn service', () => {
 
     // Act
     try {
-      await service.execute('any_email', 'any_password');
+      await service.execute({
+        user: { email: 'any_email', password: 'any_password' },
+      });
     } catch (error: any) {
       // Assert
       expect(error.message).toBe('User not exists');
