@@ -1,3 +1,5 @@
+import * as z from 'zod';
+
 import UserRepositories from '../../../../shared/database/repositories/user';
 import { AppError } from '../../../../shared/error';
 import { ICrypt } from '../../../../shared/interfaces/crypt';
@@ -10,11 +12,21 @@ interface ISignInServiceOutput {
   token: string;
 }
 
+export const UserSchema = z.object({
+  email: z.string().email({ message: 'Invalid e-mail format' }),
+  password: z.string().min(8),
+});
+
+export type TUser = z.infer<typeof UserSchema>;
+
+export interface ISignInServiceInput {
+  user: TUser;
+}
+
 export interface ISignInService {
   execute(
-    email: string,
-    password: string
-  ): Promise<ISignInServiceOutput | undefined>;
+    signInServiceInput: ISignInServiceInput
+  ): Promise<ISignInServiceOutput>;
 }
 
 class SignIn implements ISignInService {
@@ -25,9 +37,11 @@ class SignIn implements ISignInService {
   ) {}
 
   async execute(
-    email: string,
-    password: string
+    signInServiceInput: ISignInServiceInput
   ): Promise<ISignInServiceOutput> {
+    const { user } = signInServiceInput;
+    const { email, password } = user;
+
     const findUser = await this.userRepositories.findUnique({
       where: {
         email,

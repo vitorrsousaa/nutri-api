@@ -1,4 +1,5 @@
-import SignIn, { ISignInService } from './SignInService';
+import SignIn, { ISignInService, UserSchema } from './SignInService';
 
-export { ISignInService };
+export { UserSchema };
+export type { ISignInService };
 export default SignIn;
