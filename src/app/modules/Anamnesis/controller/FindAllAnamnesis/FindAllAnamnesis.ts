@@ -3,8 +3,6 @@ import {
   IRequest,
   IResponse,
 } from '../../../../interfaces/controller';
-import { DataBaseIdSchema } from '../../../../shared/entities/TUuid';
-import returnErrorMissingField from '../../../../shared/utils/returnErrorMissingField';
 import { IFindAllAnamnesisService } from '../../services/FindAllAnamnesis';
 
 export class FindAllAnamnesisController implements IController {
@@ -13,22 +11,21 @@ export class FindAllAnamnesisController implements IController {
   ) {}
 
   async handle(request: IRequest): Promise<IResponse> {
-    const user = returnErrorMissingField(DataBaseIdSchema, {
-      id: request.accountId,
-    });
-
-    const patient = returnErrorMissingField(DataBaseIdSchema, {
-      id: request.params.patientId,
-    });
+    if (!request.patientId) {
+      return {
+        statusCode: 400,
+        body: {
+          error: 'Patient not found',
+        },
+      };
+    }
 
     const result = await this.findAllAnamnesisService.execute({
-      userId: user.id,
-      patientId: patient.id,
+      patientId: request.patientId,
     });
 
     return {
       statusCode: 200,
-
       body: result,
     };
   }

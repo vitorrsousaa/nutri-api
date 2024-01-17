@@ -8,6 +8,7 @@ export function routeAdapter(controller: IController) {
       body: request.body,
       accountId: request.metadata?.accountId,
       params: request.params,
+      patientId: request.metadata?.patientId,
     });
 
     response.status(statusCode).json(body);

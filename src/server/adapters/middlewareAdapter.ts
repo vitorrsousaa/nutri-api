@@ -6,6 +6,8 @@ export function middlewareAdapter(middleware: IMiddleware) {
   return async (request: Request, response: Response, next: NextFunction) => {
     const middlewareResponse = await middleware.handle({
       headers: request.headers as Record<string, string>,
+      params: request.params as Record<string, string>,
+      accountId: request.metadata.accountId,
     });
 
     if ('statusCode' in middlewareResponse) {

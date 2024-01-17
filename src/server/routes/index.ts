@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import { makeAuthenticationMiddleware } from '../../factories/middlewares/makeAuthenticationMiddleware';
+import { makeMiddlewareAuthorizationPatientModification } from '../../factories/middlewares/makeMiddlewareAuthorizationPatientModification';
 import { middlewareAdapter } from '../adapters/middlewareAdapter';
 
 import anamnesisRoutes from './anamnesis';
@@ -27,6 +28,7 @@ routes.use(
 routes.use(
   '/api',
   middlewareAdapter(makeAuthenticationMiddleware()),
+  middlewareAdapter(makeMiddlewareAuthorizationPatientModification()),
   anamnesisRoutes
 );
 

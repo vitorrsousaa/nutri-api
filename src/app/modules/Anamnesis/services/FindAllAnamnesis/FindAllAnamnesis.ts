@@ -1,7 +1,6 @@
 import * as z from 'zod';
 
 import AnamnesisRepositories from '../../../../shared/database/repositories/anamnesis';
-import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
 
 export const AnamnesisSchema = z.object({
   title: z.string(),
@@ -22,23 +21,17 @@ export interface IFindAllAnamnesisService {
 
 export interface IFindAllAnamnesisServiceInput {
   patientId: string;
-  userId: string;
 }
 
 export type IFindAllAnamenesisServiceOutput = TAnamnesis[];
 
 export class FindAllAnamnesisService implements IFindAllAnamnesisService {
-  constructor(
-    private readonly anamnesisRepositories: AnamnesisRepositories,
-    private readonly validatePatientOwnershipService: ValidatePatientOwnershipService
-  ) {}
+  constructor(private readonly anamnesisRepositories: AnamnesisRepositories) {}
 
   async execute(
     findAllAnamenesisServiceInput: IFindAllAnamnesisServiceInput
   ): Promise<IFindAllAnamenesisServiceOutput> {
-    const { patientId, userId } = findAllAnamenesisServiceInput;
-
-    await this.validatePatientOwnershipService.validate(userId, patientId);
+    const { patientId } = findAllAnamenesisServiceInput;
 
     return this.anamnesisRepositories.findAll({
       where: {
