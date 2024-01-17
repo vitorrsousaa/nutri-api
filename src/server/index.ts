@@ -17,8 +17,8 @@ const server = express();
 server.use(cors(corsOptions));
 server.use(express.json());
 server.use(morgan('dev'));
-server.use(routesApp);
 server.use(routes);
+server.use(routesApp);
 server.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 server.use(errorHandler);

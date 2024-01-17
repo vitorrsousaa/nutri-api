@@ -22,7 +22,15 @@ export interface ICreateAnamnesisServiceInput {
   anamnesis: TAnamnesisCreateDTO;
 }
 
-export interface ICreateAnamnesisServiceOutput {}
+export type ICreateAnamnesisServiceOutput = {
+  id: string;
+  userId: string;
+  patientId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  text: string;
+  title: string;
+};
 
 export class CreateAnamnesisService implements ICreateAnamnesisService {
   constructor(

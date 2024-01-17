@@ -127,7 +127,6 @@ const doc = {
 
 const outputFile = './swagger-output.json';
 const routes = [
-  './src/app/modules/Auth/http/routes/index.ts',
   './src/app/modules/Patient/http/routes/index.ts',
   './src/app/modules/User/http/routes/index.ts',
   './src/app/modules/PlanningMeal/http/routes/index.ts',
