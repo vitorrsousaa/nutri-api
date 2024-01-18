@@ -44,7 +44,10 @@ describe('Delete patient service', () => {
     });
 
     // Act
-    const patient = await service.execute('any_user_id', 'any_patient_id');
+    const patient = await service.execute({
+      patientId: 'any_id',
+      userId: 'any_user_id',
+    });
 
     // Assert
     expect(patient).toBeNull();

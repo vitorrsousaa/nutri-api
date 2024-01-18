@@ -16,7 +16,6 @@ describe('FindByPatientIdController', () => {
   beforeEach(() => {
     mockRequest = {
       accountId: 'any_user_id',
-      patientId: '',
     } as IRequest;
 
     const service = {
@@ -37,7 +36,7 @@ describe('FindByPatientIdController', () => {
 
   it('Should call service with user id and patient id', async () => {
     // Arrange
-    mockRequest.accountId = '47f9c5f8-6a2d-4f1e-ba47-4cddf2509c33';
+    mockRequest.patientId = '47f9c5f8-6a2d-4f1e-ba47-4cddf2509c33';
 
     // Act
     await controller.handle(mockRequest);
@@ -51,7 +50,7 @@ describe('FindByPatientIdController', () => {
 
   it('Should call response with data returned of service', async () => {
     // arrange
-    mockRequest.accountId = '47f9c5f8-6a2d-4f1e-ba47-4cddf2509c33';
+    mockRequest.patientId = '47f9c5f8-6a2d-4f1e-ba47-4cddf2509c33';
 
     spy['service.execute'].mockResolvedValue({
       birthDate: new Date('2023-10-26T03:00:00.000Z'),
