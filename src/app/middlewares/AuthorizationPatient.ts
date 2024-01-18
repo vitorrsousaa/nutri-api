@@ -27,7 +27,7 @@ export class AuthorizationPatient implements IMiddleware {
       return {
         statusCode: 401,
         body: {
-          error: 'Unauthorized',
+          error: 'Patient not found',
         },
       };
     }

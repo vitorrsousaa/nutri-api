@@ -1,5 +1,4 @@
 import PatientRepositories from '../../../../shared/database/repositories/patient';
-import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
 
 import { DeleteService } from './DeleteService';
 
@@ -9,9 +8,6 @@ describe('Delete patient service', () => {
     'patientRepositories.delete': {} as jest.SpiedFunction<
       PatientRepositories['delete']
     >,
-    'validateOwnershipService.validate': {} as jest.SpiedFunction<
-      ValidatePatientOwnershipService['validate']
-    >,
   };
 
   beforeEach(() => {
@@ -19,42 +15,18 @@ describe('Delete patient service', () => {
       delete: jest.fn(),
     } as unknown as PatientRepositories;
 
-    const validatePatientOwnershipServiceInstance = {
-      validate: jest.fn(),
-    } as unknown as ValidatePatientOwnershipService;
-
     spy = {
       'patientRepositories.delete': jest.spyOn(
         patientRepositoriesInstance,
         'delete'
       ),
-      'validateOwnershipService.validate': jest.spyOn(
-        validatePatientOwnershipServiceInstance,
-        'validate'
-      ),
     };
 
-    service = new DeleteService(
-      patientRepositoriesInstance,
-      validatePatientOwnershipServiceInstance
-    );
+    service = new DeleteService(patientRepositoriesInstance);
   });
 
   afterEach(() => {
     jest.clearAllMocks();
-  });
-
-  it('Should throw error user not owner patient', async () => {
-    // Arrange
-    spy['validateOwnershipService.validate'].mockRejectedValue(
-      new Error('Patient not found')
-    );
-
-    // Act
-    const promise = service.execute('any_user_id', 'any_patient_id');
-
-    // Assert
-    await expect(promise).rejects.toThrow(new Error('Patient not found'));
   });
 
   it('Should return patient when user is owner', async () => {

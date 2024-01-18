@@ -42,6 +42,24 @@ export default ${toPascalCase(inputs.name)}Controller;
 export class ${toPascalCase(inputs.name)}Controller implements IController {
   constructor() {}
   async handle(request: IRequest): Promise<IResponse> {
+    if (!request.accountId) {
+      return {
+        statusCode: 400,
+        body: {
+          error: 'User not found',
+        },
+      };
+    }
+
+    if (!request.patientId) {
+      return {
+        statusCode: 400,
+        body: {
+          error: 'Patient not found',
+        },
+      };
+    }
+
     return {
       statusCode: 200,
       body: {

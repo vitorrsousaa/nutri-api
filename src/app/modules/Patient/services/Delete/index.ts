@@ -1,3 +1,9 @@
-import { DeleteService } from './DeleteService';
+import {
+  DeleteService as DeletePatientService,
+  IDeleteService,
+  IDeleteServiceInput,
+  IDeleteServiceOutput,
+} from './DeleteService';
 
-export default DeleteService;
+export { IDeleteService, IDeleteServiceInput, IDeleteServiceOutput };
+export default DeletePatientService;
