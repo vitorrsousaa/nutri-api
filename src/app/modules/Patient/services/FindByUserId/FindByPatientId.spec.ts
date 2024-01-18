@@ -1,8 +1,8 @@
 import * as z from 'zod';
 
 import PatientRepositories from '../../../../shared/database/repositories/patient';
-import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
 import verifyObject from '../../../../shared/utils-test/verifyObject';
+
 import { FindByPatientId } from './FindByPatientId';
 
 const patientSchema = z.object({
@@ -22,9 +22,6 @@ describe('Find Patient by patient id', () => {
     'patientRepositories.findUnique': {} as jest.SpiedFunction<
       PatientRepositories['findUnique']
     >,
-    'validateOwnershipService.validate': {} as jest.SpiedFunction<
-      ValidatePatientOwnershipService['validate']
-    >,
   };
 
   beforeEach(() => {
@@ -32,42 +29,18 @@ describe('Find Patient by patient id', () => {
       findUnique: jest.fn(),
     } as unknown as PatientRepositories;
 
-    const validatePatientOwnershipServiceInstance = {
-      validate: jest.fn(),
-    } as unknown as ValidatePatientOwnershipService;
-
     spy = {
       'patientRepositories.findUnique': jest.spyOn(
         patientRepositoriesInstance,
         'findUnique'
       ),
-      'validateOwnershipService.validate': jest.spyOn(
-        validatePatientOwnershipServiceInstance,
-        'validate'
-      ),
     };
 
-    service = new FindByPatientId(
-      patientRepositoriesInstance,
-      validatePatientOwnershipServiceInstance
-    );
+    service = new FindByPatientId(patientRepositoriesInstance);
   });
 
   afterEach(() => {
     jest.clearAllMocks();
-  });
-
-  it('Should throw error user not owner patient', async () => {
-    // Arrange
-    spy['validateOwnershipService.validate'].mockRejectedValue(
-      new Error('Patient not found')
-    );
-
-    // Act
-    const promise = service.execute('any_user_id', 'any_patient_id');
-
-    // Assert
-    await expect(promise).rejects.toThrow(new Error('Patient not found'));
   });
 
   it('Should return patient when user is owner', async () => {
@@ -85,7 +58,10 @@ describe('Find Patient by patient id', () => {
     });
 
     // Act
-    const patient = await service.execute('any_user_id', 'any_patient_id');
+    const patient = await service.execute({
+      patientId: 'any_patient_id',
+      userId: 'any_user_id',
+    });
 
     // Assert
     expect(verifyObject(patientSchema, patient!)).toBe(true);

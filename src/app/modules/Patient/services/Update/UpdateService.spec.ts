@@ -1,8 +1,6 @@
 import PatientRepositories from '../../../../shared/database/repositories/patient';
 import { AppError } from '../../../../shared/error';
-import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
-import ValidatePatientStatusService from '../../../../shared/services/ValidatePatientStatus';
-import { IUpdatePatientDTO } from '../../dtos/update-patient-dto';
+
 import { IUpdateService, UpdateService } from './UpdateService';
 
 describe('Update patient service', () => {
@@ -10,12 +8,6 @@ describe('Update patient service', () => {
   let spy = {
     'patientRepositories.update': {} as jest.SpiedFunction<
       PatientRepositories['update']
-    >,
-    'validateOwnershipService.validate': {} as jest.SpiedFunction<
-      ValidatePatientOwnershipService['validate']
-    >,
-    'validateStatusService.validate': {} as jest.SpiedFunction<
-      ValidatePatientStatusService['validate']
     >,
     'patientRepositories.findFirst': {} as jest.SpiedFunction<
       PatientRepositories['findFirst']
@@ -28,80 +20,23 @@ describe('Update patient service', () => {
       findFirst: jest.fn(),
     } as unknown as PatientRepositories;
 
-    const validatePatientOwnershipServiceInstance = {
-      validate: jest.fn(),
-    } as unknown as ValidatePatientOwnershipService;
-
-    const validatePatientStatusServiceInstance = {
-      validate: jest.fn(),
-    } as unknown as ValidatePatientStatusService;
-
     spy = {
       'patientRepositories.update': jest.spyOn(
         patientRepositoriesInstance,
         'update'
       ),
-      'validateOwnershipService.validate': jest.spyOn(
-        validatePatientOwnershipServiceInstance,
-        'validate'
-      ),
-      'validateStatusService.validate': jest.spyOn(
-        validatePatientStatusServiceInstance,
-        'validate'
-      ),
+
       'patientRepositories.findFirst': jest.spyOn(
         patientRepositoriesInstance,
         'findFirst'
       ),
     };
 
-    service = new UpdateService(
-      patientRepositoriesInstance,
-      validatePatientOwnershipServiceInstance,
-      validatePatientStatusServiceInstance
-    );
+    service = new UpdateService(patientRepositoriesInstance);
   });
 
   afterEach(() => {
     jest.clearAllMocks();
-  });
-
-  it('Should throw error user not owner patient', async () => {
-    // Arrange
-    spy['validateOwnershipService.validate'].mockRejectedValue(
-      new Error('Patient not found')
-    );
-
-    const patientUpdateDTO = {};
-
-    // Act
-    const promise = service.execute({
-      patient: patientUpdateDTO as IUpdatePatientDTO,
-      userId: 'any_user_id',
-      patientId: 'any_patient_id',
-    });
-
-    // Assert
-    await expect(promise).rejects.toThrow(new Error('Patient not found'));
-  });
-
-  it('Should throw error when patient is not active', async () => {
-    // Arrange
-    spy['validateStatusService.validate'].mockRejectedValue(
-      new Error('Patient not found')
-    );
-
-    const patientUpdateDTO = {};
-
-    // Act
-    const promise = service.execute({
-      patient: patientUpdateDTO as IUpdatePatientDTO,
-      userId: 'any_user_id',
-      patientId: 'any_patient_id',
-    });
-
-    // Assert
-    await expect(promise).rejects.toThrow(new Error('Patient not found'));
   });
 
   it('Should return patient when user is owner', async () => {

@@ -8,10 +8,17 @@ import anamnesisRoutes from './anamnesis';
 import anamnesisTemplateRoutes from './anamnesisTemplate';
 import authRoutes from './auth';
 import foodRoutes from './food';
+import patientRoutes from './patient';
 import userRoutes from './user';
 const routes = Router();
 
 routes.use('/api', authRoutes);
+
+routes.use(
+  '/api',
+  middlewareAdapter(makeAuthenticationMiddleware()),
+  patientRoutes
+);
 
 routes.use(
   '/api',

@@ -1,14 +1,26 @@
 import PatientRepositories from '../../../../shared/database/repositories/patient';
-import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
+import { TPatient } from '../../entities/TPatient';
 
-export class FindByPatientId {
-  constructor(
-    private readonly patientRepositories: PatientRepositories,
-    private readonly validatePatientOwnershipService: ValidatePatientOwnershipService
-  ) {}
+export interface IFindByPatientIdServiceInput {
+  userId: string;
+  patientId: string;
+}
 
-  async execute(userId: string, patientId: string) {
-    await this.validatePatientOwnershipService.validate(userId, patientId);
+export type IFindByPatientIdServiceOutput = TPatient | null;
+
+export interface IFindByPatientIdService {
+  execute(
+    input: IFindByPatientIdServiceInput
+  ): Promise<IFindByPatientIdServiceOutput>;
+}
+
+export class FindByPatientId implements IFindByPatientIdService {
+  constructor(private readonly patientRepositories: PatientRepositories) {}
+
+  async execute(
+    findByPatientIdServiceInput: IFindByPatientIdServiceInput
+  ): Promise<IFindByPatientIdServiceOutput> {
+    const { userId, patientId } = findByPatientIdServiceInput;
 
     const patient = await this.patientRepositories.findUnique({
       where: {
