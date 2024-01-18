@@ -1,7 +1,5 @@
 import PatientRepositories from '../../../../shared/database/repositories/patient';
 import { AppError } from '../../../../shared/error';
-import ValidatePatientOwnershipService from '../../../../shared/services/ValidatePatientOwnership';
-import ValidatePatientStatusService from '../../../../shared/services/ValidatePatientStatus';
 import { IUpdatePatientDTO } from '../../dtos/update-patient-dto';
 import { TPatient } from '../../entities/TPatient';
 
@@ -28,11 +26,7 @@ export interface IUpdateService {
 }
 
 export class UpdateService implements IUpdateService {
-  constructor(
-    private readonly patientRepositories: PatientRepositories,
-    private readonly validatePatientOwnershipService: ValidatePatientOwnershipService,
-    private readonly validatePatientStatusService: ValidatePatientStatusService
-  ) {}
+  constructor(private readonly patientRepositories: PatientRepositories) {}
 
   async execute(
     updateServiceInput: IUpdatePatientServiceInput
@@ -67,10 +61,8 @@ export class UpdateService implements IUpdateService {
   private async validatePatient(
     validatePatientInput: IValidatePatientServiceInput
   ) {
-    const { userId, patientId, patientEmail } = validatePatientInput;
+    const { patientId, patientEmail } = validatePatientInput;
     return Promise.all([
-      this.validatePatientOwnershipService.validate(userId, patientId),
-      this.validatePatientStatusService.validate(userId, patientId),
       this.validateHasPatientWithEmail(patientEmail, patientId),
     ]);
   }

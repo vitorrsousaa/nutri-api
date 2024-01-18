@@ -1,4 +1,7 @@
-import { IUpdateService, UpdateService } from './UpdateService';
+import {
+  IUpdateService as IUpdatePatientService,
+  UpdateService as UpdatePatientService,
+} from './UpdateService';
 
-export { IUpdateService };
-export default UpdateService;
+export { IUpdatePatientService };
+export default UpdatePatientService;
