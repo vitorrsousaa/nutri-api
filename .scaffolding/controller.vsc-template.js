@@ -72,7 +72,7 @@ describe('${toPascalCase(inputs.name)}Controller', () => {
     mockRequest = {
       body: {},
       params: {},
-    } as unknown as IRequest;
+    } as IRequest;
 
     spy = {
       'service.execute': jest.spyOn(service, 'execute'),

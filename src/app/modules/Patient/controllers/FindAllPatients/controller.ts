@@ -14,7 +14,7 @@ export class FindAllPatientsController implements IController {
       return {
         statusCode: 400,
         body: {
-          error: 'Anamnesis not found',
+          error: 'User not found',
         },
       };
     }
