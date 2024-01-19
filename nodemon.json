@@ -9,5 +9,5 @@
     "NODE_ENV": "development"
   },
   "ext": "js,json,ts",
-  "exec": "yarn docs && ts-node --transpile-only src/index.ts"
+  "exec": "yarn docs && ts-node -r tsconfig-paths/register --transpile-only src/index.ts"
 }
