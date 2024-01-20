@@ -5,7 +5,7 @@ import signUpRoute from './signUp.routes';
 
 const authRoutes = Router();
 
-authRoutes.use('/auth', signUpRoute);
-authRoutes.use('/auth', signInRoutes);
+authRoutes.use(signUpRoute);
+authRoutes.use(signInRoutes);
 
 export default authRoutes;

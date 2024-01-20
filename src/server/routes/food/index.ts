@@ -4,6 +4,6 @@ import findAllFoodRoutes from './findAll.routes';
 
 const foodRoutes = Router();
 
-foodRoutes.use('/food', findAllFoodRoutes);
+foodRoutes.use(findAllFoodRoutes);
 
 export default foodRoutes;

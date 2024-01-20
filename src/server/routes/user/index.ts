@@ -4,6 +4,6 @@ import recoverRoute from './recover.routes';
 
 const userRoutes = Router();
 
-userRoutes.use('/user', recoverRoute);
+userRoutes.use(recoverRoute);
 
 export default userRoutes;

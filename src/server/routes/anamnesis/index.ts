@@ -6,8 +6,8 @@ import updateAnamnesisRoutes from './update.routes';
 
 const anamnesisRoutes = Router();
 
-anamnesisRoutes.use('/anamnesis', createAnamnesisRoutes);
-anamnesisRoutes.use('/anamnesis', findAllAnamnesisRoutes);
-anamnesisRoutes.use('/anamnesis', updateAnamnesisRoutes);
+anamnesisRoutes.use(createAnamnesisRoutes);
+anamnesisRoutes.use(findAllAnamnesisRoutes);
+anamnesisRoutes.use(updateAnamnesisRoutes);
 
 export default anamnesisRoutes;

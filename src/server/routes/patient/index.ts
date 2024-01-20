@@ -8,10 +8,10 @@ import updatePatientRoutes from './update.routes';
 
 const patientRoutes = Router();
 
-patientRoutes.use('/patient', createPatientRoutes);
-patientRoutes.use('/patient', findAllPatientRoutes);
-patientRoutes.use('/patient', findByUserIdPatientRoutes);
-patientRoutes.use('/patient', deletePatientRoutes);
-patientRoutes.use('/patient', updatePatientRoutes);
+patientRoutes.use(createPatientRoutes);
+patientRoutes.use(findAllPatientRoutes);
+patientRoutes.use(findByUserIdPatientRoutes);
+patientRoutes.use(deletePatientRoutes);
+patientRoutes.use(updatePatientRoutes);
 
 export default patientRoutes;

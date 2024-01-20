@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
 import { makeAuthenticationMiddleware } from '../../factories/middlewares/makeAuthenticationMiddleware';
-import { makeMiddlewareAuthorizationPatientModification } from '../../factories/middlewares/makeMiddlewareAuthorizationPatientModification';
 import { middlewareAdapter } from '../adapters/middlewareAdapter';
 
 import anamnesisRoutes from './anamnesis';
@@ -12,35 +11,34 @@ import patientRoutes from './patient';
 import userRoutes from './user';
 const routes = Router();
 
-routes.use('/api', authRoutes);
+routes.use('/api/auth', authRoutes);
 
 routes.use(
-  '/api',
+  '/api/patient',
   middlewareAdapter(makeAuthenticationMiddleware()),
   patientRoutes
 );
 
 routes.use(
-  '/api',
+  '/api/food',
   middlewareAdapter(makeAuthenticationMiddleware()),
   foodRoutes
 );
 
 routes.use(
-  '/api',
+  '/api/anamnesis-template',
   middlewareAdapter(makeAuthenticationMiddleware()),
   anamnesisTemplateRoutes
 );
 
 routes.use(
-  '/api',
+  '/api/anamnesis',
   middlewareAdapter(makeAuthenticationMiddleware()),
-  middlewareAdapter(makeMiddlewareAuthorizationPatientModification()),
   anamnesisRoutes
 );
 
 routes.use(
-  '/api',
+  '/api/user',
   middlewareAdapter(makeAuthenticationMiddleware()),
   userRoutes
 );
