@@ -23,6 +23,7 @@ model User {
   planningMeal      PlanningMeal[]
   anamneses         Anamnesis[]
   anamnesisTemplate AnamnesisTemplate[]
+  Antropometric     Antropometric[]
 
   @@map("users")
 }
@@ -54,8 +55,9 @@ model Patient {
 
   planningMeal PlanningMeal[]
 
-  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  anamneses Anamnesis[]
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  anamneses     Anamnesis[]
+  antropometric Antropometric[]
 
   @@map("patients")
 }
@@ -149,4 +151,20 @@ model AnamnesisTemplate {
   user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("anamnesis_templates")
+}
+
+model Antropometric {
+  id        String   @id @default(uuid()) @db.Uuid()
+  userId    String   @map("user_id") @db.Uuid()
+  patientId String   @map("patient_id") @db.Uuid()
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  weight Float
+  height Float
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("antropometrics")
 }

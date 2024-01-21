@@ -24,15 +24,18 @@
             type: 'file',
             name: 'index.ts',
             content: (inputs) => `import {
+  ${toPascalCase(inputs.name)}Service,
+  I${toPascalCase(inputs.name)}ServiceSchema,
   I${toPascalCase(inputs.name)}Input,
   I${toPascalCase(inputs.name)}Output,
   I${toPascalCase(inputs.name)}Service,
-  ${toPascalCase(inputs.name)}Service
 } from './service';
 
 export type { I${toPascalCase(inputs.name)}Service, I${toPascalCase(
               inputs.name
             )}Input, I${toPascalCase(inputs.name)}Output};
+
+export  { I${toPascalCase(inputs.name)}ServiceSchema };
 
 export default ${toPascalCase(inputs.name)}Service;
 `,
