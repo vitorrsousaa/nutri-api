@@ -104,7 +104,7 @@ describe('${toPascalCase(inputs.name)}Controller', () => {
     mockRequest.body = {};
   })
 
-  it('should be defined', () => {
+  it('should be defined', async () => {
     // Arrange
 
     // Act

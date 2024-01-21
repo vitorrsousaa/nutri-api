@@ -6,4 +6,8 @@ export default class AntropometricRepositories {
   async create(createAntropometricDTO: Prisma.AntropometricCreateArgs) {
     return this.prismaService.antropometric.create(createAntropometricDTO);
   }
+
+  async findAll(findAllAntropometricArgs: Prisma.AntropometricFindManyArgs) {
+    return this.prismaService.antropometric.findMany(findAllAntropometricArgs);
+  }
 }

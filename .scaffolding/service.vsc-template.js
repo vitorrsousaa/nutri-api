@@ -25,7 +25,7 @@
             name: 'index.ts',
             content: (inputs) => `import {
   ${toPascalCase(inputs.name)}Service,
-  I${toPascalCase(inputs.name)}ServiceSchema,
+  ${toPascalCase(inputs.name)}ServiceSchema,
   I${toPascalCase(inputs.name)}Input,
   I${toPascalCase(inputs.name)}Output,
   I${toPascalCase(inputs.name)}Service,
