@@ -1,10 +1,9 @@
-import returnErrorMissingField from 'app/shared/utils/returnErrorMissingField';
-
 import {
   IController,
   IRequest,
   IResponse,
 } from '../../../../interfaces/controller';
+import returnErrorMissingField from '../../../../shared/utils/returnErrorMissingField';
 import { ICreateAntropometricService } from '../../services/CreateAntropometric';
 import { CreateAntropometricServiceSchema } from '../../services/CreateAntropometric/service';
 

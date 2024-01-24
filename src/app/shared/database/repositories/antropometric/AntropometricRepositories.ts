@@ -10,4 +10,8 @@ export default class AntropometricRepositories {
   async findAll(findAllAntropometricArgs: Prisma.AntropometricFindManyArgs) {
     return this.prismaService.antropometric.findMany(findAllAntropometricArgs);
   }
+
+  async delete(deleteAntropometricArgs: Prisma.AntropometricDeleteArgs) {
+    return this.prismaService.antropometric.delete(deleteAntropometricArgs);
+  }
 }

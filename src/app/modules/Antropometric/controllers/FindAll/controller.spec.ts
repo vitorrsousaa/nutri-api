@@ -18,6 +18,7 @@ describe('FindAllController', () => {
       body: {},
       params: {},
       patientId: '657cb359-1b94-4f37-93e6-131a37404dc7',
+      accountId: '657cb359-1b94-4f37-93e6-131a37404dc7',
     } as IRequest;
 
     const service = {
